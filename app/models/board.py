@@ -17,7 +17,7 @@ class Board(db.Model):
 
     # Relationship with lists
     lists = db.relationship('List', backref='board', lazy=True)
-    users_in_board = db.relationship('UserInBoard', backref='board', lazy=True)
+    #users_in_board = db.relationship('UserInBoard', backref='board', lazy=True)
 
     def to_dict(self):
         return {

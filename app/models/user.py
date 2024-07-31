@@ -19,7 +19,7 @@ class User(db.Model, UserMixin):
 
     # Relationship with board
     boards = db.relationship('Board', backref='user', lazy=True)
-    users_in_board = db.relationship('UserInBoard', backref='board', lazy=True)
+    #users_in_board = db.relationship('UserInBoard', backref='board', lazy=True)
 
 
     @property

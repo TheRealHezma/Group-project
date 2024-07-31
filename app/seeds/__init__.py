@@ -32,8 +32,8 @@ def seed():
     seed_boards()
     seed_lists()
     seed_cards()
-    seed_comments()
     seed_card_tasks()
+    seed_comments()
     seed_users_in_board()
     # Add other seed functions here
 

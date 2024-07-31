@@ -57,7 +57,7 @@ def seed_boards():
 # Using
 def undo_boards():
     if environment == "production":
-        db.session.execute('TRUNCATE table {SCHEMA}.boards RESTART IDENTITY CASCADE;')
+        db.session.execute(f'TRUNCATE table {SCHEMA}.boards RESTART IDENTITY CASCADE;')
     else:
         db.session.execute(text('DELETE FROM boards'))
 

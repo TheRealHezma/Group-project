@@ -8,6 +8,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.list_routes import list_routes #added
+from .api.cardtask_routes import cardtask_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -29,7 +30,9 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(list_routes, url_prefix='/api/lists') #added
+app.register_blueprint(list_routes, url_prefix='/api/lists') 
+#added
+app.register_blueprint(cardtask_routes, url_prefix='/api/cardtasks')
 db.init_app(app)
 Migrate(app, db)
 

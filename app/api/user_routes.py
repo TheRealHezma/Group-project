@@ -23,3 +23,15 @@ def user(id):
     """
     user = User.query.get(id)
     return user.to_dict()
+
+@user_routes.route('/<username>')
+@login_required
+def get_user_by_username(username):
+    """
+    Query for a user by username and returns that user in a dictionary
+    """
+    user = User.query.filter_by(username=username).first()
+    if user:
+        return user.to_dict()
+    else:
+        return jsonify({'error': 'User not found'}), 404

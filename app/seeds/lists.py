@@ -10,9 +10,11 @@ def seed_lists():
     ListThree = List(
         name='Test 3', board_id=3)
 
+
     db.session.add(ListOne)
     db.session.add(ListTwo)
     db.session.add(ListThree)
+
     db.session.commit()
 
 

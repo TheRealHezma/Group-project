@@ -16,6 +16,10 @@
   .board-link {
     text-decoration: none;
   }
+
+  .board-link:hover {
+    text-decoration: none;
+  }
   
   .board-card {
     display: flex;
@@ -25,7 +29,7 @@
     width: 190px;
     height: 200px;
     padding: 10px;
-    background-color: #f0f0f0;
+    background-color: silver;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
@@ -38,13 +42,13 @@
   .board-name {
     font-size: 22px;
     font-weight: bold;
-    color: #333;
+    color: black;
     margin-bottom: 10px;
     text-align: center;
   }
   
   .board-description {
-    font-size: 1px;
+    font-size: 16px;
     color: #666;
     text-align: center;
   }

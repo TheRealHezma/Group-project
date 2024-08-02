@@ -4,6 +4,18 @@ from app.models import db, Board, List, UserInBoard
 
 board_routes = Blueprint('boards', __name__)
 
+#(for testing) remove b4 pushing
+@board_routes.route('/my-boards', methods=['GET'])
+@login_required
+def get_user_boards():
+    """
+    Get all boards for the current user.
+    """
+    user_id = current_user.id
+    boards = Board.query.filter_by(owner_id=user_id).all()
+    return jsonify([board.to_dict() for board in boards])
+
+
 @board_routes.route('/current', methods=['GET'])
 @login_required
 def get_current_user_boards():
@@ -103,7 +115,7 @@ def add_user_to_board(id):
 
     if not user_id:
         return jsonify({"message": "Bad Request", "errors": {"user_id": "User ID is required"}}), 400
-    
+
     user_in_board = UserInBoard(
         board_id=id,
         user_id=user_id
@@ -138,12 +150,12 @@ def create_list(id):
     )
     db.session.add(new_list)
     db.session.commit()
-    
+
     return jsonify(new_list.to_dict()), 201
-    
-    
-    
-    
+
+
+
+
     db.session.add(user_in_board)
     db.session.commit()
 

@@ -25,7 +25,7 @@ function Navigation() {
 
   useEffect(() => {
     // Fetch user boards when the component mounts
-    fetch('/api/my-boards')
+    fetch('/api/boards/current')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -33,7 +33,7 @@ function Navigation() {
         return response.json();
       })
       .then(data => {
-        setUserBoards(data.boards); // check and fix later
+        setUserBoards(data.Boards);
       })
       .catch(error => {
         console.error("There was an error fetching the boards:", error);

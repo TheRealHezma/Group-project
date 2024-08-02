@@ -1,5 +1,6 @@
 //*VARIABLE TYPES
 const GET = 'boards/LOAD';
+const GET_BY_ID = 'board/LOADONE';
 
 //*ACTIONS
 
@@ -11,6 +12,13 @@ const getBoards = (boards) => {
   };
 };
 
+const getBoardById = (board) => {
+    return {
+        type: GET_BY_ID,
+        board,
+    }
+}
+
 //*THUNKS
 export const getAllBoards = () => async (dispatch) => {
   const response = await fetch('/api/boards/current');
@@ -19,6 +27,13 @@ export const getAllBoards = () => async (dispatch) => {
   console.log('hello');
   dispatch(getBoards(allUserBoards));
 };
+
+export const getBoard = (boardId) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}`) ;
+
+  const board = await response.json();
+  dispatch(getBoardById(board));
+}
 
 //*INITIAL STATE + REDUCER
 const initialState = { allBoards: {}, currentBoard: {} };
@@ -34,6 +49,10 @@ const boardsReducer = (state = initialState, action) => {
         ...state,
         allBoards: { ...allBoards },
       };
+    }
+    case GET_BY_ID: {
+        const currentBoard = action.board;
+        return { ...state, currentBoard: currentBoard }
     }
     default:
       return state;

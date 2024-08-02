@@ -2,30 +2,44 @@ import { NavLink, useNavigate } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 function Navigation() {
   const [greeting, setGreeting] = useState("");
   const navigate = useNavigate();
   const [userBoards, setUserBoards] = useState([]);
+  const user = useSelector((store) => store.session.user);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
     let greetingMessage = "";
 
-    if (currentHour < 12) {
-      greetingMessage = "Good morning! Let's get to work.";
-    } else if (currentHour < 18) {
-      greetingMessage = "Good afternoon! Let's get to work.";
+    if (user) {
+      // If user is logged in
+      if (currentHour < 12) {
+        greetingMessage = `Good morning, ${user.username}! Let's get to work.`;
+      } else if (currentHour < 18) {
+        greetingMessage = `Good afternoon, ${user.username}! Let's get to work.`;
+      } else {
+        greetingMessage = `Good evening, ${user.username}! Let's get to work.`;
+      }
     } else {
-      greetingMessage = "Good evening! Let's get to work.";
+      // If no user is logged in
+      if (currentHour < 12) {
+        greetingMessage = "Good morning! Let's be productive today.";
+      } else if (currentHour < 18) {
+        greetingMessage = "Good afternoon! Let's be productive today.";
+      } else {
+        greetingMessage = "Good evening! Let's be productive today.";
+      }
     }
 
     setGreeting(greetingMessage);
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     // Fetch user boards when the component mounts
-    fetch('/api/boards/current')
+    fetch('/api/my-boards')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -33,7 +47,7 @@ function Navigation() {
         return response.json();
       })
       .then(data => {
-        setUserBoards(data.Boards);
+        setUserBoards(data.boards); // check and fix later
       })
       .catch(error => {
         console.error("There was an error fetching the boards:", error);

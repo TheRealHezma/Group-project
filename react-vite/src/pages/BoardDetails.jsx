@@ -11,7 +11,6 @@ const BoardDetails = () => {
   const dispatch = useDispatch();
   const currentBoard = useSelector((state) => state.boards.currentBoard);
   const { id } = useParams();
-  const allLists = useSelector((state) => state.lists.allLists);
 
   useEffect(() => {
     dispatch(getBoard(id));
@@ -25,8 +24,8 @@ const BoardDetails = () => {
     <div>
       {currentBoard ? (
         <div>
-          <h1>{currentBoard.name}</h1>
-          <p>{currentBoard.description}</p>
+          <h1>{currentBoard.Board.name}</h1>
+          <p>{currentBoard.Board.description}</p>
         </div>
       ) : (
         <p>Loading...</p>

@@ -1,7 +1,7 @@
 //*VARIABLE TYPES
-const GET = 'lists/LOAD';
+// const GET = 'lists/LOAD';
 
-//*ACTIONS
+// //*ACTIONS
 
-//* get all lists by board id
-const getListsByBoard = (lists)
+// //* get all lists by board id
+// const getListsByBoard = (lists)

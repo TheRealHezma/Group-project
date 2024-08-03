@@ -6,12 +6,12 @@ const GET_BY_ID = 'board/LOADONE';
 
 //? get all boards for a specific user where they are owner or member
 const getBoards = (boards) => {
-  return {
-    type: GET,
-    boards,
+    return {
+        type: GET,
+        boards,
   };
 };
-
+// get a board by board id
 const getBoardById = (board) => {
     return {
         type: GET_BY_ID,

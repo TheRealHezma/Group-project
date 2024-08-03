@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation/Navigation";
 import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
+import CardsTest from './pages/CardsTest';
 
 const Layout = () => {
   //TODO: this is for navbar once created
@@ -49,7 +50,11 @@ const router = createBrowserRouter([
                     }
 
                 ]
-            }
+            },
+            {
+                path: 'cards',
+                element: <CardsTest />,
+            },
             ]
         }
     ]

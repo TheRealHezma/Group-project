@@ -4,7 +4,7 @@ const GET_BY_ID = 'board/LOADONE';
 
 //*ACTIONS
 
-//? get all boards for a specific user
+//? get all boards for a specific user where they are owner or member
 const getBoards = (boards) => {
   return {
     type: GET,
@@ -18,13 +18,12 @@ const getBoardById = (board) => {
         board,
     }
 }
-
+ 
 //*THUNKS
 export const getAllBoards = () => async (dispatch) => {
   const response = await fetch('/api/boards/current');
 
   const allUserBoards = await response.json();
-  console.log('hello');
   dispatch(getBoards(allUserBoards));
 };
 

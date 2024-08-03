@@ -1,3 +1,4 @@
+/* src/pages/Splash.css */
 .splash-container {
     display: flex;
     flex-direction: column;
@@ -16,7 +17,7 @@
   .board-link {
     text-decoration: none;
   }
-
+  
   .board-link:hover {
     text-decoration: none;
   }
@@ -29,10 +30,13 @@
     width: 190px;
     height: 200px;
     padding: 10px;
-    background-color: silver;
+    background-color: #d7d9de;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
+    -webkit-font-smoothing: antialiased; /* Smooth font rendering for WebKit browsers */
+    -moz-osx-font-smoothing: grayscale; /* Smooth font rendering for Firefox on macOS */
+    text-rendering: optimizeLegibility; /* Optimize text rendering for better legibility */
   }
   
   .board-card:hover {
@@ -40,15 +44,21 @@
   }
   
   .board-name {
-    font-size: 22px;
+    font-size: 26px;
     font-weight: bold;
     color: black;
     margin-bottom: 10px;
     text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }
   
   .board-description {
-    font-size: 16px;
-    color: #666;
+    font-size: 18px;
+    color: #43424a;
     text-align: center;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
   }

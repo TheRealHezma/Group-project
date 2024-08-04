@@ -21,23 +21,28 @@
   
   .welcome-container {
     text-align: center;
-    margin: 10px;
-    margin-top: 70px;
-    margin-bottom: 40px;
-    display: flex;  /* Added display flex to center title */
+    margin: 5px;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    display: flex;
     flex-direction: column;
     align-items: center;
   }
   
   @media (min-width: 1024px) {
+    .welcome-container {
+      margin-top: 140px;
+    }
+  }
+
+  @media (min-width: 1450px) {
     .welcome-title {
       width: 60%;
     }
   }
 
   .welcome-container h1 {
-    margin-bottom: 40px;
-    margin: 10px;
+    margin: 5px;
     color: silver;
   }
 
@@ -47,12 +52,12 @@
 
   h3 {
     color: silver;
-    margin-top: 40px;
+    margin-top: 20px;
   }
   .content-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 20px;
+    gap: 30px;
     max-width: 1000px;
     width: 100%;
     margin: 0 auto;
@@ -84,7 +89,7 @@
     max-width: 80%;
     height: auto;
     border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px rgba(70, 69, 69, 0.2);
   }
   
   .signup-container {
@@ -93,7 +98,7 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    margin-top: 50px;
+    margin-top: 40px;
   }
   
   .signup-container h3 {
@@ -172,18 +177,33 @@
   }
   
   /* Responsive adjustments */
-  @media (max-width: 768px) {
+  @media (max-width: 900px) {
     .content-container {
       grid-template-columns: 1fr;
       gap: 10px;
     }
-  
+
+    .signup-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 10px;
+        width: 80%;
+      }
+
     .left-content, .right-content {
       align-items: center;
     }
   
     .welcome-image {
-      max-width: 60%;
+      max-width: 45%;
     }
+
+    .welcome-title {
+        width: 80%;
+        font-size: 1.2rem;
+      }
   }
   

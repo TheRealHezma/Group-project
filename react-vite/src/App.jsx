@@ -13,6 +13,7 @@ const Layout = () => {
   //TODO: this is for navbar once created
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+
   useEffect(() => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -21,7 +22,7 @@ const Layout = () => {
   return (
     <>
       <ModalProvider>
-        <Navigation />
+        <Navigation isLoaded={isLoaded} />
         {isLoaded && <Outlet />}
         <Modal />
       </ModalProvider>
@@ -36,24 +37,24 @@ const router = createBrowserRouter([
       {
         path: '/',
         children: [
-            {
-                index: true,
-                element: <Splash />,
-            },
-            {
-                path: 'boards',
-                children: [
-                    {
-                        path: ':id',
-                        element: <BoardDetails />,
-                    }
+          {
+            index: true,
+            element: <Splash />,
+          },
+          {
+            path: 'boards',
+            children: [
+              {
+                path: ':id',
+                element: <BoardDetails />,
+              }
 
-                ]
-            }
             ]
-        }
+          }
+        ]
+      }
     ]
-}]);
+  }]);
 
 const App = () => {
   return <RouterProvider router={router} />;

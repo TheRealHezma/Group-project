@@ -1,14 +1,15 @@
 import { NavLink, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useEffect, useState } from "react";
 
-function Navigation() {
-  const [greeting, setGreeting] = useState("");
-  const navigate = useNavigate();
-  const [userBoards, setUserBoards] = useState([]);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+function Navigation({ isLoaded }) {
 
+  const [greeting, setGreeting] = useState("");
+  const [userBoards, setUserBoards] = useState([]);
+  const navigate = useNavigate();
+  const user = useSelector((state) => state.session.user);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -53,27 +54,32 @@ function Navigation() {
           <img src="/TaskWaveNarrow.png" alt="TaskWave" className="logo" />
         </NavLink>
       </li>
-      <li className="dropdown">
-        <button className="dropdown-toggle">
-          My Boards
-        </button>
-        <ul className="dropdown-menu">
-          {userBoards.length > 0 ? (
-            userBoards.map(board => (
-              <li key={board.id}>
-                <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
-              </li>
-            ))
-          ) : (
-            <li>No boards available</li>
-          )}
-        </ul>
-      </li>
-      <li>
-        <button className="new_Board" onClick={handleNewBoard}>
-          New Board
-        </button>
-      </li>
+      {isLoaded && user && (
+        <>
+          <li className="dropdown">
+            <button className="dropdown-toggle">
+              My Boards
+            </button>
+            <ul className="dropdown-menu">
+              {userBoards.length > 0 ? (
+                userBoards.map(board => (
+                  <li key={board.id}>
+                    <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
+                  </li>
+                ))
+              ) : (
+                <li>No boards available</li>
+              )}
+            </ul>
+          </li>
+          <li>
+            <button className="new_Board" onClick={handleNewBoard}>
+              New Board
+            </button>
+          </li>
+        </>
+      )}
+
       <li>{greeting}</li>
       <li>
         <ProfileButton />

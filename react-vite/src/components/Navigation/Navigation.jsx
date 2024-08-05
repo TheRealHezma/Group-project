@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useEffect, useState } from "react";
+import { useModal } from "../../context/Modal";
+import NewBoardModal from "../NewBoardModal/NewBoardModal";
 
 function Navigation({ isLoaded }) {
   const [greeting, setGreeting] = useState("");
@@ -10,6 +12,7 @@ function Navigation({ isLoaded }) {
   const navigate = useNavigate();
   const { id } = useParams(); // Get the current board ID from URL parameters
   const user = useSelector((state) => state.session.user);
+  const { setModalContent, setModalVisible } = useModal();
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -44,9 +47,14 @@ function Navigation({ isLoaded }) {
     }
   }, [user]);
 
+  // const handleNewBoard = () => {
+  //   navigate("/api/boards");
+  // };
+
   const handleNewBoard = () => {
-    navigate("/api/boards");
-  };
+    setModalContent(<NewBoardModal />);
+    setModalVisible(true);
+  }
 
   const currentBoard = userBoards.find(board => board.id === Number(id)); // Find the current board based on the URL
 

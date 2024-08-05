@@ -162,7 +162,7 @@ def get_lists_by_board(id):
     lists = List.query.filter_by(board_id=id).all()
     if not lists:
         return jsonify({"message": "No lists found for this board"})
-    
+
     return {'lists':[list.to_dict() for list in lists]}
 
 # Will allow anyone to create a list on board where they are owner or member

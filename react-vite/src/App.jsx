@@ -5,9 +5,10 @@ import { useDispatch } from "react-redux";
 import { ModalProvider, Modal } from "./context/Modal";
 import { thunkAuthenticate } from "./redux/session";
 import Navigation from "./components/Navigation/Navigation";
-import './index.css';
+import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
+import CardsTest from './pages/CardsTest';
 
 const Layout = () => {
   //TODO: this is for navbar once created
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
               }
 
             ]
-          }
+          },
+          {
+            path: 'cards',
+            element: <CardsTest />,
+          },
         ]
       }
     ]

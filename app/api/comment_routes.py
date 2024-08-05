@@ -13,6 +13,10 @@ def edit_comment(id):
     if not comment_to_edit:
         return jsonify({'error': 'Comment not found'}), 404
     
+    # Check to verify board ownership
+    if comment.user_id != current_user.id:
+        return jsonify({"message": "Forbidden"}), 403
+    
     data = request.json
     comment_to_edit.content = data.get('content', comment_to_edit.content)
 
@@ -26,6 +30,9 @@ def delete_comment(id):
     comment_to_delete = Comment.query.get(id)
     if not comment_to_delete:
         return jsonify({'error': 'Comment not found'}), 404
+    # Check to verify board ownership
+    if comment.user_id != current_user.id:
+        return jsonify({"message": "Forbidden"}), 403
     
     db.session.delete(comment_to_delete)
     db.session.commit()

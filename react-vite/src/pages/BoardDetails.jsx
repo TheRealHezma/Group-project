@@ -15,6 +15,8 @@ const BoardDetails = () => {
     dispatch(getBoard(id));
   }, [dispatch, id]);
 
+
+  
   return (
     <div>
       {currentBoard ? (

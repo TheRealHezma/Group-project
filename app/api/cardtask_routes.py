@@ -13,6 +13,11 @@ def edit_card_task(id):
     if not task_to_edit:
         return jsonify({'error': 'Card task not found'}), 404
 
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
+
     data = request.json
     task_to_edit.description = data.get('description', task_to_edit.description)
     task_to_edit.completed = data.get('completed', task_to_edit.completed)
@@ -28,6 +33,11 @@ def delete_card_task(id):
     task_to_delete = CardTask.query.get(id)
     if not task_to_delete:
         return jsonify({'error': "Task not found"}), 404
+    
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
     
     db.session.delete(task_to_delete)
     db.session.commit()

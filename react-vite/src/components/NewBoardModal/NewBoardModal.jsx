@@ -20,20 +20,15 @@ function NewBoardModal() {
             name: boardName,
             description,
         };
-
-        try {
-            const serverResponse = await dispatch(createBoardThunk(boardData));
-            if (serverResponse.errors) {
-                setErrors(serverResponse.errors); // Adjust based on server response structure
-            } else {
-                closeModal(); // Close modal if creation is successful
+        dispatch(createBoardThunk(boardData)).then(() =>
+            closeModal()
+        ).catch(async (res) => {
+            const data = await res.json()
+            if (data?.errors) {
+                setErrors(data.errors)
             }
-        } catch (error) {
-            console.error("Error creating board:", error);
-            setErrors({ general: "An unexpected error occurred. Please try again." });
-        } finally {
-            setIsSubmitting(false); // Reset loading state
-        }
+        })
+
     };
 
     const handleBackgroundClick = (e) => {
@@ -65,7 +60,6 @@ function NewBoardModal() {
                         />
                     </label>
                     {errors.description && <p>{errors.description}</p>}
-                    {errors.general && <p>{errors.general}</p>}
                     <button type="submit" disabled={isSubmitting}>
                         {isSubmitting ? 'Creating...' : 'Create'}
                     </button>

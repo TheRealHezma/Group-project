@@ -1,3 +1,4 @@
+
 //*VARIABLE TYPES
 const GET = 'boards/LOAD';
 const GET_BY_ID = 'board/LOADONE';
@@ -44,29 +45,16 @@ export const getBoard = (boardId) => async (dispatch) => {
 
 // create board thunk
 export const createBoardThunk = (boardData) => async (dispatch) => {
-  // Fetch the CSRF token from cookies
-  const csrfCookie = document.cookie.split('; ').find(row => row.startsWith('csrf_token'));
-  if (!csrfCookie) {
-    console.error('CSRF token not found');
-    return;
-  }
-
-  const csrfToken = csrfCookie.split('=')[1];
-  const response = await fetch('/api/boards/', {
+  const response = await fetch(`/api/boards/`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json',
-      'X-CSRFToken': csrfToken, // Include the CSRF token in the request headers
+      'Content-Type': 'application/json'
     },
-    body: JSON.stringify(boardData),
+    body: JSON.stringify(boardData)
   });
-
-  if (response.ok) {
-    const newBoard = await response.json();
-    dispatch(createBoard(newBoard));
-  } else {
-    console.error('Failed to create board, issue in create board thunk:', response.statusText);
-  }
+  const newBoard = await response.json();
+  dispatch(createBoard(newBoard))
+  return newBoard
 };
 
 //*INITIAL STATE + REDUCER

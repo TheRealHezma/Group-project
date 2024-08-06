@@ -1,18 +1,17 @@
-import { NavLink, useNavigate, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
 import { useEffect, useState } from "react";
-import { useModal } from "../../context/Modal";
 import NewBoardModal from "../NewBoardModal/NewBoardModal";
+import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
 function Navigation({ isLoaded }) {
   const [greeting, setGreeting] = useState("");
   const [userBoards, setUserBoards] = useState([]);
-  const navigate = useNavigate();
-  const { id } = useParams(); // Get the current board ID from URL parameters
+  const { id } = useParams();
   const user = useSelector((state) => state.session.user);
-  const { setModalContent, setModalVisible } = useModal();
+  const boards = useSelector((state) => state.boards.allBoards);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -30,33 +29,11 @@ function Navigation({ isLoaded }) {
   }, []);
 
   useEffect(() => {
-    if (user) {
-      fetch("/api/boards/current")
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((data) => {
-          setUserBoards(data.Boards);
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the boards:", error);
-        });
-    }
-  }, [user]);
+    setUserBoards(Object.values(boards))
+  }, [boards]);
 
-  // const handleNewBoard = () => {
-  //   navigate("/api/boards");
-  // };
 
-  const handleNewBoard = () => {
-    setModalContent(<NewBoardModal />);
-    setModalVisible(true);
-  }
-
-  const currentBoard = userBoards.find(board => board.id === Number(id)); // Find the current board based on the URL
+  const currentBoard = userBoards.find(board => board.id === Number(id));
 
   return (
     <ul className="navigation">
@@ -65,16 +42,15 @@ function Navigation({ isLoaded }) {
           <img src="/TaskWaveNarrow.png" alt="TaskWave" className="logo" />
         </NavLink>
       </li>
-      {isLoaded && user && (
+      {(isLoaded && user) && ( //added parenth around is loaded and user
         <>
           <li>
-            <button className="new_Board" onClick={handleNewBoard}>
-              New Board
-            </button>
+            <OpenModalButton buttonText={'Create Board'} modalComponent={<NewBoardModal />} />
           </li>
           <li className="dropdown middle">
             <button className="dropdown-toggle">
               {currentBoard ? currentBoard.name : "My Boards"}
+
               <span className="arrow-down">▼</span>
             </button>
             <ul className="dropdown-menu">

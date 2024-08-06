@@ -160,7 +160,10 @@ def get_lists_by_board(id):
        return jsonify({"message": "Forbidden"}), 403
 
     lists = List.query.filter_by(board_id=id).all()
-    return {'Lists':[list.to_dict() for list in lists]}
+    if not lists:
+        return jsonify({"message": "No lists found for this board"})
+
+    return {'lists':[list.to_dict() for list in lists]}
 
 # Will allow anyone to create a list on board where they are owner or member
 @board_routes.route('/<int:id>/lists', methods=['POST'])
@@ -187,6 +190,10 @@ def create_list(id):
     db.session.commit()
 
     return jsonify(new_list.to_dict()), 201
+
+
+
+
 
     db.session.add(user_in_board)
     db.session.commit()

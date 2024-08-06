@@ -4,7 +4,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import configureStore from './redux/store';
 import App from './App';
 import * as sessionActions from './redux/session';
-import './index.css';
+import './global.css';
 
 const store = configureStore();
 

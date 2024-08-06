@@ -2,7 +2,7 @@
 const GET = "lists/LOAD";
 const EDIT = "lists/EDIT"
 
-//*ACTIONS
+// //*ACTIONS
 
 //* get all lists by board id
 const getListsByBoard = (lists) => ({

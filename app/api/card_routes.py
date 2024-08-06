@@ -28,6 +28,11 @@ def edit_card(id):
             errors["description"] = "Description is required"
         return jsonify({"message": "Bad Request", "errors": errors}), 400
 
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
+
     card.title = title
     card.description = description
     card.updated_at = datetime.now(timezone.utc)
@@ -47,6 +52,11 @@ def delete_card(id):
     if not card:
         return jsonify({"message": "Card couldn't be found"}), 404
 
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
+
     db.session.delete(card)
     db.session.commit()
 
@@ -58,6 +68,11 @@ def get_card_tasks_by_card_id(id):
     """
     Returns all card tasks that belong to a card by specified id
     """
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
+    
     tasks = CardTask.query.filter_by(card_id=id).all()
     return jsonify({"Card Tasks": [task.to_dict() for task in tasks]}), 200
 
@@ -73,6 +88,11 @@ def create_card_task(id):
 
     if not description:
         return jsonify({"message": "Bad Request", "errors": {"description": "Description is required"}}), 400
+
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
 
     new_task = CardTask(
         card_id=id,
@@ -91,6 +111,10 @@ def get_comments_by_card_id(id):
     """
     Get all Comments by Card's ID
     """
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
     comments = Comment.query.filter_by(card_id=id).all()
     return jsonify({"Comments": [comments.to_dict() for comment in comments]}), 200
 
@@ -111,6 +135,11 @@ def create_comment(id):
         if not description:
             errors["description"] = "Description is required"
         return jsonify({"message": "Bad Request", "errors": errors}), 400
+
+    # Check for board membership of current user
+    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    if not user_in_board:
+       return jsonify({"message": "Forbidden"}), 403
 
     new_comment = Comment(
         card_id=id,

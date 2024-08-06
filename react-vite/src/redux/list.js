@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 //*VARIABLE TYPES
 const GET = "lists/LOAD";
 const EDIT = "lists/EDIT";
@@ -68,7 +66,3 @@ const listsReducer = (state = initialState, action) => {
 };
 
 export default listsReducer
-<<<<<<< HEAD
->>>>>>> af87aa5348509a551563a78ef7227124712b9533
-=======
->>>>>>> 03580047a67e3916dcd2bc240016b3df448cf589

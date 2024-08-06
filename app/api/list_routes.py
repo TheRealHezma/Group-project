@@ -1,13 +1,5 @@
 from flask import Blueprint, jsonify, request
-<<<<<<< HEAD
-<<<<<<< HEAD
 from app.models import List, Card, UserInBoard, db
-=======
-from app.models import List, Card, UserInBoard,db
->>>>>>> af87aa5348509a551563a78ef7227124712b9533
-=======
-from app.models import List, Card, UserInBoard,db
->>>>>>> 03580047a67e3916dcd2bc240016b3df448cf589
 from flask_login import login_required, current_user
 
 list_routes = Blueprint('lists', __name__)

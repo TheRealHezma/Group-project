@@ -1,12 +1,12 @@
 from flask import Blueprint, jsonify, request
-from app.models import List, Card, db
-from flask_login import login_required
+from app.models import List, Card, UserInBoard, db
+from flask_login import login_required, current_user
 
 list_routes = Blueprint('lists', __name__)
 
 
 # Edit a List
-@list_routes.route('/<int:id>', methods=['PUT'])
+@list_routes.route('/<int:id>/', methods=['PUT'])
 @login_required
 def edit_list(id):
     """
@@ -31,7 +31,7 @@ def edit_list(id):
     return list_to_edit.to_dict(), 201
 
 # Delete a List
-@list_routes.route('/<int:id>', methods=['DELETE'])
+@list_routes.route('/<int:id>/', methods=['DELETE'])
 @login_required
 def delete_list(id):
     """

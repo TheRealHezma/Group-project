@@ -41,6 +41,7 @@ const listsReducer = (state = initialState, action) => {
       action.lists.Lists.forEach((list) => {
         allLists[list.id] = list;
       });
+      console.log("HERE,",allLists)
       return {
         ...state,
         allLists: { ...allLists },

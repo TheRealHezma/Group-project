@@ -25,11 +25,12 @@
     position: absolute;
     top: 100%;
     right: 0;
-    background-color: #ffffff;
+    background-color: rgb(200, 250, 100);
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 160px;
+    min-width: 120px;
+    /* Reduced the width */
     z-index: 1;
 }
 
@@ -38,26 +39,29 @@
 }
 
 .profile-dropdown li {
-    padding: 10px 20px;
+    padding: 8px 12px;
+    /* Adjusted padding */
     color: #333;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    /* list-style: none; */
 }
 
 .profile-dropdown li:hover {
     background: rgb(200, 250, 100);
 }
 
-/* .profile-info {
+.profile-info {
     font-size: 14px;
     color: #333;
     cursor: default;
-} */
+}
 
 .profile-info:hover {
     background-color: #ffffff;
 }
 
+.profile-dropdown button,
 .profile-logout button {
     width: 100%;
     background-color: rgb(200, 250, 100);
@@ -69,6 +73,7 @@
     font-size: 14px;
 }
 
+.profile-dropdown button:hover,
 .profile-logout button:hover {
     background-color: yellow;
 }

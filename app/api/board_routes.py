@@ -190,7 +190,11 @@ def create_list(id):
     db.session.commit()
 
     return jsonify(new_list.to_dict()), 201
-    
+
+
+
+
+
     db.session.add(user_in_board)
     db.session.commit()
 

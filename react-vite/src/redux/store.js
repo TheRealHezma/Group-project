@@ -7,11 +7,13 @@ import {
 import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import boardsReducer from './board';
+import listsReducer from './list';
 import cardsReducer from './card';
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   boards: boardsReducer,
+  lists: listsReducer,
   cards: cardsReducer,
 });
 

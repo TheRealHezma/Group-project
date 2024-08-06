@@ -57,6 +57,7 @@ function NewBoardModal() {
                         <textarea
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
+                            required
                         />
                     </label>
                     {errors.description && <p>{errors.description}</p>}

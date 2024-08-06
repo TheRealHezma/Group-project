@@ -44,8 +44,10 @@ function Navigation({ isLoaded }) {
       </li>
       {(isLoaded && user) && ( //added parenth around is loaded and user
         <>
+          {/* <li className="create-board-button"> */}
           <li>
-            <OpenModalButton buttonText={'Create Board'} modalComponent={<NewBoardModal />} />
+
+            <OpenModalButton buttonText={'Create Board'} modalComponent={<NewBoardModal />} className='create-board-button' />
           </li>
           <li className="dropdown middle">
             <button className="dropdown-toggle">

@@ -28,6 +28,7 @@ a {
 }
 
 .new_Board,
+/* .create-board-button, */
 .dropdown-toggle {
   color: rgb(21, 21, 21);
   background: rgb(200, 250, 100);
@@ -38,6 +39,7 @@ a {
 }
 
 .new_Board:hover,
+/* .create-board-button, */
 .dropdown-toggle:hover {
   background-color: yellow;
 }
@@ -82,4 +84,19 @@ a {
 
 .dropdown-menu li:last-child a {
   border-bottom: none;
+}
+
+.create-board-button {
+  background-color: rgb(200, 250, 100);
+  color: rgb(21, 21, 21);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-board-button:hover {
+  background-color: yellow;
 }

@@ -20,6 +20,8 @@ const BoardDetails = () => {
     dispatch(getLists(id));
   }, [dispatch, id]);
 
+
+
   return (
     <div>
       {currentBoard ? (

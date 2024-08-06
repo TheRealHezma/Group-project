@@ -1,6 +1,7 @@
 //*VARIABLE TYPES
 const GET = "lists/LOAD";
-const EDIT = "lists/EDIT"
+const EDIT = "lists/EDIT";
+const DELETE = "lists/DELETE";
 
 // //*ACTIONS
 
@@ -14,6 +15,12 @@ const getListsByBoard = (lists) => ({
 const editedList = (list) => ({
   type: EDIT,
   list,
+})
+
+//*delete a list
+const deleteList = (list) => ({
+  type: DELETE,
+  list
 })
 
 //*THUNKS
@@ -41,7 +48,6 @@ const listsReducer = (state = initialState, action) => {
       action.lists.Lists.forEach((list) => {
         allLists[list.id] = list;
       });
-      console.log("HERE,",allLists)
       return {
         ...state,
         allLists: { ...allLists },

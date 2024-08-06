@@ -1,7 +1,6 @@
 import './Lists.css';
 
 const List = ({ list }) => {
-  console.log('List component received:', list); // Debugging line
 
   return (
     <div className="list-card">

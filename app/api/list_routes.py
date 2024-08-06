@@ -1,5 +1,9 @@
 from flask import Blueprint, jsonify, request
+<<<<<<< HEAD
 from app.models import List, Card, UserInBoard, db
+=======
+from app.models import List, Card, UserInBoard,db
+>>>>>>> af87aa5348509a551563a78ef7227124712b9533
 from flask_login import login_required, current_user
 
 list_routes = Blueprint('lists', __name__)
@@ -24,7 +28,7 @@ def edit_list(id):
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-   
+
     list_to_edit.name = data.get('name', list_to_edit.name)
     list_to_edit.board_id = data.get('board_id', list_to_edit.board_id)
     db.session.commit()
@@ -46,7 +50,7 @@ def delete_list(id):
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-   
+
     db.session.delete(list_to_delete)
     db.session.commit()
     return jsonify({"message": "Successfully deleted"}), 200

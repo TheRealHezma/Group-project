@@ -1,4 +1,3 @@
-// src/pages/Splash.js
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -22,21 +21,38 @@ const Splash = () => {
   };
 
   return (
-    <div className={`splash-container ${!currentUser ? 'gradient-background' : ''}`}>
+    <div
+      className={`splash-container ${
+        !currentUser ? 'gradient-background' : ''
+      }`}
+    >
       {!currentUser && (
         <div className="welcome-container">
-          <h1 className="welcome-title">The All-in-one Solution for Managing Your Team, Tasks and Workflow in one Place!</h1>
+          <h1 className="welcome-title">
+            The All-in-one Solution for Managing Your Team, Tasks and Workflow
+            in one Place!
+          </h1>
           <div className="content-container">
             <div className="left-content">
-              <h3>Don&apos;t be an <span className="green">Ogre!</span></h3>
+              <h3>
+                Don&apos;t be an <span className="green">Ogre!</span>
+              </h3>
               <div className="image-wrapper">
-                <img src="/Ogre.jpg" alt="Office Ogre" className="welcome-image" />
+                <img
+                  src="/Ogre.jpg"
+                  alt="Office Ogre"
+                  className="welcome-image"
+                />
               </div>
             </div>
             <div className="right-content">
               <h3>....Get Task Wave Today!</h3>
               <div className="image-wrapper">
-                <img src="/OfficePeople.jpg" alt="Office People" className="welcome-image" />
+                <img
+                  src="/OfficePeople.jpg"
+                  alt="Office People"
+                  className="welcome-image"
+                />
               </div>
             </div>
           </div>
@@ -53,7 +69,11 @@ const Splash = () => {
           ) : (
             <div className="boards-container">
               {Object.values(boards).map((board) => (
-                <Link key={board.id} to={`/boards/${board.id}`} className="board-link">
+                <Link
+                  key={board.id}
+                  to={`/boards/${board.id}`}
+                  className="board-link"
+                >
                   <div key={board.id} className="board-card">
                     <h2 className="board-name">{board.name}</h2>
                     <p className="board-description">{board.description}</p>

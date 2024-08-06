@@ -1,30 +1,102 @@
-/* src/Navigation.css */
 ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #20232a;
-    padding: 10px 20px;
-  }
-  
-  li {
-    margin: 0 15px;
-  }
-  
-  a {
-    color: white;
-    text-decoration: none;
-    font-weight: 500;
-    padding: 8px 16px;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .logo {
-    height: 50px; /* Adjust the height as necessary */
-    width: auto;
-  }
-  
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #20232a;
+  padding: 10px 20px;
+}
+
+li {
+  margin: 0 15px;
+}
+
+a {
+  color: rgb(255, 255, 255);
+  text-decoration: none;
+  font-weight: 500;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
+
+.new_Board,
+/* .create-board-button, */
+.dropdown-toggle {
+  color: rgb(21, 21, 21);
+  background: rgb(200, 250, 100);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.new_Board:hover,
+/* .create-board-button, */
+.dropdown-toggle:hover {
+  background-color: yellow;
+}
+
+.dropdown {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: rgb(200, 250, 100);
+  border: 1px solid #ddd;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-menu li {
+  margin: 0;
+}
+
+.dropdown-menu a {
+  display: block;
+  color: black;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-bottom: 1px solid #ddd;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f0f0f0;
+}
+
+.dropdown-menu li:last-child a {
+  border-bottom: none;
+}
+
+.create-board-button {
+  background-color: rgb(200, 250, 100);
+  color: rgb(21, 21, 21);
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.create-board-button:hover {
+  background-color: yellow;
+}

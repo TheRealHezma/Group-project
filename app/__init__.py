@@ -33,7 +33,7 @@ app.cli.add_command(seed_commands)
 app.config.from_object(Config)
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
-app.register_blueprint(board_routes, url_prefix='/api/boards') #might need / at end of route
+app.register_blueprint(board_routes, url_prefix='/api/boards')
 app.register_blueprint(list_routes, url_prefix='/api/lists')
 #added
 app.register_blueprint(cardtask_routes, url_prefix='/api/cardtasks')

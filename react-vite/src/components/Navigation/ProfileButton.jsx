@@ -2,10 +2,9 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserCircle } from 'react-icons/fa';
 import { thunkLogout } from "../../redux/session";
+import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import "./ProfileButton.css";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -14,8 +13,8 @@ function ProfileButton() {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation();
-    setShowMenu((prev) => !prev);
+    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
+    setShowMenu(!showMenu);
   };
 
   useEffect(() => {
@@ -41,17 +40,17 @@ function ProfileButton() {
   };
 
   return (
-    <div className={`profile-button-container ${showMenu ? "show" : ""}`}>
-      <button onClick={toggleMenu} className="profile-button">
+    <>
+      <button onClick={toggleMenu}>
         <FaUserCircle />
       </button>
       {showMenu && (
-        <ul className="profile-dropdown" ref={ulRef}>
+        <ul className={"profile-dropdown"} ref={ulRef}>
           {user ? (
             <>
-              <li className="profile-info">{user.username}</li>
-              <li className="profile-info">{user.email}</li>
-              <li className="profile-logout">
+              <li>{user.username}</li>
+              <li>{user.email}</li>
+              <li>
                 <button onClick={logout}>Log Out</button>
               </li>
             </>
@@ -77,7 +76,7 @@ function ProfileButton() {
           )}
         </ul>
       )}
-    </div>
+    </>
   );
 }
 

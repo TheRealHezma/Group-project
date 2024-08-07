@@ -4,4 +4,8 @@ __pycache__/
 .venv
 .DS_Store
 .vscode/
+<<<<<<< HEAD
 dev.db
+=======
+.pylintrc
+>>>>>>> updated_list_routes

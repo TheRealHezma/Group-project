@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { getBoard } from '../redux/board';
 import { getLists } from '../redux/list';
 import List from '../components/Lists/Lists';
-import './BoardDetails.css'
+import './BoardDetails.css';
 
 const BoardDetails = () => {
   const dispatch = useDispatch();
@@ -19,8 +19,6 @@ const BoardDetails = () => {
   useEffect(() => {
     dispatch(getLists(id));
   }, [dispatch, id]);
-
-
 
   return (
     <div>

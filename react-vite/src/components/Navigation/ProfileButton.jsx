@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FaUserCircle } from 'react-icons/fa';
-import { thunkLogout } from "../../redux/session";
-import OpenModalMenuItem from "./OpenModalMenuItem";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
+import { thunkLogout } from '../../redux/session';
+import LoginFormModal from '../LoginFormModal';
+import SignupFormModal from '../SignupFormModal';
+import './ProfileButton.css';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 function ProfileButton() {
   const dispatch = useDispatch();
@@ -13,8 +14,8 @@ function ProfileButton() {
   const ulRef = useRef();
 
   const toggleMenu = (e) => {
-    e.stopPropagation(); // Keep from bubbling up to document and triggering closeMenu
-    setShowMenu(!showMenu);
+    e.stopPropagation();
+    setShowMenu((prev) => !prev);
   };
 
   useEffect(() => {
@@ -26,9 +27,9 @@ function ProfileButton() {
       }
     };
 
-    document.addEventListener("click", closeMenu);
+    document.addEventListener('click', closeMenu);
 
-    return () => document.removeEventListener("click", closeMenu);
+    return () => document.removeEventListener('click', closeMenu);
   }, [showMenu]);
 
   const closeMenu = () => setShowMenu(false);
@@ -40,24 +41,23 @@ function ProfileButton() {
   };
 
   return (
-    <>
-      <button onClick={toggleMenu}>
+    <div className={`profile-button-container ${showMenu ? 'show' : ''}`}>
+      <button onClick={toggleMenu} className="profile-button">
         <FaUserCircle />
       </button>
       {showMenu && (
-        <ul className={"profile-dropdown"} ref={ulRef}>
+        <ul className="profile-dropdown" ref={ulRef}>
           {user ? (
             <>
-              <li>{user.username}</li>
-              <li>{user.email}</li>
-              <li>
+              <li className="profile-info">{user.username}</li>
+              <li className="profile-info">{user.email}</li>
+              <li className="profile-logout">
                 <button onClick={logout}>Log Out</button>
               </li>
             </>
           ) : (
             <>
               <li>
-
                 <OpenModalButton
                   buttonText="Log In"
                   onButtonClick={closeMenu}
@@ -65,7 +65,6 @@ function ProfileButton() {
                 />
               </li>
               <li>
-
                 <OpenModalButton
                   buttonText="Sign Up"
                   onButtonClick={closeMenu}
@@ -76,7 +75,7 @@ function ProfileButton() {
           )}
         </ul>
       )}
-    </>
+    </div>
   );
 }
 

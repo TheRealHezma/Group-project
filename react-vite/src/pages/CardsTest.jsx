@@ -1,13 +1,22 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllCards, getCard, editCardById, deleteCardById, createCardTask, getAllCardTasks, editCardTaskById, deleteCardTaskById } from '../redux/card';
+import {
+  getAllCards,
+  getCard,
+  editCardById,
+  deleteCardById,
+  createCardTask,
+  getAllCardTasks,
+  editCardTaskById,
+  deleteCardTaskById,
+} from '../redux/card';
 import './Splash.css';
 
 const CardsTest = () => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
-  const cardTasks = useSelector((state) => state.cardTasks?.allCardTasks || {});
-  const currentCard = useSelector((state) => state.cards.currentCard);
+  // const cardTasks = useSelector((state) => state.cardTasks?.allCardTasks || {});
+  // const currentCard = useSelector((state) => state.cards.currentCard);
   // const [selectedCardId, setSelectedCardId] = useState(null);
   const [newTaskDescription, setNewTaskDescription] = useState('');
   // const [cardDetails, setCardDetails] = useState(null);
@@ -22,7 +31,7 @@ const CardsTest = () => {
   const handleEditCard = (cardId) => {
     const updatedCardData = {
       title: 'Updated Title',
-      description: 'Updated Description'
+      description: 'Updated Description',
     };
     dispatch(editCardById(cardId, updatedCardData));
   };
@@ -34,7 +43,7 @@ const CardsTest = () => {
   const handleCreateCardTask = (cardId) => {
     const taskData = {
       description: newTaskDescription,
-      completed: false
+      completed: false,
     };
     dispatch(createCardTask(cardId, taskData));
   };
@@ -47,11 +56,10 @@ const CardsTest = () => {
     setIsAddingTask(!isAddingTask);
   };
 
-
   const handleEditSubmit = (taskId) => {
     const updatedTaskData = {
       description: 'Updated Task Description',
-      completed: true
+      completed: true,
     };
     dispatch(editCardTaskById(taskId, updatedTaskData));
   };
@@ -88,10 +96,18 @@ const CardsTest = () => {
                   onChange={(e) => setNewTaskDescription(e.target.value)}
                 />
               )}
-              <button onClick={() => handleLoadCardTasks(card.id)}>Load Tasks</button>
-              <button onClick={() => handleGetCardById(3)}>Get Card By Id</button>
-              <button onClick={() => handleEditCard(card.id)}>Edit Card Details</button>
-              <button onClick={() => handleDeleteCard(card.id)}>Delete Card</button>
+              <button onClick={() => handleLoadCardTasks(card.id)}>
+                Load Tasks
+              </button>
+              <button onClick={() => handleGetCardById(3)}>
+                Get Card By Id
+              </button>
+              <button onClick={() => handleEditCard(card.id)}>
+                Edit Card Details
+              </button>
+              <button onClick={() => handleDeleteCard(card.id)}>
+                Delete Card
+              </button>
             </div>
           ))}
         </div>

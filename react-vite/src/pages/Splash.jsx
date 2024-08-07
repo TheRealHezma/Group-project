@@ -14,7 +14,12 @@ const Splash = () => {
 
   useEffect(() => {
     if (currentUser) {
-      dispatch(getAllBoards());
+      dispatch(getAllBoards()).catch((error) => {
+        if (error.response && error.response.status === 401) {
+          // Handle 401 error gracefully
+          console.log('Unauthorized access - user may need to log in.');
+        }
+      });
     }
   }, [dispatch, currentUser]);
 

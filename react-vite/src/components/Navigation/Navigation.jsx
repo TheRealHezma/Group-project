@@ -1,43 +1,12 @@
-import { NavLink, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+// src/Navigation.js
+import { NavLink } from "react-router-dom";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
-import { useEffect, useState } from "react";
-import NewBoardModal from "../NewBoardModal/NewBoardModal";
-import OpenModalButton from "../OpenModalButton/OpenModalButton";
 
-function Navigation({ isLoaded }) {
-  const [greeting, setGreeting] = useState("");
-  const [userBoards, setUserBoards] = useState([]);
-  const { id } = useParams();
-  const user = useSelector((state) => state.session.user);
-  const boards = useSelector((state) => state.boards.allBoards);
-
-  useEffect(() => {
-    const currentHour = new Date().getHours();
-    let greetingMessage = "";
-
-    if (currentHour < 12) {
-      greetingMessage = "Good morning! Let's get to work.";
-    } else if (currentHour < 18) {
-      greetingMessage = "Good afternoon! Let's get to work.";
-    } else {
-      greetingMessage = "Good evening! Let's get to work.";
-    }
-
-    setGreeting(greetingMessage);
-  }, []);
-
-  useEffect(() => {
-    setUserBoards(Object.values(boards))
-  }, [boards]);
-
-
-  const currentBoard = userBoards.find(board => board.id === Number(id));
-
+function Navigation() {
   return (
-    <ul className="navigation">
-      <li className="logo-container">
+    <ul>
+      <li>
         <NavLink exact to="/">
           <img src="/TaskWaveNarrow.png" alt="TaskWave" className="logo" />
         </NavLink>

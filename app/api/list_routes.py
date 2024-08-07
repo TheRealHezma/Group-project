@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify, request
-from app.models import List, Card, db
-from flask_login import login_required
+from app.models import List, Card, UserInBoard, db
+from flask_login import login_required, current_user
 
 list_routes = Blueprint('lists', __name__)
 

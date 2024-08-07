@@ -1,6 +1,6 @@
 from flask import Blueprint, jsonify , request
 from app.models import Comment, db
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 
 comment_routes = Blueprint('comments', __name__)
@@ -14,7 +14,7 @@ def edit_comment(id):
         return jsonify({'error': 'Comment not found'}), 404
     
     # Check to verify board ownership
-    if comment.user_id != current_user.id:
+    if comment_to_edit.user_id != current_user.id:
         return jsonify({"message": "Forbidden"}), 403
     
     data = request.json
@@ -31,7 +31,7 @@ def delete_comment(id):
     if not comment_to_delete:
         return jsonify({'error': 'Comment not found'}), 404
     # Check to verify board ownership
-    if comment.user_id != current_user.id:
+    if comment_to_delete.user_id != current_user.id:
         return jsonify({"message": "Forbidden"}), 403
     
     db.session.delete(comment_to_delete)

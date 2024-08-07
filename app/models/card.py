@@ -14,9 +14,9 @@ class Card(db.Model):
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
-    # Relationship with card_tasks
-    tasks = db.relationship('CardTask', backref='card', lazy=True)
-    comments = db.relationship('Comment', backref='card', lazy=True)
+    # Relationship with card_tasks and comments with cascade delete
+    tasks = db.relationship('CardTask', backref='card', lazy=True, cascade="all, delete-orphan")
+    comments = db.relationship('Comment', backref='card', lazy=True, cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

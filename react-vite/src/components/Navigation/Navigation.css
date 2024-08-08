@@ -12,6 +12,7 @@ ul {
 
 li {
   margin: 0 15px;
+  color:rgb(201, 201, 197)
 }
 
 a {
@@ -26,7 +27,12 @@ a {
 .logo {
   height: 50px;
   width: auto;
+  border-radius: 6px;
 }
+
+.logo:hover {
+    transform: scale(1.05);
+  }
 
 .new_Board,
 /* .create-board-button, */
@@ -42,7 +48,7 @@ a {
 .new_Board:hover,
 /* .create-board-button, */
 .dropdown-toggle:hover {
-  background-color: yellow;
+  background-color: rgb(170, 208, 95);
 }
 
 .dropdown {
@@ -65,6 +71,7 @@ a {
 
 .dropdown:hover .dropdown-menu {
   display: block;
+  background-color: rgb(170, 208, 95);
 }
 
 .dropdown-menu li {
@@ -99,5 +106,5 @@ a {
 }
 
 .create-board-button:hover {
-  background-color: yellow;
+  background-color: rgb(170, 208, 95);;
 }

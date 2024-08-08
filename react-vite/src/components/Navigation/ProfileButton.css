@@ -17,7 +17,7 @@
 }
 
 .profile-button:hover {
-    background-color: yellow;
+    background-color: rgb(170, 208, 95);
 }
 
 .profile-dropdown {
@@ -75,5 +75,5 @@
 
 .profile-dropdown button:hover,
 .profile-logout button:hover {
-    background-color: yellow;
+    background-color: rgb(170, 208, 95);
 }

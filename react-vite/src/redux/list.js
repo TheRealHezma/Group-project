@@ -3,10 +3,9 @@ const GET = "lists/LOAD";
 const EDIT = "lists/EDIT";
 const DELETE = "lists/DELETE";
 
+//*ACTIONS
 
-// //*ACTIONS
-
-//* get all lists by board id
+// get all lists by board id
 const getListsByBoard = (lists) => ({
   type: GET,
   lists,
@@ -26,21 +25,23 @@ const deleteList = (listId) => ({
 
 //*THUNKS
 
-//Fetch all lists by board id
+// Fetch all lists by board id
 export const getLists = (boardId) => async (dispatch) => {
   const res = await fetch(`/api/boards/${boardId}/lists`);
   const data = await res.json();
-  dispatch(getListsByBoard(data));
+  if (res.ok) {
+    dispatch(getListsByBoard(data));
+  }
 };
 
 // Edit list by id
 export const editListById = (listId, updatedData) => async (dispatch) => {
   const res = await fetch(`/api/lists/${listId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(updatedData)
+    body: JSON.stringify(updatedData),
   });
   const data = await res.json();
   dispatch(editedList(data));
@@ -49,7 +50,7 @@ export const editListById = (listId, updatedData) => async (dispatch) => {
 // Delete list by id
 export const deleteListById = (listId) => async (dispatch) => {
   const res = await fetch(`/api/lists/${listId}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
   if (res.ok) {
     dispatch(deleteList(listId));
@@ -57,19 +58,26 @@ export const deleteListById = (listId) => async (dispatch) => {
 };
 
 //*REDUCER
-const initialState = { allLists: {}, updatedList: {}};
+const initialState = { allLists: {}, updatedList: {} };
 
 const listsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET: {
-      const allLists = {};
-      action.lists.lists.forEach((list) => {
-        allLists[list.id] = list;
-      });
-      return {
-        ...state,
-        allLists: { ...allLists },
-      };
+      if (action.lists.lists) {
+        const allLists = {};
+        action.lists.lists.forEach((list) => {
+          allLists[list.id] = list;
+        });
+        return {
+          ...state,
+          allLists: { ...allLists },
+        };
+      }
+      else {
+        return {
+          ...state
+        }
+      }
     }
     case EDIT: {
       const updatedList = action.list;

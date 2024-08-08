@@ -27,9 +27,13 @@ const BoardDetails = () => {
           <h1>{currentBoard.name}</h1>
           <p>{currentBoard.description}</p>
           <div className="lists-container">
-            {Object.values(lists).map((list) => (
-              <List key={list.id} list={list} />
-            ))}
+            {Object.keys(lists).length > 0 ? (
+              Object.values(lists).map((list) => (
+                <List key={list.id} list={list} />
+              ))
+            ) : (
+              <p>No lists! Make one today!</p>
+            )}
           </div>
         </div>
       ) : (

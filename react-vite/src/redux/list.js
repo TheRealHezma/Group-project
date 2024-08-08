@@ -25,10 +25,10 @@ const deleteList = (listId) => ({
 });
 
 // create a list
-const createList = list => ({
+const createList = (list) => ({
   type: CREATE,
-  list
-})
+  list,
+});
 
 //*THUNKS
 
@@ -65,16 +65,20 @@ export const deleteListById = (listId) => async (dispatch) => {
 };
 
 // Create a list
-export const createListThunk = (listData) => async (dispatch) => {
-  const res = await fetch('/api/lists', {
+export const createListThunk = (listData, boardId) => async (dispatch) => {
+  const res = await fetch(`/api/boards/${boardId}/lists`, {
     method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(listData),
   });
-  dispatch(createList(listData))
-  return listData;
+
+  if (res.ok) {
+    const newList = await res.json();
+    dispatch(createList(newList));
+    return newList;
+  }
 };
 
 //*REDUCER
@@ -92,11 +96,10 @@ const listsReducer = (state = initialState, action) => {
           ...state,
           allLists: { ...allLists },
         };
-      }
-      else {
+      } else {
         return {
-          ...state
-        }
+          ...state,
+        };
       }
     }
     case EDIT: {
@@ -117,8 +120,8 @@ const listsReducer = (state = initialState, action) => {
     case CREATE: {
       return {
         ...state,
-        allLists: { ...state.allLists, [action.list.id]: action.list}
-      }
+        allLists: { ...state.allLists, [action.list.id]: action.list },
+      };
     }
     default:
       return state;

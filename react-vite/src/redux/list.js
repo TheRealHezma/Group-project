@@ -2,6 +2,7 @@
 const GET = "lists/LOAD";
 const EDIT = "lists/EDIT";
 const DELETE = "lists/DELETE";
+const CREATE = "lists/CREATE";
 
 //*ACTIONS
 
@@ -22,6 +23,12 @@ const deleteList = (listId) => ({
   type: DELETE,
   listId,
 });
+
+// create a list
+const createList = list => ({
+  type: CREATE,
+  list
+})
 
 //*THUNKS
 
@@ -55,6 +62,19 @@ export const deleteListById = (listId) => async (dispatch) => {
   if (res.ok) {
     dispatch(deleteList(listId));
   }
+};
+
+// Create a list
+export const createListThunk = (listData) => async (dispatch) => {
+  const res = await fetch('/api/lists', {
+    method: "POST",
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(listData),
+  });
+  dispatch(createList(listData))
+  return listData;
 };
 
 //*REDUCER
@@ -93,6 +113,12 @@ const listsReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState.allLists[action.listId];
       return newState;
+    }
+    case CREATE: {
+      return {
+        ...state,
+        allLists: { ...state.allLists, [action.list.id]: action.list}
+      }
     }
     default:
       return state;

@@ -1,4 +1,3 @@
-//! import { useState } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -11,7 +10,6 @@ import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
 
 const Layout = () => {
-  //TODO: this is for navbar once created
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -19,7 +17,6 @@ const Layout = () => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  //TODO: add navigation bar once component is built
   return (
     <>
       <ModalProvider>

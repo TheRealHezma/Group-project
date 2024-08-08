@@ -107,7 +107,7 @@
   
   .signup-container button {
     padding: 10px 20px;
-    background-color: #bdd42a;
+    background-color: rgb(200, 250, 100);
     color: rgb(57, 57, 57);
     font-weight: 600;
     border: none;
@@ -117,7 +117,7 @@
   }
   
   .signup-container button:hover {
-    background-color: #0056b3;
+    background-color: rgb(170, 208, 95);
   }
   
   .boards-container {
@@ -143,7 +143,7 @@
     width: 190px;
     height: 200px;
     padding: 10px;
-    background-color: #d7d9de;
+    background-color: #cfd0d4;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;

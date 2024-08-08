@@ -9,6 +9,7 @@ import sessionReducer from './session';
 import boardsReducer from './board';
 import cardsReducer from './card';
 import listsReducer from './list';
+
 // import commentsReducer from './comment'; //check if needed
 
 const rootReducer = combineReducers({
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   boards: boardsReducer,
   cards: cardsReducer,
   lists: listsReducer,
+
   // comment: commentsReducer, //check if needed
 });
 

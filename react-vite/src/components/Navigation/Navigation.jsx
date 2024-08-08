@@ -1,4 +1,4 @@
-import { NavLink, useParams, useNavigate } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
@@ -10,7 +10,6 @@ function Navigation({ isLoaded }) {
   const [greeting, setGreeting] = useState('');
   const [userBoards, setUserBoards] = useState([]);
   const { id } = useParams();
-  const navigate = useNavigate();
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
 
@@ -32,12 +31,6 @@ function Navigation({ isLoaded }) {
   useEffect(() => {
     setUserBoards(Object.values(boards));
   }, [boards]);
-
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
 
   const currentBoard = userBoards.find((board) => board.id === Number(id));
 

@@ -8,12 +8,14 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import boardsReducer from './board';
 import cardsReducer from './card';
+// import listsReducer from './list'; //uncomment when ready
 // import commentsReducer from './comment'; //check if needed
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   boards: boardsReducer,
   cards: cardsReducer,
+  //lists: listsReducer, // uncomment when ready
   // comment: commentsReducer, //check if needed
 });
 

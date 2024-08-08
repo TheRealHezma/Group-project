@@ -33,11 +33,11 @@ function Navigation({ isLoaded }) {
     setUserBoards(Object.values(boards));
   }, [boards]);
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/');
-    }
-  }, [user, navigate]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     navigate('/');
+  //   }
+  // }, [user, navigate]); //! NOT NEEDED CAUSED ERROR FOR NAVIGATING TO OTHER PAGES - BN 8/7
 
   const currentBoard = userBoards.find((board) => board.id === Number(id));
 

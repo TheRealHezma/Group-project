@@ -1,19 +1,19 @@
 import { useDispatch } from 'react-redux';
-import { deleteListById, editListById } from '../../redux/list';
+import { deleteListById } from '../../redux/list';
+import { useModal } from '../../context/Modal';
+import EditListForm from '../EditListForm/EditListForm';
 import './Lists.css';
 
 const List = ({ list }) => {
   const dispatch = useDispatch();
+  const { setModalContent } = useModal();
 
   const handleDelete = () => {
     dispatch(deleteListById(list.id));
   };
 
   const handleEdit = () => {
-    const newName = prompt("Enter new list name:", list.name);
-    if (newName) {
-      dispatch(editListById(list.id, { name: newName }));
-    }
+    setModalContent(<EditListForm listId={list.id} currentName={list.name} />);
   };
 
   return (

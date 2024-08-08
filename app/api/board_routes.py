@@ -13,9 +13,9 @@ def get_current_user_boards():
     Get all Boards owned by the Current User where they are owner or member (checked w/postman)
     """
     user_boards = UserInBoard.query.filter_by(user_id=current_user.id).all()
-    
+
     board_ids = [user_board.board_id for user_board in user_boards]
-    
+
     boards =Board.query.filter(Board.id.in_(board_ids)).all()
     return jsonify({"Boards": [board.to_dict() for board in boards]}), 200
 
@@ -26,14 +26,14 @@ def get_board_by_id(id):
     """
     Get a board by id for authorized users
     """
-    
+
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     board = Board.query.get(id)
     if not board:
         return jsonify({"message": "Board couldn't be found"}), 404
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-    
+
     return jsonify({"Board": board.to_dict()}), 200
 
 # Will create a new board and assign current user as owner and member
@@ -46,7 +46,7 @@ def create_board():
     data = request.get_json()
     name = data.get('name')
     description = data.get('description')
-    
+
     if not name:
         return jsonify({"message": "Bad Request", "errors": {"Name": "Name is required"}}), 400
 
@@ -136,7 +136,7 @@ def add_user_to_board(id):
 
     if not user_id:
         return jsonify({"message": "Bad Request", "errors": {"user_id": "User ID is required"}}), 400
-    
+
     user_in_board = UserInBoard(
         board_id=id,
         user_id=user_id
@@ -158,11 +158,11 @@ def get_lists_by_board(id):
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-   
+
     lists = List.query.filter_by(board_id=id).all()
     if not lists:
         return jsonify({"message": "No lists found for this board"})
-    
+
     return {'lists':[list.to_dict() for list in lists]}
 
 # Will allow anyone to create a list on board where they are owner or member
@@ -181,16 +181,16 @@ def create_list(id):
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-    
+
     new_list = List(
         name=data['name'],
         board_id=id
     )
     db.session.add(new_list)
     db.session.commit()
-    
+
     return jsonify(new_list.to_dict()), 201
-    
+
     db.session.add(user_in_board)
     db.session.commit()
 

@@ -1,3 +1,6 @@
+//TODO: UPDATE A BOARD AND DELETE A BOARD ###########################################################
+
+
 //*VARIABLE TYPES
 const GET = 'boards/LOAD';
 const GET_BY_ID = 'board/LOADONE';

@@ -21,9 +21,9 @@ def edit_list(id):
         return jsonify({"message": "Bad Request", "errors": {"Name": "Name is required"}}), 400
 
     # Check for board membership of current user
-    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
-    if not user_in_board:
-       return jsonify({"message": "Forbidden"}), 403
+    # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    # if not user_in_board:
+    #    return jsonify({"message": "Forbidden"}), 403
    
     list_to_edit.name = data.get('name', list_to_edit.name)
     list_to_edit.board_id = data.get('board_id', list_to_edit.board_id)
@@ -43,9 +43,9 @@ def delete_list(id):
     if not list_to_delete:
         return jsonify({"message": "List couldn't be found"}), 404
     # Check for board membership of current user
-    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
-    if not user_in_board:
-       return jsonify({"message": "Forbidden"}), 403
+    # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    # if not user_in_board:
+    #    return jsonify({"message": "Forbidden"}), 403
    
     db.session.delete(list_to_delete)
     db.session.commit()
@@ -62,9 +62,10 @@ def create_card(id):
     title = data.get('title')
     description = data.get('description')
     # Check for board membership of current user
-    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
-    if not user_in_board:
-       return jsonify({"message": "Forbidden"}), 403
+    # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    # if not user_in_board:
+    #    return jsonify({"message": "Forbidden"}), 403
+   
     if not title or not description:
         errors = {}
         if not title:

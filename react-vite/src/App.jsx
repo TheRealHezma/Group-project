@@ -1,4 +1,3 @@
-//! import { useState } from 'react';
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -9,9 +8,9 @@ import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
+import CardDetails from './pages/CardDetails'; //ADDED TAKE OUT B4 MERGE
 
 const Layout = () => {
-  //TODO: this is for navbar once created
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
@@ -19,7 +18,6 @@ const Layout = () => {
     dispatch(thunkAuthenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 
-  //TODO: add navigation bar once component is built
   return (
     <>
       <ModalProvider>
@@ -53,7 +51,16 @@ const router = createBrowserRouter([
           },
           {
             path: 'cards',
-            element: <CardsTest />,
+            children: [
+              {
+                index: true,
+                element: <CardsTest />,
+              },
+              {
+                path: ':id', // Added
+                element: <CardDetails />,
+              },
+            ],
           },
         ],
       },

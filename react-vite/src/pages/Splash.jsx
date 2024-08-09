@@ -16,7 +16,6 @@ const Splash = () => {
     if (currentUser) {
       dispatch(getAllBoards()).catch((error) => {
         if (error.response && error.response.status === 401) {
-          // Handle 401 error gracefully
           console.log('Unauthorized access - user may need to log in.');
         }
       });

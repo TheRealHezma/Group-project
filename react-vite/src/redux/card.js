@@ -21,7 +21,6 @@ const getCards = (cards) => {
   };
 };
 
-
 // get a card by card id
 const getCardById = (card) => {
   return {
@@ -87,7 +86,6 @@ const deleteCardTask = (taskId) => {
 };
 
 //*THUNKS
-
 
 export const getAllCards = (listId) => async (dispatch) => {
   const response = await fetch(`/api/lists/${listId}/cards`);
@@ -178,9 +176,13 @@ export const deleteCardTaskById = (taskId) => async (dispatch) => {
   }
 };
 
-
 //*INITIAL STATE + REDUCER
-const initialState = { allCards: {}, currentCard: {}, allCardTasks: {}, currentCardTask: {} };
+const initialState = {
+  allCards: {},
+  currentCard: {},
+  allCardTasks: {},
+  currentCardTask: {},
+};
 
 const cardsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -206,7 +208,10 @@ const cardsReducer = (state = initialState, action) => {
           ...state.allCards,
           [updatedCard.id]: updatedCard,
         },
-        currentCard: updatedCard.id === state.currentCard.id ? updatedCard : state.currentCard,
+        currentCard:
+          updatedCard.id === state.currentCard.id
+            ? updatedCard
+            : state.currentCard,
       };
     }
     case DELETE_CARD: {
@@ -215,7 +220,8 @@ const cardsReducer = (state = initialState, action) => {
       return {
         ...state,
         allCards: newCards,
-        currentCard: state.currentCard.id === action.cardId ? {} : state.currentCard,
+        currentCard:
+          state.currentCard.id === action.cardId ? {} : state.currentCard,
       };
     }
     case GET_TASKS: {
@@ -250,7 +256,10 @@ const cardsReducer = (state = initialState, action) => {
           ...state.allCardTasks,
           [updatedTask.id]: updatedTask,
         },
-        currentCardTask: updatedTask.id === state.currentCardTask.id ? updatedTask : state.currentCardTask,
+        currentCardTask:
+          updatedTask.id === state.currentCardTask.id
+            ? updatedTask
+            : state.currentCardTask,
       };
     }
     case DELETE_TASK: {
@@ -259,7 +268,10 @@ const cardsReducer = (state = initialState, action) => {
       return {
         ...state,
         allCardTasks: newCardTasks,
-        currentCardTask: state.currentCardTask.id === action.taskId ? {} : state.currentCardTask,
+        currentCardTask:
+          state.currentCardTask.id === action.taskId
+            ? {}
+            : state.currentCardTask,
       };
     }
     default:

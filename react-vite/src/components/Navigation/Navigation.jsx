@@ -32,6 +32,7 @@ function Navigation({ isLoaded }) {
     setUserBoards(Object.values(boards));
   }, [boards]);
 
+
   const currentBoard = userBoards.find((board) => board.id === Number(id));
 
   return (

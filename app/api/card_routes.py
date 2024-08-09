@@ -30,19 +30,16 @@ def get_card_tasks_by_card_id(id):
     Returns all card tasks that belong to a card by specified id
     """
 
-<<<<<<< HEAD
     # # Check for board membership of current user
     # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
     # if not user_in_board:
     #    return jsonify({"message": "Forbidden"}), 403
     
-=======
     # Check for board membership of current user
-    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
-    if not user_in_board:
-       return jsonify({"message": "Forbidden"}), 403
+    # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
+    # if not user_in_board:
+    #    return jsonify({"message": "Forbidden"}), 403
 
->>>>>>> commentStore_Hemza
     tasks = CardTask.query.filter_by(card_id=id).all()
     if not tasks:
         return jsonify({"message": "No tasks found"}), 404
@@ -146,19 +143,16 @@ def get_comments_by_card_id(id):
     print(f"Fetching comments for card id: {id}")  # Log the card id
 
     # Check for board membership of current user
-<<<<<<< HEAD
     # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     # if not user_in_board:
     #    print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
     #    return jsonify({"message": "Forbidden"}), 403
     
-=======
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
        return jsonify({"message": "Forbidden"}), 403
 
->>>>>>> commentStore_Hemza
     comments = Comment.query.filter_by(card_id=id).all()
     if not comments:
         return jsonify({"message": "No comments found"}), 404

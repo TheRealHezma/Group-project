@@ -12,13 +12,7 @@ const EditListForm = ({ listId, currentName }) => {
         e.preventDefault();
 
         const updatedData = { name };
-        const updatedList = await dispatch(editListById(listId, updatedData));
-
-        if (updatedList) {
-          closeModal();
-        } else {
-          console.log('HELP I AM BROKEN!!!');
-        }
+        dispatch(editListById(listId, updatedData)).then(closeModal());
     };
 
     return (

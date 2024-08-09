@@ -8,8 +8,7 @@ import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
-import ActionButtons from './components/ActionButtons/ActionButtons';
-import CardDetails from './pages/CardDetails'; //ADDED TAKE OUT B4 MERGE
+
 
 const Layout = () => {
   const dispatch = useDispatch();

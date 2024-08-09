@@ -1,4 +1,3 @@
-// src/pages/Splash.js
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,8 +13,15 @@ const Splash = () => {
   const { setModalContent } = useModal();
 
   useEffect(() => {
-    dispatch(getAllBoards());
-  }, [dispatch]);
+    if (currentUser) {
+      dispatch(getAllBoards()).catch((error) => {
+        if (error.response && error.response.status === 401) {
+          // Handle 401 error gracefully
+          console.log('Unauthorized access - user may need to log in.');
+        }
+      });
+    }
+  }, [dispatch, currentUser]);
 
   const openSignupModal = () => {
     setModalContent(<SignupFormModal />);
@@ -23,7 +29,7 @@ const Splash = () => {
 
   return (
     <div className={`splash-container ${!currentUser ? 'gradient-background' : ''}`}>
-      {!currentUser && (
+      {!currentUser ? (
         <div className="welcome-container">
           <h1 className="welcome-title">The All-in-one Solution for Managing Your Team, Tasks and Workflow in one Place!</h1>
           <div className="content-container">
@@ -45,8 +51,7 @@ const Splash = () => {
             <button onClick={openSignupModal}>Sign Up</button>
           </div>
         </div>
-      )}
-      {currentUser && (
+      ) : (
         <>
           {Object.keys(boards).length === 0 ? (
             <h2>CREATE YOUR FIRST BOARD!</h2>
@@ -54,7 +59,7 @@ const Splash = () => {
             <div className="boards-container">
               {Object.values(boards).map((board) => (
                 <Link key={board.id} to={`/boards/${board.id}`} className="board-link">
-                  <div key={board.id} className="board-card">
+                  <div className="board-card">
                     <h2 className="board-name">{board.name}</h2>
                     <p className="board-description">{board.description}</p>
                   </div>

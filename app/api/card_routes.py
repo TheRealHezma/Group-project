@@ -34,14 +34,14 @@ def get_card_tasks_by_card_id(id):
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
     if not user_in_board:
        return jsonify({"message": "Forbidden"}), 403
-    
+
     tasks = CardTask.query.filter_by(card_id=id).all()
     if not tasks:
         return jsonify({"message": "No tasks found"}), 404
 
     return jsonify({"CardTasks": [task.to_dict() for task in tasks]}), 200
-    
-    
+
+
 @card_routes.route('/<int:id>', methods=['PUT'])
 @login_required
 def edit_card(id):
@@ -142,11 +142,11 @@ def get_comments_by_card_id(id):
     if not user_in_board:
        print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
        return jsonify({"message": "Forbidden"}), 403
-    
+
     comments = Comment.query.filter_by(card_id=id).all()
     if not comments:
         return jsonify({"message": "No comments found"}), 404
-    
+
     print(f"Found {len(comments)} comments for card id: {id}")  # Log the number of comments found
 
     return jsonify({"Comments": [comment.to_dict() for comment in comments]}), 200
@@ -160,15 +160,15 @@ def create_comment(id):
     """
     data = request.get_json()
     content = data.get('content')
-    description = data.get('description')
+    # description = data.get('description')
 
-    if not content or not description:
-        errors = {}
-        if not content:
-            errors["content"] = "Content is required"
-        if not description:
-            errors["description"] = "Description is required"
-        return jsonify({"message": "Bad Request", "errors": errors}), 400
+    # if not content or not description:
+    #     errors = {}
+    #     if not content:
+    #         errors["content"] = "Content is required"
+    #     if not description:
+    #         errors["description"] = "Description is required"
+    #     return jsonify({"message": "Bad Request", "errors": errors}), 400
 
     # Check for board membership of current user
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
@@ -179,7 +179,7 @@ def create_comment(id):
         card_id=id,
         user_id=current_user.id,
         content=content,
-        description=description
+        # description=description
     )
 
     db.session.add(new_comment)

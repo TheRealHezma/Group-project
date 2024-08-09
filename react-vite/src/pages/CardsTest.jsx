@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllCards,
@@ -16,23 +16,15 @@ import Card from '../components/Card/Card';
 const CardsTest = () => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
-  // const cardTasks = useSelector((state) => state.cardTasks?.allCardTasks || {});
-  // const currentCard = useSelector((state) => state.cards.currentCard);
-  // const [selectedCardId, setSelectedCardId] = useState(null);
-  // const [newTaskDescription, setNewTaskDescription] = useState('');
-  // const [cardDetails, setCardDetails] = useState(null);
-  // const [editTaskDescription, setEditTaskDescription] = useState('');
-  const [isEditingTask, setIsEditingTask] = useState(false);
-  const [isAddingTask, setIsAddingTask] = useState(false);
 
   useEffect(() => {
     dispatch(getAllCards(1));
   }, [dispatch]);
 
-  const handleEditCard = (cardId) => {
+  const handleEditCard = (cardId, cardTitle, cardDescription) => {
     const updatedCardData = {
-      title: 'Updated Title',
-      description: 'Updated Description',
+      title: cardTitle,
+      description: cardDescription,
     };
     dispatch(editCardById(cardId, updatedCardData));
   };
@@ -49,18 +41,10 @@ const CardsTest = () => {
     dispatch(createCardTask(cardId, taskData));
   };
 
-  const handleIsEditingTask = (taskId) => {
-    setIsEditingTask(!isEditingTask);
-  };
-
-  const handleIsAddingTask = (taskId) => {
-    setIsAddingTask(!isAddingTask);
-  };
-
-  const handleEditSubmit = (taskId) => {
+  const handleEditSubmit = (taskId, editDesc, completed) => {
     const updatedTaskData = {
-      description: 'Updated Task Description',
-      completed: true,
+      description: editDesc,
+      completed: completed,
     };
     dispatch(editCardTaskById(taskId, updatedTaskData));
   };
@@ -71,7 +55,6 @@ const CardsTest = () => {
 
   const handleLoadCardTasks = (cardId) => {
     dispatch(getAllCardTasks(cardId));
-    //   setSelectedCardId(cardId);
   };
 
   const handleGetCardById = (cardId) => {
@@ -94,7 +77,7 @@ const CardsTest = () => {
               onEditCard={handleEditCard}
               onDeleteCard={handleDeleteCard}
               onLoadCardTasks={handleLoadCardTasks}
-              onEditTask={handleIsEditingTask}
+              onEditTask={handleEditSubmit}
               onDeleteTask={handleDeleteCardTask}
             />
           ))}

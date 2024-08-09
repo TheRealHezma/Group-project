@@ -15,11 +15,18 @@ const Card = ({
 }) => {
   const allTasks = useSelector((state) => state.cards.allCardTasks || []);
   const [cardTasks, setCardTasks] = useState([]);
-  const [taskDescription, setTaskDescription] = useState('');
-  const [isAddingTask, setIsAddingTask] = useState(false);
+  //*State for editing task
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [editTaskDescription, setEditTaskDescription] = useState('');
+  const [editTaskCompleted, setEditTaskCompleted] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
+  //*State for adding a new task to a card
+  const [isAddingTask, setIsAddingTask] = useState(false);
+  const [taskDescription, setTaskDescription] = useState('');
+  //*State for editing a card
+  const [newCardTitle, setNewCardTitle] = useState('');
+  const [newCardDescription, setNewCardDescription] = useState('');
+  const [isEditingCard, setIsEditingCard] = useState(false);
 
   useEffect(() => {
     const filteredTasks = Object.values(allTasks).filter(
@@ -32,9 +39,22 @@ const Card = ({
     setIsAddingTask(!isAddingTask);
   };
 
-  const toggleEditTask = (taskId) => {
+  const toggleEditCard = () => {
+    setIsEditingCard(!isEditingCard);
+  };
+
+  const handleEditCard = () => {
+    onEditCard(id, newCardTitle, newCardDescription);
+    set;
+    setNewCardTitle('');
+    setNewCardDescription('');
+  };
+
+  const toggleEditTask = (task) => {
     setIsEditingTask(!isEditingTask);
-    setEditingTaskId(taskId);
+    setEditingTaskId(task.id);
+    setEditTaskDescription(task.description);
+    setEditTaskCompleted(task.completed);
   };
 
   const handleAddTask = () => {
@@ -44,7 +64,7 @@ const Card = ({
   };
 
   const handleEditTask = () => {
-    onEditTask(editingTaskId, editTaskDescription);
+    onEditTask(editingTaskId, editTaskDescription, editTaskCompleted);
     setEditTaskDescription('');
     setIsEditingTask(false);
     setEditingTaskId(null);
@@ -74,9 +94,29 @@ const Card = ({
           </button>
         </div>
       )}
-      <button className={styles.cardButton} onClick={() => onEditCard(id)}>
+      <button className={styles.cardButton} onClick={toggleEditCard}>
         Edit Card
       </button>
+      {isEditingCard && (
+        <div>
+          <input
+            type="text"
+            placeholder="New Title"
+            value={newCardTitle}
+            onChange={(e) => setNewCardTitle(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="New Description"
+            value={newCardDescription}
+            onChange={(e) => setNewCardDescription(e.target.value)}
+          />
+          <button className={styles.taskButton} onClick={handleEditCard}>
+            Submit
+          </button>
+        </div>
+      )}
+
       <button className={styles.cardButton} onClick={() => onDeleteCard(id)}>
         Delete Card
       </button>
@@ -91,7 +131,7 @@ const Card = ({
               <p>{task.description}</p>
               <button
                 className={styles.taskButton}
-                onClick={() => toggleEditTask(task.id)}
+                onClick={() => toggleEditTask(task)}
               >
                 Edit Task
               </button>
@@ -103,6 +143,16 @@ const Card = ({
                     value={editTaskDescription}
                     onChange={(e) => setEditTaskDescription(e.target.value)}
                   />
+                  <div className={styles.checkboxContainer}>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={editTaskCompleted}
+                        onChange={(e) => setEditTaskCompleted(e.target.checked)}
+                      />
+                      Completed
+                    </label>
+                  </div>
                   <button
                     className={styles.taskButton}
                     onClick={handleEditTask}

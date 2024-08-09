@@ -28,7 +28,7 @@
 }
 
 .cardButton:hover {
-  background-color: #0056b3;
+  background-color: white;
 }
 
 .taskButton {
@@ -54,7 +54,12 @@
 
 .taskCard {
   background-color: #f1f1f1;
+  color: black;
   padding: 10px;
   border-radius: 4px;
   margin: 5px 0;
+}
+
+.checkboxContainer {
+  margin: 10px 0;
 }

@@ -182,6 +182,7 @@ const initialState = {
   currentCard: {},
   allCardTasks: {},
   currentCardTask: {},
+  cardsByListId: {},
 };
 
 const cardsReducer = (state = initialState, action) => {

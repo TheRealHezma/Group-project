@@ -45,9 +45,9 @@ const Card = ({
 
   const handleEditCard = () => {
     onEditCard(id, newCardTitle, newCardDescription);
-    set;
     setNewCardTitle('');
     setNewCardDescription('');
+    setIsEditingCard(false);
   };
 
   const toggleEditTask = (task) => {

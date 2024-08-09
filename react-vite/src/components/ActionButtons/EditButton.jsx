@@ -15,13 +15,14 @@ const EditButton = ({ onEdit }) => {
 const buttonStyle = {
   backgroundColor: 'transparent',
   border: '1px solid blue',
-  borderRadius: '50%',
+  borderRadius: '20%',
   cursor: 'pointer',
 };
 
 const iconStyle = {
+  marginBottom: '-2px',
   color: 'blue',
-  fontSize: '20px',
+  fontSize: '18px',
 };
 
 export default EditButton;

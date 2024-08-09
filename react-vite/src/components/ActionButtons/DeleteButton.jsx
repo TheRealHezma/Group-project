@@ -21,7 +21,7 @@ const buttonStyle = {
 
 const iconStyle = {
   color: 'red',
-  fontSize: '16px',
+  fontSize: '14px',
 };
 
 export default DeleteButton;

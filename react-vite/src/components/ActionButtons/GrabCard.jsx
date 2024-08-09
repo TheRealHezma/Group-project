@@ -1,5 +1,5 @@
 import { FaGripLines } from 'react-icons/fa';
-import './GrabCard.css'; // Ensure this CSS file is imported
+import './GrabCard.css';
 
 const GrabCard = ({ children, onDragStart, onDragEnd }) => {
   return (

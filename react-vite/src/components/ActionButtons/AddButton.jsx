@@ -1,6 +1,5 @@
-import React from 'react';
 import { FaPlus } from 'react-icons/fa';
-import './Tooltip.css'; // Ensure this CSS file is imported
+import './Tooltip.css';
 
 const AddButton = ({ onAdd }) => {
   return (
@@ -22,7 +21,8 @@ const buttonStyle = {
 
 const iconStyle = {
   color: 'green',
-  fontSize: '15px',
+  marginBottom: '-1px',
+  fontSize: '14px',
 };
 
 export default AddButton;

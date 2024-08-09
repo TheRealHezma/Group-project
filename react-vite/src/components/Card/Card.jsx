@@ -45,7 +45,7 @@ const Card = ({
 
   const handleEditCard = () => {
     onEditCard(id, newCardTitle, newCardDescription);
-    set;
+
     setNewCardTitle('');
     setNewCardDescription('');
   };

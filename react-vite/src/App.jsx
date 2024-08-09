@@ -8,6 +8,7 @@ import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
+import ActionButtons from './components/ActionButtons/ActionButtons';
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
           {
             path: 'cards',
             element: <CardsTest />,
+          },
+          {
+            path: 'buttons',
+            element: <ActionButtons />,
           },
         ],
       },

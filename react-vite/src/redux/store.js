@@ -8,17 +8,25 @@ import thunk from 'redux-thunk';
 import sessionReducer from './session';
 import boardsReducer from './board';
 import cardsReducer from './card';
+<<<<<<< HEAD
 import listsReducer from './list';
 
 // import commentsReducer from './comment'; //check if needed
+=======
+import commentsReducer from './comment'; //check if needed
+>>>>>>> commentStore_Hemza
 
 const rootReducer = combineReducers({
   session: sessionReducer,
   boards: boardsReducer,
   cards: cardsReducer,
+<<<<<<< HEAD
   lists: listsReducer,
 
   // comment: commentsReducer, //check if needed
+=======
+  comment: commentsReducer, //check if needed
+>>>>>>> commentStore_Hemza
 });
 
 let enhancer;

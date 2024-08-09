@@ -8,6 +8,7 @@ import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
+import CardDetails from './pages/CardDetails'; //ADDED TAKE OUT B4 MERGE
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -50,7 +51,16 @@ const router = createBrowserRouter([
           },
           {
             path: 'cards',
-            element: <CardsTest />,
+            children: [
+              {
+                index: true,
+                element: <CardsTest />,
+              },
+              {
+                path: ':id', // Added
+                element: <CardDetails />,
+              },
+            ],
           },
         ],
       },

@@ -1,4 +1,5 @@
 // src/pages/CardDetails.jsx
+
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -6,7 +7,7 @@ import { getCard, editCardById, deleteCardById } from '../redux/card';
 import { getComment, getAllComments, createNewComment, updateComment, removeComment } from '../redux/comment';
 
 const CardDetails = () => {
-  const { id } = useParams();
+  const { id } = useParams(); //id of card
   const dispatch = useDispatch();
   const card = useSelector((state) => state.cards.currentCard);
   const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
@@ -22,13 +23,37 @@ const CardDetails = () => {
   }
 
   useEffect(() => {
-    dispatch(getAllComments(cardId))
-  }, [dispatch])
+    if (id) {
 
-  useEffect(() => {
+      dispatch(getCard(id)).then(() => setIsLoading(false));
+      dispatch(getAllComments(id));
+    }
+  }, [dispatch, id])
 
-  })
 
+
+  return (
+    <div>
+      <ul>
+        <h1>Card Name</h1>
+      </ul>
+      <ul>
+        <h2>Description of Card:</h2>
+      </ul>
+      <ul>
+        <h3>Tasks:</h3>
+
+        <button>Add Task</button>
+      </ul>
+      <ul>
+        <h3>People the card is assigned to:</h3>
+      </ul>
+      <ul>
+        <h2>Comments:</h2>
+        <button>Add Comment</button>
+      </ul>
+    </div>
+  )
 };
 
 // const payload = {

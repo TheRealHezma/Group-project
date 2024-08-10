@@ -15,14 +15,15 @@ const AddButton = ({ onAdd }) => {
 const buttonStyle = {
   backgroundColor: 'transparent',
   border: '1px solid green',
-  borderRadius: '50%',
+  borderRadius: '45%',
   cursor: 'pointer',
+  padding: '4px 5px',
 };
 
 const iconStyle = {
   color: 'green',
-  marginBottom: '-1px',
-  fontSize: '14px',
+  marginBottom: '-2px',
+  fontSize: '16px',
 };
 
 export default AddButton;

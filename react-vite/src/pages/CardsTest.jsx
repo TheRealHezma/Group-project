@@ -12,10 +12,28 @@ import {
 } from '../redux/card';
 import './Splash.css';
 import Card from '../components/Card/Card';
+import { getComment, getAllComments, createNewComment, updateComment, removeComment } from '../redux/comment';// added
+
 
 const CardsTest = () => {
+  const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
+
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
+  ////////////////////////////////
+  const cardId = null;
+
+  const handleCardClick = (event) => {
+    cardId = event.target.id
+
+  }
+
+  useEffect(() => {
+    dispatch(getAllComments(cardId))
+  }, [dispatch])
+
+  ////////////////////
+
 
   useEffect(() => {
     dispatch(getAllCards(1));

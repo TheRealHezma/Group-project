@@ -38,7 +38,7 @@ const CardDetails = () => {
         <h1>Card Name</h1>
       </ul>
       <ul>
-        <h2>Description of Card:</h2>
+        <h2> this is the Description of Card we are going to make it super dupper long:</h2>
       </ul>
       <ul>
         <h3>Tasks:</h3>

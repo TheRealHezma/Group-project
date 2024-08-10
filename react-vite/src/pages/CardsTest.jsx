@@ -18,37 +18,18 @@ import {
 } from '../redux/comment';
 import './Splash.css';
 import Card from '../components/Card/Card';
-import { getComment, getAllComments, createNewComment, updateComment, removeComment } from '../redux/comment';// added
-
-
+import OpenModalButton from '../components/Card/cardDescriptionModal';
+import CardDetails from './CardDetails';
 const CardsTest = () => {
-  const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
-
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
-<<<<<<< HEAD
-  ////////////////////////////////
-  const cardId = null;
-
-  const handleCardClick = (event) => {
-    cardId = event.target.id
-
-  }
-
-  useEffect(() => {
-    dispatch(getAllComments(cardId))
-  }, [dispatch])
-
-  ////////////////////
-
-=======
   const commentsByCard = useSelector((state) => state.comments.allCommentsByCard || {});
   const currentUser = useSelector((state) => state.session.user);
   const [newComment, setNewComment] = useState('');
   const [editCommentData, setEditCommentData] = useState({});
   const [commentsLoaded, setCommentsLoaded] = useState({});
   const [commentsOpen, setCommentsOpen] = useState({});
->>>>>>> 5fd8c16b6135b78a530b14a62385e539e7d77169
+  // const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
 
   useEffect(() => {
     dispatch(getAllCards(1));
@@ -135,6 +116,10 @@ const CardsTest = () => {
     }));
   };
 
+  const handleCardClick = (cardId) => {
+    dispatch(getCard(cardId))
+  }
+
   return (
     <div className="splash-container">
       {Object.keys(cards).length === 0 ? (
@@ -142,6 +127,7 @@ const CardsTest = () => {
       ) : (
         <div className="boards-container">
           {Object.values(cards).map((card) => (
+
             <div key={card.id} className="card-container">
               <Card
                 id={card.id}
@@ -153,6 +139,12 @@ const CardsTest = () => {
                 onLoadCardTasks={handleLoadCardTasks}
                 onEditTask={handleEditSubmit}
                 onDeleteTask={handleDeleteCardTask}
+              />
+              <OpenModalButton
+                buttonText="View Details"
+                modalComponent={<CardDetails cardId={card.id} />} // Pass CardDetails component with the cardId prop
+                onButtonClick={() => handleCardClick(card.id)} // Dispatch the getCard action
+                className="open-card-modal-button"
               />
               <button
                 onClick={() => handleLoadComments(card.id)}

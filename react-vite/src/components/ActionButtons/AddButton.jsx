@@ -14,7 +14,7 @@ const AddButton = ({ onAdd }) => {
 
 const buttonStyle = {
   backgroundColor: 'transparent',
-  border: '1px solid green',
+//   border: '1px solid green',
   borderRadius: '45%',
   cursor: 'pointer',
   padding: '4px 5px',

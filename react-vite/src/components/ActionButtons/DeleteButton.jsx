@@ -14,7 +14,7 @@ const DeleteButton = ({ onDelete }) => {
 
 const buttonStyle = {
   backgroundColor: 'transparent',
-  border: '1px solid red',
+//   border: '1px solid red',
   borderRadius: '30%',
   cursor: 'pointer',
   padding: '7px 8px',

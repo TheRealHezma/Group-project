@@ -39,7 +39,7 @@ function Navigation({ isLoaded }) {
     <ul className="navigation">
       <li className="logo-container">
         <NavLink to="/">
-          <img src="/TaskWaveNarrow.png" alt="TaskWave" className="logo" />
+          <img src="/TaskWaveNarrow2.png" alt="TaskWave" className="logo" />
         </NavLink>
       </li>
       {isLoaded && user && (

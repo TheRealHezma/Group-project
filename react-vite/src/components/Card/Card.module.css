@@ -1,5 +1,6 @@
 .card {
   background-color: #d7d9de;
+  color: black;
   border-radius: 8px;
   padding: 16px;
   margin: 8px 0;
@@ -10,42 +11,57 @@
   align-items: center;
 }
 
+.cardButtons {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.cardButtonsText {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+  margin-top: -7px;
+  font-size: 0.8rem;
+}
+
 .card:hover {
   transform: scale(1.05);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .cardButton {
-  background-color: #bdd42a;
+  /* background-color: #bdd42a; */
   color: rgb(57, 57, 57);
+  background-color: #d7d9de;
   font-weight: 600;
   border: none;
   border-radius: 4px;
-  padding: 10px 20px;
+  padding: 0;
   margin: 5px;
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
 .cardButton:hover {
-  background-color: white;
+  background-color: #d7d9de;
 }
 
 .taskButton {
-  background-color: #4caf50;
+  /* background-color: #4caf50;
   color: white;
   font-weight: 600;
   border: none;
   border-radius: 4px;
   padding: 5px 10px;
-  margin: 5px;
+  margin: 5px; */
   cursor: pointer;
   transition: background-color 0.3s;
 }
 
-.taskButton:hover {
+/* .taskButton:hover {
   background-color: #45a049;
-}
+} */
 
 .tasksContainer {
   width: 100%;

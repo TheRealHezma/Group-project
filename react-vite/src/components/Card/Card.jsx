@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './Card.module.css';
+import AddButton from '../ActionButtons/AddButton';
+import EditButton from '../ActionButtons/EditButton';
+import DeleteButton from '../ActionButtons/DeleteButton';
 
 const Card = ({
   id,
@@ -27,7 +30,7 @@ const Card = ({
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
   const [isEditingCard, setIsEditingCard] = useState(false);
-
+  
   useEffect(() => {
     const filteredTasks = Object.values(allTasks).filter(
       (task) => task.card_id === id
@@ -77,8 +80,14 @@ const Card = ({
     <div className={styles.card}>
       <h2>{title}</h2>
       <p>{description}</p>
+      {/* <div className={styles.cardButtons}>
+        <span>Edit Card</span><EditButton onClick={toggleEditCard} />
+        <span>Delete Card</span><DeleteButton onClick={() => onDeleteCard(id)} />
+        <span>Add Task</span><AddButton onClick={toggleAddTask} />
+        </div> */}
+        <div className={styles.cardButtons}>
       <button className={styles.cardButton} onClick={toggleAddTask}>
-        Add Task
+      <AddButton />
       </button>
       {isAddingTask && (
         <div>
@@ -91,10 +100,11 @@ const Card = ({
           <button className={styles.taskButton} onClick={handleAddTask}>
             Submit Task
           </button>
+          <p>Submit Task</p>
         </div>
       )}
       <button className={styles.cardButton} onClick={toggleEditCard}>
-        Edit Card
+      <EditButton />
       </button>
       {isEditingCard && (
         <div>
@@ -117,11 +127,11 @@ const Card = ({
       )}
 
       <button className={styles.cardButton} onClick={() => onDeleteCard(id)}>
-        Delete Card
+      <DeleteButton />
       </button>
-      <button className={styles.cardButton} onClick={loadTasks}>
+      {/* <button className={styles.cardButton} onClick={loadTasks}>
         Load Tasks
-      </button>
+      </button> */}
 
       {cardTasks.length > 0 && (
         <div className={styles.tasksContainer}>
@@ -170,6 +180,12 @@ const Card = ({
           ))}
         </div>
       )}
+      </div>
+      <div className={styles.cardButtonsText}>
+        <p>Add Task</p>
+        <p>Edit Card</p>
+        <p>Delete Card</p>
+        </div>
     </div>
   );
 };

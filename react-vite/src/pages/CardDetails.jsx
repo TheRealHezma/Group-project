@@ -9,18 +9,18 @@ import { getComment, getAllComments, createNewComment, updateComment, removeComm
 const CardDetails = () => {
   const { id } = useParams(); //id of card
   const dispatch = useDispatch();
-  const card = useSelector((state) => state.cards.currentCard);
+  const card = useSelector((state) => state.cards.currentCard); //currentCard is empty obj, need to take away to console.log
   const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
   const [isLoading, setIsLoading] = useState(true);
   const [newComment, setNewComment] = useState('');
   const [editCommentData, setEditCommentData] = useState({});
 
-  const cardId = null;
+  // const cardId = null;
 
-  const handleCardClick = (event) => {
-    cardId = event.target.id
+  // const handleCardClick = (event) => {
+  //   cardId = event.target.id
 
-  }
+  // }
 
   useEffect(() => {
     if (id) {
@@ -30,12 +30,36 @@ const CardDetails = () => {
     }
   }, [dispatch, id])
 
+  // Function to handle task completion toggle
+  const handleTaskToggle = (taskId) => {
+    const updatedTasks = card.tasks.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
+    );
+    dispatch(editCardById(id, { tasks: updatedTasks }));
+  };
 
+  const handleCreateComment = (e) => {
+    e.preventDefault();
+    dispatch(createNewComment(id, { content: newComment }));
+    setNewComment('');
+  };
 
+  const handleEditComment = (commentId) => {
+    const updatedContent = editCommentData[commentId];
+    if (updatedContent) {
+      dispatch(updateComment(commentId, updatedContent));
+    }
+  };
+
+  const handleDeleteComment = (commentId) => {
+    dispatch(removeComment(commentId));
+  };
+
+  console.log("HERE", card.allCards)
   return (
     <div>
       <ul>
-        <h1>Card Name</h1>
+        <h1>Card Name: {card.id}</h1>
       </ul>
       <ul>
         <h2> this is the Description of Card we are going to make it super dupper long:</h2>
@@ -56,6 +80,8 @@ const CardDetails = () => {
   )
 };
 
+
+export default CardDetails;
 // const payload = {
 //   user_id: 1,
 //   content: 'TEST',
@@ -161,5 +187,3 @@ const CardDetails = () => {
 //     </ul>
 //   </div>
 // );
-
-export default CardDetails;

@@ -9,7 +9,7 @@ const CardDetails = () => {
   const { id } = useParams();
   const dispatch = useDispatch();
   const card = useSelector((state) => state.cards.currentCard);
-  const comments = useSelector((state) => state.comment.allCardComments);
+  const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
   const [isLoading, setIsLoading] = useState(true);
   const [newComment, setNewComment] = useState('');
   const [editCommentData, setEditCommentData] = useState({});

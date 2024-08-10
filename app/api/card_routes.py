@@ -5,7 +5,7 @@ from datetime import datetime, timezone
 
 card_routes = Blueprint('cards', __name__)
 
-@card_routes.route('/<int:id>/', methods=['GET'])
+@card_routes.route('/<int:id>', methods=['GET']) #has trailing /
 @login_required
 def get_card_by_id(id):
     """
@@ -34,7 +34,7 @@ def get_card_tasks_by_card_id(id):
     # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
     # if not user_in_board:
     #    return jsonify({"message": "Forbidden"}), 403
-    
+
     # Check for board membership of current user
     # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).all()
     # if not user_in_board:
@@ -147,7 +147,7 @@ def get_comments_by_card_id(id):
     # if not user_in_board:
     #    print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
     #    return jsonify({"message": "Forbidden"}), 403
-    
+
     user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
     if not user_in_board:
        print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id

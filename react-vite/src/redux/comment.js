@@ -1,65 +1,70 @@
 //*VARIABLE TYPES
-const GET = 'comments/LOAD'
-const GET_BY_ID = 'comments/LOADONE';
-const CREATE = 'comments/CREATE';
-const EDIT = 'comments/EDIT'
-const DELETE = 'comments/DELETE'
+const GET_COMMENTS_BY_CARD = 'comments/GET_BY_CARD';
+const GET_COMMENT_BY_ID = 'comments/GET_BY_ID';
+const CREATE_COMMENT = 'comments/CREATE';
+const EDIT_COMMENT = 'comments/EDIT';
+const DELETE_COMMENT = 'comments/DELETE';
+
 
 //*ACTIONS
 
 // Get all comments by card id
 const getCommentsByCardId = (cardId, comments) => ({
-    type: GET,
+    type: GET_COMMENTS_BY_CARD,
     cardId,
-    comments
+    comments,
 });
 
 // Get comment by id
-const getCommentById = (commentId) => ({
-    type: GET_BY_ID,
-    commentId,
+const getCommentById = (comment) => ({
+    type: GET_COMMENT_BY_ID,
+    comment,
 });
 
 // Create a comment
 const createComment = (comment) => ({
-    type: CREATE,
+    type: CREATE_COMMENT,
     comment,
 });
 
 // Edit a comment
 const editComment = (comment) => ({
-    type: EDIT,
+    type: EDIT_COMMENT,
     comment,
 });
 
 // Delete a comment
 const deleteComment = (commentId) => ({
-    type: DELETE,
+    type: DELETE_COMMENT,
     commentId,
 });
 
 
 //*THUNKS
 
-
 // Get all comments by card id
 export const getAllComments = (cardId) => async (dispatch) => {
-    // console.log('request received')
     const response = await fetch(`/api/cards/${cardId}/comments`);
-    // if (response.ok) {
-    const comments = await response.json();
-    dispatch(getCommentsByCardId(cardId, comments));
-    // }
+    if (response.ok) {
+        const comments = await response.json();
+        if (typeof comments === 'object' && !Array.isArray(comments)) {
+            dispatch(getCommentsByCardId(cardId, comments));
+        } else {
+            console.error('Expected comments to be an object:', comments);
+        }
+    } else {
+        console.error('Failed to fetch comments:', response.statusText);
+    }
 };
+
 
 // Get a comment by id
 export const getComment = (commentId) => async (dispatch) => {
     const response = await fetch(`/api/comments/${commentId}`);
-    // if (response.ok) {
-    const comment = await response.json();
-    console.log(comment)
-    dispatch(getCommentById(comment));
-    // }
+    if (response.ok) {
+        const comment = await response.json();
+        dispatch(getCommentById(comment));
+    }
 };
 
 // Create a comment
@@ -104,55 +109,92 @@ export const removeComment = (commentId) => async (dispatch) => {
 };
 
 
+
 //*INITIAL STATE + REDUCER
 
 const initialState = {
-    allCommentsByCard: {}, currentComment: null,
+    allCommentsByCard: {},  // { cardId: { commentId: comment } }
+    currentComment: null,
 };
 
 const commentsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET: {
+        case GET_COMMENTS_BY_CARD: {
             const { cardId, comments } = action;
+
+            // Ensure comments is an object with a Comments array
+            if (comments && typeof comments === 'object' && Array.isArray(comments.Comments)) {
+                const normalizedComments = {};
+                comments.Comments.forEach(comment => {
+                    normalizedComments[comment.id] = comment;
+                });
+
+                return {
+                    ...state,
+                    allCommentsByCard: {
+                        ...state.allCommentsByCard,
+                        [cardId]: normalizedComments,
+                    },
+                };
+            } else {
+                console.error('Expected comments to be an object with a Comments array:', comments);
+                return state;
+            }
+        }
+        case GET_COMMENT_BY_ID: {
+            return {
+                ...state,
+                currentComment: action.comment,
+            };
+        }
+        case CREATE_COMMENT: {
+            const { comment } = action;
+            const { cardId } = comment;
 
             return {
                 ...state,
-                allCardComments: {
-                    ...state.allCardComments,
-                    [cardId]: comments,
+                allCommentsByCard: {
+                    ...state.allCommentsByCard,
+                    [cardId]: {
+                        ...state.allCommentsByCard[cardId],
+                        [comment.id]: comment,
+                    },
                 },
             };
         }
-        case GET_BY_ID: {
-            const currentComment = action.comment
-            return { ...state, currentComment: currentComment };
-        }
-        case CREATE: {
+        case EDIT_COMMENT: {
+            const { comment } = action;
+            const { cardId } = comment;
+
             return {
                 ...state,
-                allComments: {
-                    ...state.allComments,
-                    [action.comment.id]: action.comment,
+                allCommentsByCard: {
+                    ...state.allCommentsByCard,
+                    [cardId]: {
+                        ...state.allCommentsByCard[cardId],
+                        [comment.id]: comment,
+                    },
                 },
             };
         }
-        case EDIT: {
-            const updatedComment = action.comment
+        case DELETE_COMMENT: {
+            const { commentId } = action;
+            const updatedCommentsByCard = { ...state.allCommentsByCard };
+
+            for (const cardId in updatedCommentsByCard) {
+                const cardComments = { ...updatedCommentsByCard[cardId] };
+                delete cardComments[commentId];
+                if (Object.keys(cardComments).length > 0) {
+                    updatedCommentsByCard[cardId] = cardComments;
+                } else {
+                    delete updatedCommentsByCard[cardId];
+                }
+            }
+
             return {
                 ...state,
-                allComments: {
-                    ...state.allComments,
-                    [updatedComment.id]: updatedComment,
-                },
-            };
-        }
-        case DELETE: {
-            const newState = { ...state.allComments };
-            delete newState[action.commentId];
-            return {
-                ...state,
-                allComments: newState,
-                currentComment: state.currentComment.id === action.commentId ? {} : state.currentComment
+                allCommentsByCard: updatedCommentsByCard,
+                currentComment: state.currentComment?.id === commentId ? null : state.currentComment,
             };
         }
         default:

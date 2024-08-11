@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllCards,
-  getCard,
   editCardById,
   deleteCardById,
   createCardTask,
@@ -16,7 +15,7 @@ import {
   updateComment,
   removeComment,
 } from '../redux/comment';
-import './Splash.css';
+import './CardDetails.css';
 import Card from '../components/Card/Card';
 
 const CardsTest = () => {
@@ -28,6 +27,8 @@ const CardsTest = () => {
   const [editCommentData, setEditCommentData] = useState({});
   const [commentsLoaded, setCommentsLoaded] = useState({});
   const [commentsOpen, setCommentsOpen] = useState({});
+  const [editMode, setEditMode] = useState({});
+  const [error, setError] = useState('');
 
   useEffect(() => {
     dispatch(getAllCards(1));
@@ -69,10 +70,6 @@ const CardsTest = () => {
     dispatch(getAllCardTasks(cardId));
   };
 
-  const handleGetCardById = (cardId) => {
-    dispatch(getCard(cardId));
-  };
-
   const handleLoadComments = (cardId) => {
     dispatch(getAllComments(cardId));
     setCommentsLoaded((prev) => ({ ...prev, [cardId]: true }));
@@ -81,6 +78,10 @@ const CardsTest = () => {
 
   const handleCreateComment = (e, cardId) => {
     e.preventDefault();
+    if (!newComment.trim()) {
+      setError('Message cannot be blank');
+      return;
+    }
     const cardIdInt = parseInt(cardId, 10);
     if (!isNaN(cardIdInt)) {
       const payload = {
@@ -88,8 +89,17 @@ const CardsTest = () => {
         content: newComment,
         card_id: cardIdInt,
       };
-      dispatch(createNewComment(cardIdInt, payload));
-      setNewComment('');
+      dispatch(createNewComment(cardIdInt, payload))
+        .then(() => {
+          // Update local state after successfully creating a new comment
+          setNewComment('');
+          setError('');
+          dispatch(getAllComments(cardIdInt));
+        })
+        .catch(error => {
+          console.error('Failed to create comment:', error);
+          setError('Failed to create comment');
+        });
     } else {
       console.error('Invalid card ID:', cardId);
     }
@@ -98,13 +108,29 @@ const CardsTest = () => {
   const handleEditComment = (commentId) => {
     const updatedContent = editCommentData[commentId];
     if (updatedContent) {
-      dispatch(updateComment(commentId, { content: updatedContent }));
-      setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
+      dispatch(updateComment(commentId, { content: updatedContent }))
+        .then(() => {
+          // Update local state after successfully updating a comment
+          setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
+          setEditMode((prev) => ({ ...prev, [commentId]: false }));
+          setError('');
+        })
+        .catch(error => {
+          console.error('Failed to update comment:', error);
+          setError('Failed to update comment');
+        });
     }
   };
 
   const handleDeleteComment = (commentId) => {
-    dispatch(removeComment(commentId));
+    dispatch(removeComment(commentId))
+      .then(() => {
+        setError('');
+      })
+      .catch(error => {
+        console.error('Failed to delete comment:', error);
+        setError('Failed to delete comment');
+      });
   };
 
   const toggleCommentsSection = (cardId) => {
@@ -112,6 +138,10 @@ const CardsTest = () => {
       ...prev,
       [cardId]: !prev[cardId],
     }));
+  };
+
+  const handleEditButtonClick = (commentId) => {
+    setEditMode((prev) => ({ ...prev, [commentId]: true }));
   };
 
   return (
@@ -156,6 +186,7 @@ const CardsTest = () => {
                       placeholder="Add a comment"
                     />
                     <button type="submit">Post Comment</button>
+                    {error && <p className="error-message">{error}</p>}
                   </form>
                   <ul className="comments-list">
                     {Object.values(commentsByCard[card.id] || {})
@@ -175,19 +206,27 @@ const CardsTest = () => {
                           </div>
                           {currentUser.id === comment.user_id && (
                             <div className="comment-actions">
-                              <input
-                                type="text"
-                                value={editCommentData[comment.id] || ''}
-                                onChange={(e) =>
-                                  setEditCommentData({
-                                    ...editCommentData,
-                                    [comment.id]: e.target.value,
-                                  })
-                                }
-                                placeholder="Edit comment"
-                              />
-                              <button onClick={() => handleEditComment(comment.id)}>Save</button>
-                              <button className="delete-button" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                              {editMode[comment.id] ? (
+                                <>
+                                  <input
+                                    type="text"
+                                    value={editCommentData[comment.id] || ''}
+                                    onChange={(e) =>
+                                      setEditCommentData({
+                                        ...editCommentData,
+                                        [comment.id]: e.target.value,
+                                      })
+                                    }
+                                    placeholder="Edit comment"
+                                  />
+                                  <button onClick={() => handleEditComment(comment.id)}>Save</button>
+                                </>
+                              ) : (
+                                <>
+                                  <button onClick={() => handleEditButtonClick(comment.id)}>Edit</button>
+                                  <button className="delete-button" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                </>
+                              )}
                             </div>
                           )}
                         </li>

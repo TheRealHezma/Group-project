@@ -149,14 +149,14 @@ const commentsReducer = (state = initialState, action) => {
         }
         case CREATE_COMMENT: {
             const { comment } = action;
-            const { cardId } = comment;
+            const { card_id } = comment;
 
             return {
                 ...state,
                 allCommentsByCard: {
                     ...state.allCommentsByCard,
-                    [cardId]: {
-                        ...state.allCommentsByCard[cardId],
+                    [card_id]: {
+                        ...state.allCommentsByCard[card_id],
                         [comment.id]: comment,
                     },
                 },
@@ -164,14 +164,15 @@ const commentsReducer = (state = initialState, action) => {
         }
         case EDIT_COMMENT: {
             const { comment } = action;
-            const { cardId } = comment;
-
+            console.log("Comment:", comment);
+            const { card_id } = comment;
+            console.log('Card Id:', card_id)
             return {
                 ...state,
                 allCommentsByCard: {
                     ...state.allCommentsByCard,
-                    [cardId]: {
-                        ...state.allCommentsByCard[cardId],
+                    [card_id]: {
+                        ...state.allCommentsByCard[card_id],
                         [comment.id]: comment,
                     },
                 },

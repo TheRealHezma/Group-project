@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
 import styles from './Card.module.css';
 import AddButton from '../ActionButtons/AddButton';
 import EditButton from '../ActionButtons/EditButton';
@@ -87,7 +88,7 @@ const Card = ({
         </div> */}
         <div className={styles.cardButtons}>
       <button className={styles.cardButton} onClick={toggleAddTask}>
-      <AddButton />
+      <FaPlus />
       </button>
       {isAddingTask && (
         <div>
@@ -104,7 +105,7 @@ const Card = ({
         </div>
       )}
       <button className={styles.cardButton} onClick={toggleEditCard}>
-      <EditButton />
+      <FaEdit />
       </button>
       {isEditingCard && (
         <div>
@@ -127,7 +128,7 @@ const Card = ({
       )}
 
       <button className={styles.cardButton} onClick={() => onDeleteCard(id)}>
-      <DeleteButton />
+      <FaTrash  />
       </button>
       {/* <button className={styles.cardButton} onClick={loadTasks}>
         Load Tasks

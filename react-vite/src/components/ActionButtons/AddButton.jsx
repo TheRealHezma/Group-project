@@ -5,7 +5,7 @@ const AddButton = ({ onAdd }) => {
   return (
     <div className="tooltip-container">
       <button onClick={onAdd} className="tooltip-button" style={buttonStyle}>
-        <FaPlus style={iconStyle} />
+      <FaPlus style={iconStyle} />
       </button>
       <span className="tooltip-text">Create new element</span>
     </div>

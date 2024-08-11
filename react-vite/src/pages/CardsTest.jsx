@@ -105,8 +105,9 @@ const CardsTest = () => {
     }
   };
 
-  const handleEditComment = (commentId) => {
+  const handleEditComment = (commentId, cardIdInt) => {
     const updatedContent = editCommentData[commentId];
+    console.log(updatedContent);
     if (updatedContent) {
       dispatch(updateComment(commentId, { content: updatedContent }))
         .then(() => {
@@ -114,7 +115,8 @@ const CardsTest = () => {
           setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
           setEditMode((prev) => ({ ...prev, [commentId]: false }));
           setError('');
-        })
+          dispatch(getAllComments(cardIdInt));
+        }) 
         .catch(error => {
           console.error('Failed to update comment:', error);
           setError('Failed to update comment');
@@ -213,7 +215,7 @@ const CardsTest = () => {
                                     value={editCommentData[comment.id] || ''}
                                     onChange={(e) =>
                                       setEditCommentData({
-                                        ...editCommentData,
+                                        // ...editCommentData,
                                         [comment.id]: e.target.value,
                                       })
                                     }

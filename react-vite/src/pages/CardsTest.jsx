@@ -17,7 +17,8 @@ import {
 } from '../redux/comment';
 import './CardDetails.css';
 import Card from '../components/Card/Card';
-
+import OpenModalButton from '../components/Card/cardDescriptionModal';
+import CardDetails from './CardDetails';
 const CardsTest = () => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
@@ -29,6 +30,7 @@ const CardsTest = () => {
   const [commentsOpen, setCommentsOpen] = useState({});
   const [editMode, setEditMode] = useState({});
   const [error, setError] = useState('');
+  // const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
 
   useEffect(() => {
     dispatch(getAllCards(1));
@@ -146,6 +148,10 @@ const CardsTest = () => {
     setEditMode((prev) => ({ ...prev, [commentId]: true }));
   };
 
+  const handleCardClick = (cardId) => {
+    dispatch(getCard(cardId))
+  }
+
   return (
     <div className="splash-container">
       {Object.keys(cards).length === 0 ? (
@@ -153,6 +159,7 @@ const CardsTest = () => {
       ) : (
         <div className="boards-container">
           {Object.values(cards).map((card) => (
+
             <div key={card.id} className="card-container">
               <Card
                 id={card.id}
@@ -164,6 +171,12 @@ const CardsTest = () => {
                 onLoadCardTasks={handleLoadCardTasks}
                 onEditTask={handleEditSubmit}
                 onDeleteTask={handleDeleteCardTask}
+              />
+              <OpenModalButton
+                buttonText="View Details"
+                modalComponent={<CardDetails cardId={card.id} />} // Pass CardDetails component with the cardId prop
+                onButtonClick={() => handleCardClick(card.id)} // Dispatch the getCard action
+                className="open-card-modal-button"
               />
               <button
                 onClick={() => handleLoadComments(card.id)}

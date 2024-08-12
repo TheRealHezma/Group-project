@@ -10,6 +10,7 @@ import BoardDetails from './pages/BoardDetails';
 import CardsTest from './pages/CardsTest';
 import CardDetails from './pages/CardDetails';
 import ActionButtons from './components/ActionButtons/ActionButtons';
+import Footer from './components/Footer/Footer';
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -24,6 +25,7 @@ const Layout = () => {
       <ModalProvider>
         <Navigation isLoaded={isLoaded} />
         {isLoaded && <Outlet />}
+        <Footer />
         <Modal />
       </ModalProvider>
     </>

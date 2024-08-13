@@ -46,10 +46,11 @@ const editCard = (card) => {
 };
 
 // delete a card by id
-const deleteCard = (cardId) => {
+const deleteCard = (cardId, listId) => {
   return {
     type: DELETE_CARD,
     cardId,
+    listId
   };
 };
 
@@ -128,13 +129,13 @@ export const editCardById = (cardId, cardData) => async (dispatch) => {
   }
 };
 
-export const deleteCardById = (cardId) => async (dispatch) => {
+export const deleteCardById = (cardId, listId) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}`, {
     method: 'DELETE',
   });
 
   if (response.ok) {
-    dispatch(deleteCard(cardId));
+    dispatch(deleteCard(cardId, listId));
   }
 };
 
@@ -227,26 +228,44 @@ const cardsReducer = (state = initialState, action) => {
     }
     case EDIT_CARD: {
       const updatedCard = action.card;
+      const listId = updatedCard.list_id;
+      const cardToBeUpdated = state.cardsByListId[listId].Cards
       return {
         ...state,
         allCards: {
           ...state.allCards,
           [updatedCard.id]: updatedCard,
         },
-        currentCard:
-          updatedCard.id === state.currentCard.id
-            ? updatedCard
-            : state.currentCard,
+        cardsByListId: {
+          ...state.cardsByListId,
+          [listId]: {
+            ...state.cardsByListId[listId],
+            Cards: cardToBeUpdated.map((card) =>
+              card.id === updatedCard.id ? updatedCard : card
+            ),
+          },
+        },
       };
     }
     case DELETE_CARD: {
       const newCards = { ...state.allCards };
+      const listId = action.listId
+      const cardsNotToBeDeleted = state.cardsByListId[action.listId].Cards.filter(
+        (card) => card.id != action.cardId
+      )
       delete newCards[action.cardId];
       return {
         ...state,
         allCards: newCards,
         currentCard:
           state.currentCard.id === action.cardId ? {} : state.currentCard,
+          cardsByListId: {
+            ...state.cardsByListId,
+            [listId]: {
+              ...state.cardsByListId[listId],
+              Cards: cardsNotToBeDeleted
+            },
+          },
       };
     }
     case GET_TASKS: {

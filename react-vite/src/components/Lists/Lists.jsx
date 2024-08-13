@@ -7,7 +7,6 @@ import "./Lists.css";
 
 const List = ({ list }) => {
   const cards = useSelector((state) => state.cards.cardsByListId[list.id]?.Cards || []);
-  console.log("CARDS HERE!!!!", cards);
 
   const dispatch = useDispatch();
 
@@ -20,14 +19,14 @@ const List = ({ list }) => {
   };
 
   const handleEdit = () => {
-    const newName = prompt("Enter new list name:", list.name);
+    const newName = prompt("Enter new list name:", list.name); //I NEED TO CHANGE THIS STOP FORGETTING
     if (newName) {
       dispatch(editListById(list.id, { name: newName }));
     }
   };
 
   const handleDeleteCard = (cardId) => {
-    dispatch(deleteCardById(cardId));
+    dispatch(deleteCardById(cardId, list.id));
   };
 
   const handleEditCard = (cardId, newCardTitle, newCardDescription) => {

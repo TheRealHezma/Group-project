@@ -172,13 +172,13 @@ const CardsTest = () => {
                 onEditTask={handleEditSubmit}
                 onDeleteTask={handleDeleteCardTask}
               />
-              <OpenModalButton
+              {/* <OpenModalButton
                 buttonText="View Details"
                 modalComponent={<CardDetails cardId={card.id} />} // Pass CardDetails component with the cardId prop
                 onButtonClick={() => handleCardClick(card.id)} // Dispatch the getCard action
                 className="open-card-modal-button"
-              />
-              <button
+              /> */}
+              {/*<button
                 onClick={() => handleLoadComments(card.id)}
                 disabled={commentsLoaded[card.id]}
               >

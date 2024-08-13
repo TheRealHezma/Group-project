@@ -69,13 +69,13 @@ const CardsTest = () => {
   const handleLoadCardTasks = (cardId) => {
     dispatch(getAllCardTasks(cardId));
   };
-
+//############################################################
   const handleLoadComments = (cardId) => {
     dispatch(getAllComments(cardId));
     setCommentsLoaded((prev) => ({ ...prev, [cardId]: true }));
     setCommentsOpen((prev) => ({ ...prev, [cardId]: true }));
   };
-
+//###########################################################################
   const handleCreateComment = (e, cardId) => {
     e.preventDefault();
     if (!newComment.trim()) {
@@ -165,18 +165,18 @@ const CardsTest = () => {
                 onEditTask={handleEditSubmit}
                 onDeleteTask={handleDeleteCardTask}
               />
-              <button
+              {/* <button
                 onClick={() => handleLoadComments(card.id)}
                 disabled={commentsLoaded[card.id]}
               >
                 {commentsLoaded[card.id] ? 'Comments Loaded' : 'Load Comments'}
-              </button>
-              <button
+              </button> */}
+              {/* <button
                 onClick={() => toggleCommentsSection(card.id)}
                 disabled={!commentsLoaded[card.id]}
               >
                 {commentsOpen[card.id] ? 'Hide Comments' : 'Show Comments'}
-              </button>
+              </button> */}
               {commentsOpen[card.id] && (
                 <div className="comments-section">
                   <h3>Comments</h3>
@@ -190,7 +190,7 @@ const CardsTest = () => {
                     <button type="submit">Post Comment</button>
                     {error && <p className="error-message">{error}</p>}
                   </form>
-                  <ul className="comments-list">
+                  {/* <ul className="comments-list">
                     {Object.values(commentsByCard[card.id] || {})
                       .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
                       .map((comment) => (
@@ -233,7 +233,7 @@ const CardsTest = () => {
                           )}
                         </li>
                       ))}
-                  </ul>
+                  </ul> */}
                 </div>
               )}
             </div>

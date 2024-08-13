@@ -16,7 +16,6 @@ class List(db.Model):
 
     # Relationship with card
     Cards = db.relationship('Card', backref='list', lazy=True, cascade="all, delete-orphan")
-    
 
     def to_dict(self):
         return {

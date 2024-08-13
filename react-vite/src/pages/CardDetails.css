@@ -1,12 +1,12 @@
-.splash-container {
+.cards-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    position: relative;
+    margin-top: 20px;
+    padding: 10px;
 }
-  
+
+  /*
 .gradient-background {
     background: rgb(48,49,54);
     background: linear-gradient(173deg, rgba(48,49,54,1) 64%, rgba(127,127,138,1) 100%, rgba(77,73,142,1) 100%);
@@ -147,7 +147,7 @@ h3 {
     align-items: center;
     position: relative;
     z-index: 0;
-}
+} */
   
 .comments-section {
     background-color: #33333d;

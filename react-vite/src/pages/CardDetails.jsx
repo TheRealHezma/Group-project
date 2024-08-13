@@ -1,5 +1,5 @@
 // src/pages/CardDetails.jsx
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getCard, editCardById, deleteCardById } from '../redux/card';

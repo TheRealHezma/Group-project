@@ -10,6 +10,7 @@ const CREATE_TASK = 'cardTasks/CREATE';
 const GET_TASK_BY_ID = 'cardTasks/LOADONE';
 const EDIT_TASK = 'cardTasks/EDIT';
 const DELETE_TASK = 'cardTasks/DELETE';
+const GET_CARDS_BY_LIST = 'cards/LOAD_BY_LIST';
 
 //*ACTIONS
 
@@ -21,7 +22,14 @@ const getCards = (cards) => {
   };
 };
 
-// get a card by card id
+// get all cards for a specific list id
+const getCardsByListAction = (listId, cards) => ({
+  type: GET_CARDS_BY_LIST,
+  listId,
+  cards,
+});
+
+// get a card by card_id
 const getCardById = (card) => {
   return {
     type: GET_BY_ID,
@@ -91,6 +99,12 @@ export const getAllCards = (listId) => async (dispatch) => {
   const response = await fetch(`/api/lists/${listId}/cards`);
   const allListCards = await response.json();
   dispatch(getCards(allListCards));
+};
+
+export const getCardsByList = (listId) => async (dispatch) => {
+  const response = await fetch(`/api/lists/${listId}/cards`);
+  const cards = await response.json();
+  dispatch(getCardsByListAction(listId, cards));
 };
 
 export const getCard = (cardId) => async (dispatch) => {
@@ -195,6 +209,16 @@ const cardsReducer = (state = initialState, action) => {
       return {
         ...state,
         allCards: { ...allCards },
+      };
+    }
+    case GET_CARDS_BY_LIST: {
+      const { listId, cards } = action;
+      return {
+        ...state,
+        cardsByListId: {
+          ...state.cardsByListId,
+          [listId]: cards,
+        },
       };
     }
     case GET_BY_ID: {

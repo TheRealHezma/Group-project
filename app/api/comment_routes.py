@@ -23,13 +23,8 @@ def edit_comment(id):
     comment_to_edit = Comment.query.get(id)
     if not comment_to_edit:
         return jsonify({'error': 'Comment not found'}), 404
-<<<<<<< HEAD
-    
-    # Check to verify comment ownership
-=======
 
     # Check to verify board ownership
->>>>>>> commentStore_Hemza
     if comment_to_edit.user_id != current_user.id:
         return jsonify({"message": "Forbidden"}), 403
 

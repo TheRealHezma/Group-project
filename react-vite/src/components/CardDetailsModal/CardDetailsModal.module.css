@@ -24,6 +24,22 @@
     align-items: center;
   }
   
+  .cardComments button {
+    background-color: #61dafb;
+    color: rgb(57, 55, 55);
+  }
+
+  .cardComments button:hover {
+    background-color: #69bfd6;
+  }
+
+  .cardComments input {
+    width: 80%;
+    padding: 5px;
+    margin-bottom: 2px;
+    background-color: whitesmoke;
+  }
+
   .cardTitle {
     text-align: center;
     margin-bottom: 10px;
@@ -74,6 +90,14 @@
     margin: 2px;
   }
 
+  .taskButton {
+    background-color: #61dafb;
+    color: rgb(57, 55, 55);
+    border: none;
+    padding: 5px;
+    margin-left: 5px;
+  }
+  
   .icon {
     cursor: pointer;
     background-color: transparent;

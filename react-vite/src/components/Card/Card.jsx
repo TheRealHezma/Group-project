@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
+import { useSelector, useDispatch } from 'react-redux';
+import { FaPlus, FaTrash, FaEdit, FaExpandAlt } from 'react-icons/fa';
+import { getCard, getAllCardTasks } from '../../redux/card';
+import { getAllComments } from '../../redux/comment';
+import OpenModalButton from '../OpenModalButton';
+import CardDetailsModal from '../CardDetailsModal/CardDetailsModal';
 import styles from './Card.module.css';
-import AddButton from '../ActionButtons/AddButton';
-import EditButton from '../ActionButtons/EditButton';
-import DeleteButton from '../ActionButtons/DeleteButton';
+
+
 
 const Card = ({
   id,
@@ -31,7 +34,17 @@ const Card = ({
   const [newCardTitle, setNewCardTitle] = useState('');
   const [newCardDescription, setNewCardDescription] = useState('');
   const [isEditingCard, setIsEditingCard] = useState(false);
-  
+  const dispatch = useDispatch();
+
+/* ########################################## */
+
+
+  /*const handleExpandClick = () => {
+    dispatch(getCard(id));
+    dispatch(getAllComments(id));
+    dispatch(getAllCardTasks(id));
+  };*/
+
   useEffect(() => {
     const filteredTasks = Object.values(allTasks).filter(
       (task) => task.card_id === id
@@ -51,6 +64,7 @@ const Card = ({
     onEditCard(id, newCardTitle, newCardDescription);
     setNewCardTitle('');
     setNewCardDescription('');
+    setIsEditingCard(false);
   };
 
   const toggleEditTask = (task) => {
@@ -79,8 +93,18 @@ const Card = ({
 
   return (
     <div className={styles.card}>
-      <h2>{title}</h2>
-      <p>{description}</p>
+    <div className={styles.cardContainer}>
+  <div className={styles.textContainer}>
+    <h2>{title}</h2>
+    <p>{description}</p>
+  </div>
+  <OpenModalButton
+          modalComponent={<CardDetailsModal id={id} />}
+          buttonText={<FaExpandAlt />}
+        //   onButtonClick={}
+        />
+</div>
+
       {/* <div className={styles.cardButtons}>
         <span>Edit Card</span><EditButton onClick={toggleEditCard} />
         <span>Delete Card</span><DeleteButton onClick={() => onDeleteCard(id)} />
@@ -101,7 +125,6 @@ const Card = ({
           <button className={styles.taskButton} onClick={handleAddTask}>
             Submit Task
           </button>
-          <p>Submit Task</p>
         </div>
       )}
       <button className={styles.cardButton} onClick={toggleEditCard}>
@@ -134,7 +157,7 @@ const Card = ({
         Load Tasks
       </button> */}
 
-      {cardTasks.length > 0 && (
+      {/* {cardTasks.length > 0 && (
         <div className={styles.tasksContainer}>
           {cardTasks.map((task) => (
             <div key={task.id} className={styles.taskCard}>
@@ -180,7 +203,7 @@ const Card = ({
             </div>
           ))}
         </div>
-      )}
+      )} */}
       </div>
       <div className={styles.cardButtonsText}>
         <p>Add Task</p>

@@ -30,10 +30,10 @@ const getCardById = (card) => {
 };
 
 // edit a card by id
-const editCard = (card) => {
+const editCard = (cardId) => {
   return {
     type: EDIT_CARD,
-    card,
+    cardId,
   };
 };
 
@@ -201,7 +201,7 @@ const cardsReducer = (state = initialState, action) => {
       return { ...state, currentCard: currentCard };
     }
     case EDIT_CARD: {
-      const updatedCard = action.card;
+      const updatedCard = action.cardId;
       return {
         ...state,
         allCards: {
@@ -226,6 +226,9 @@ const cardsReducer = (state = initialState, action) => {
     }
     case GET_TASKS: {
       const allCardTasks = {};
+      if (action.cardTasks.CardTasks === undefined) {
+        return { ...state, allCardTasks: {} };
+      };
       action.cardTasks.CardTasks.forEach((cardTask) => {
         allCardTasks[cardTask.id] = cardTask;
       });

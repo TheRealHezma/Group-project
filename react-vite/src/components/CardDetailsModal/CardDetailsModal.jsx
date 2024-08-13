@@ -230,9 +230,10 @@ const CardDetailsModal = ({ id }) => {
                       .map((comment) => (
                         <li key={comment.id} className="comment-item">
                           <div className="comment-content">
-                            <span className="username">{comment.username}: </span>
-                            <span className="content">{comment.content}</span>
+                            <span className="username">{comment.username} wrote:    </span>
+                            <span className="content">{comment.content}      </span>
                             <span className="created-at">
+                            <p>    on:  </p>
                               ({new Date(comment.created_at).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',

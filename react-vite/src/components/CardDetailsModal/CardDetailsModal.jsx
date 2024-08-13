@@ -132,10 +132,10 @@ const CardDetailsModal = ({ id }) => {
       <div className={styles.cardContent}>
         <div className={styles.cardTasks}>
           <h2>Tasks</h2>
-          <button className={styles.cardButton} onClick={toggleAddTask}>
+          <button className={styles.icon} onClick={toggleAddTask}>
       <FaPlus />
       </button><span>Add Task</span>
-      <p>_____________________________</p>
+      <p>______________________</p>
       {isAddingTask && (
         <div>
           <input
@@ -144,7 +144,7 @@ const CardDetailsModal = ({ id }) => {
             value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
           />
-          <button className={styles.taskButton} onClick={handleCreateCardTask}>
+          <button className={styles.icon} onClick={handleCreateCardTask}>
             Submit Task
           </button>
         </div>
@@ -153,10 +153,10 @@ const CardDetailsModal = ({ id }) => {
             <p>No tasks</p>
           ) : (
             tasks.map((task) => (
-                <div key={task.id} className={styles.taskCard}>
+                <div key={task.id} className={styles.task}>
               <p>{task.description}</p>
               <button
-                className={styles.taskButton}
+                className={styles.icon}
                 onClick={() => toggleEditTask(task)}
               >
                 <FaEdit />
@@ -188,7 +188,7 @@ const CardDetailsModal = ({ id }) => {
                 </div>
               )}
               <button
-                className={styles.taskButton}
+                className={styles.icon}
                 onClick={() => handleDeleteCardTask(task.id)}
               >
                 <FaTrash />

@@ -38,7 +38,8 @@ a {
 /* .create-board-button, */
 .dropdown-toggle {
   color: rgb(21, 21, 21);
-  background: rgb(200, 250, 100);
+  /* background: rgb(200, 250, 100); */
+  background-color: #61dafb;
   border: none;
   padding: 8px 16px;
   border-radius: 4px;
@@ -48,7 +49,8 @@ a {
 .new_Board:hover,
 /* .create-board-button, */
 .dropdown-toggle:hover {
-  background-color: rgb(170, 208, 95);
+  /* background-color: rgb(170, 208, 95); */
+  background-color: #69bfd6;
 }
 
 .dropdown {
@@ -60,7 +62,8 @@ a {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: rgb(200, 250, 100);
+  /* background-color: rgb(200, 250, 100); */
+  background-color: #61dafb;
   border: 1px solid #ddd;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
   z-index: 1000;
@@ -71,7 +74,8 @@ a {
 
 .dropdown:hover .dropdown-menu {
   display: block;
-  background-color: rgb(170, 208, 95);
+  /* background-color: rgb(170, 208, 95); */
+  background-color: #69bfd6;
 }
 
 .dropdown-menu li {
@@ -94,8 +98,15 @@ a {
   border-bottom: none;
 }
 
+.dropdown-wrapper {
+    display: inline-block;
+    width: 200px;
+    white-space: nowrap;
+  }
+
 .create-board-button {
-  background-color: rgb(200, 250, 100);
+  /* background-color: rgb(200, 250, 100); */
+  background-color: #61dafb;
   color: rgb(21, 21, 21);
   border: none;
   padding: 8px 16px;
@@ -106,5 +117,6 @@ a {
 }
 
 .create-board-button:hover {
-  background-color: rgb(170, 208, 95);;
+  /* background-color: rgb(170, 208, 95); */
+  background-color: #69bfd6;
 }

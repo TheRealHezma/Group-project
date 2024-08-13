@@ -15,8 +15,7 @@ class List(db.Model):
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationship with card
-    Cards = db.relationship('Card', backref='list', lazy=True)
-
+    Cards = db.relationship('Card', backref='list', lazy=True, cascade="all, delete-orphan")
 
     def to_dict(self):
         return {

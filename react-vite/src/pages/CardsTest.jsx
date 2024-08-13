@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   getAllCards,
-  getCard,
   editCardById,
   deleteCardById,
   createCardTask,
@@ -10,28 +9,37 @@ import {
   editCardTaskById,
   deleteCardTaskById,
 } from '../redux/card';
-import './Splash.css';
-
+import {
+  getAllComments,
+  createNewComment,
+  updateComment,
+  removeComment,
+} from '../redux/comment';
+import './CardDetails.css';
+import Card from '../components/Card/Card';
+import OpenModalButton from '../components/Card/cardDescriptionModal';
+import CardDetails from './CardDetails';
 const CardsTest = () => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
-  // const cardTasks = useSelector((state) => state.cardTasks?.allCardTasks || {});
-  // const currentCard = useSelector((state) => state.cards.currentCard);
-  // const [selectedCardId, setSelectedCardId] = useState(null);
-  const [newTaskDescription, setNewTaskDescription] = useState('');
-  // const [cardDetails, setCardDetails] = useState(null);
-  const [editTaskDescription, setEditTaskDescription] = useState('');
-  const [isEditingTask, setIsEditingTask] = useState(false);
-  const [isAddingTask, setIsAddingTask] = useState(false);
+  const commentsByCard = useSelector((state) => state.comments.allCommentsByCard || {});
+  const currentUser = useSelector((state) => state.session.user);
+  const [newComment, setNewComment] = useState('');
+  const [editCommentData, setEditCommentData] = useState({});
+  const [commentsLoaded, setCommentsLoaded] = useState({});
+  const [commentsOpen, setCommentsOpen] = useState({});
+  const [editMode, setEditMode] = useState({});
+  const [error, setError] = useState('');
+  // const comments = useSelector((state) => state.comments.allCardComments);  //added 's' to comment
 
   useEffect(() => {
     dispatch(getAllCards(1));
   }, [dispatch]);
 
-  const handleEditCard = (cardId) => {
+  const handleEditCard = (cardId, cardTitle, cardDescription) => {
     const updatedCardData = {
-      title: 'Updated Title',
-      description: 'Updated Description',
+      title: cardTitle,
+      description: cardDescription,
     };
     dispatch(editCardById(cardId, updatedCardData));
   };
@@ -40,26 +48,18 @@ const CardsTest = () => {
     dispatch(deleteCardById(cardId));
   };
 
-  const handleCreateCardTask = (cardId) => {
+  const handleCreateCardTask = (cardId, description) => {
     const taskData = {
-      description: newTaskDescription,
+      description: description,
       completed: false,
     };
     dispatch(createCardTask(cardId, taskData));
   };
 
-  const handleIsEditingTask = (taskId) => {
-    setIsEditingTask(!isEditingTask);
-  };
-
-  const handleIsAddingTask = (taskId) => {
-    setIsAddingTask(!isAddingTask);
-  };
-
-  const handleEditSubmit = (taskId) => {
+  const handleEditSubmit = (taskId, editDesc, completed) => {
     const updatedTaskData = {
-      description: 'Updated Task Description',
-      completed: true,
+      description: editDesc,
+      completed: completed,
     };
     dispatch(editCardTaskById(taskId, updatedTaskData));
   };
@@ -70,12 +70,87 @@ const CardsTest = () => {
 
   const handleLoadCardTasks = (cardId) => {
     dispatch(getAllCardTasks(cardId));
-    //   setSelectedCardId(cardId);
+  };
+//############################################################
+  const handleLoadComments = (cardId) => {
+    dispatch(getAllComments(cardId));
+    setCommentsLoaded((prev) => ({ ...prev, [cardId]: true }));
+    setCommentsOpen((prev) => ({ ...prev, [cardId]: true }));
+  };
+//###########################################################################
+  const handleCreateComment = (e, cardId) => {
+    e.preventDefault();
+    if (!newComment.trim()) {
+      setError('Message cannot be blank');
+      return;
+    }
+    const cardIdInt = parseInt(cardId, 10);
+    if (!isNaN(cardIdInt)) {
+      const payload = {
+        user_id: currentUser.id,
+        content: newComment,
+        card_id: cardIdInt,
+      };
+      dispatch(createNewComment(cardIdInt, payload))
+        .then(() => {
+          // Update local state after successfully creating a new comment
+          setNewComment('');
+          setError('');
+          dispatch(getAllComments(cardIdInt));
+        })
+        .catch(error => {
+          console.error('Failed to create comment:', error);
+          setError('Failed to create comment');
+        });
+    } else {
+      console.error('Invalid card ID:', cardId);
+    }
   };
 
-  const handleGetCardById = (cardId) => {
-    dispatch(getCard(cardId));
+  const handleEditComment = (commentId, cardIdInt) => {
+    const updatedContent = editCommentData[commentId];
+    console.log(updatedContent);
+    if (updatedContent) {
+      dispatch(updateComment(commentId, { content: updatedContent }))
+        .then(() => {
+          // Update local state after successfully updating a comment
+          setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
+          setEditMode((prev) => ({ ...prev, [commentId]: false }));
+          setError('');
+          dispatch(getAllComments(cardIdInt));
+        }) 
+        .catch(error => {
+          console.error('Failed to update comment:', error);
+          setError('Failed to update comment');
+        });
+    }
   };
+
+  const handleDeleteComment = (commentId) => {
+    dispatch(removeComment(commentId))
+      .then(() => {
+        setError('');
+      })
+      .catch(error => {
+        console.error('Failed to delete comment:', error);
+        setError('Failed to delete comment');
+      });
+  };
+
+  const toggleCommentsSection = (cardId) => {
+    setCommentsOpen((prev) => ({
+      ...prev,
+      [cardId]: !prev[cardId],
+    }));
+  };
+
+  const handleEditButtonClick = (commentId) => {
+    setEditMode((prev) => ({ ...prev, [commentId]: true }));
+  };
+
+  const handleCardClick = (cardId) => {
+    dispatch(getCard(cardId))
+  }
 
   return (
     <div className="splash-container">
@@ -84,54 +159,100 @@ const CardsTest = () => {
       ) : (
         <div className="boards-container">
           {Object.values(cards).map((card) => (
-            <div key={card.id} className="board-card">
-              <h2 className="board-name">{card.title}</h2>
-              <p className="board-description">{card.description}</p>
-              <button onClick={handleIsAddingTask}>Add Task</button>
-              {isAddingTask && (
-                <input
-                  type="text"
-                  placeholder="New Task Description"
-                  value={newTaskDescription}
-                  onChange={(e) => setNewTaskDescription(e.target.value)}
-                />
+
+            <div key={card.id} className="card-container">
+              <Card
+                id={card.id}
+                title={card.title}
+                description={card.description}
+                onAddTask={handleCreateCardTask}
+                onEditCard={handleEditCard}
+                onDeleteCard={handleDeleteCard}
+                onLoadCardTasks={handleLoadCardTasks}
+                onEditTask={handleEditSubmit}
+                onDeleteTask={handleDeleteCardTask}
+              />
+              {/* <OpenModalButton
+                buttonText="View Details"
+                modalComponent={<CardDetails cardId={card.id} />} // Pass CardDetails component with the cardId prop
+                onButtonClick={() => handleCardClick(card.id)} // Dispatch the getCard action
+                className="open-card-modal-button"
+              /> */}
+              {/*<button
+                onClick={() => handleLoadComments(card.id)}
+                disabled={commentsLoaded[card.id]}
+              >
+                {commentsLoaded[card.id] ? 'Comments Loaded' : 'Load Comments'}
+              </button> */}
+              {/* <button
+                onClick={() => toggleCommentsSection(card.id)}
+                disabled={!commentsLoaded[card.id]}
+              >
+                {commentsOpen[card.id] ? 'Hide Comments' : 'Show Comments'}
+              </button> */}
+              {commentsOpen[card.id] && (
+                <div className="comments-section">
+                  <h3>Comments</h3>
+                  <form onSubmit={(e) => handleCreateComment(e, card.id)} className="comments-form">
+                    <input
+                      type="text"
+                      value={newComment}
+                      onChange={(e) => setNewComment(e.target.value)}
+                      placeholder="Add a comment"
+                    />
+                    <button type="submit">Post Comment</button>
+                    {error && <p className="error-message">{error}</p>}
+                  </form>
+                  {/* <ul className="comments-list">
+                    {Object.values(commentsByCard[card.id] || {})
+                      .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+                      .map((comment) => (
+                        <li key={comment.id} className="comment-item">
+                          <div className="comment-content">
+                            <span className="username">{comment.username}: </span>
+                            <span className="content">{comment.content}</span>
+                            <span className="created-at">
+                              ({new Date(comment.created_at).toLocaleDateString('en-US', {
+                                weekday: 'short',
+                                month: 'short',
+                                day: '2-digit',
+                              })})
+                            </span>
+                          </div>
+                          {currentUser.id === comment.user_id && (
+                            <div className="comment-actions">
+                              {editMode[comment.id] ? (
+                                <>
+                                  <input
+                                    type="text"
+                                    value={editCommentData[comment.id] || ''}
+                                    onChange={(e) =>
+                                      setEditCommentData({
+                                        // ...editCommentData,
+                                        [comment.id]: e.target.value,
+                                      })
+                                    }
+                                    placeholder="Edit comment"
+                                  />
+                                  <button onClick={() => handleEditComment(comment.id)}>Save</button>
+                                </>
+                              ) : (
+                                <>
+                                  <button onClick={() => handleEditButtonClick(comment.id)}>Edit</button>
+                                  <button className="delete-button" onClick={() => handleDeleteComment(comment.id)}>Delete</button>
+                                </>
+                              )}
+                            </div>
+                          )}
+                        </li>
+                      ))}
+                  </ul> */}
+                </div>
               )}
-              <button onClick={() => handleLoadCardTasks(card.id)}>
-                Load Tasks
-              </button>
-              <button onClick={() => handleGetCardById(3)}>
-                Get Card By Id
-              </button>
-              <button onClick={() => handleEditCard(card.id)}>
-                Edit Card Details
-              </button>
-              <button onClick={() => handleDeleteCard(card.id)}>
-                Delete Card
-              </button>
             </div>
           ))}
         </div>
       )}
-      <div>
-        {/* ADD Submit button */}
-        <button onClick={handleIsEditingTask}>Edit Task</button>
-        {isEditingTask && (
-          <div className="tasks-container">
-            <div className="task-card">
-              <input
-                type="text"
-                placeholder="Edit Task Description"
-                value={editTaskDescription}
-                onChange={(e) => setNewTaskDescription(e.target.value)}
-              />
-              <button onClick={() => handleEditSubmit(1)}>Submit Edit</button>
-            </div>
-          </div>
-        )}
-        <div>
-          <button onClick={() => handleDeleteCardTask(1)}>Delete Task</button>
-        </div>
-      </div>
     </div>
   );
 };

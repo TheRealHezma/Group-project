@@ -13,7 +13,9 @@ class Comment(db.Model):
     card_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod('cards.id')), nullable=False)
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
-
+    # Relationships
+    user = db.relationship('User', primaryjoin='User.id==Comment.user_id', remote_side='User.id', uselist=False)
+    
     def to_dict(self):
         return {
             'id': self.id,
@@ -21,5 +23,6 @@ class Comment(db.Model):
             'content': self.content,
             'card_id': self.card_id,
             'created_at': self.created_at,
-            'updated_at': self.updated_at
+            'updated_at': self.updated_at,
+            'username': self.user.username
         }

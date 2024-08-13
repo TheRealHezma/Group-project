@@ -32,13 +32,14 @@ function Navigation({ isLoaded }) {
     setUserBoards(Object.values(boards));
   }, [boards]);
 
+
   const currentBoard = userBoards.find((board) => board.id === Number(id));
 
   return (
     <ul className="navigation">
       <li className="logo-container">
         <NavLink to="/">
-          <img src="/TaskWaveNarrow.png" alt="TaskWave" className="logo" />
+          <img src="/TaskWaveNarrow2.png" alt="TaskWave" className="logo" />
         </NavLink>
       </li>
       {isLoaded && user && (
@@ -51,21 +52,23 @@ function Navigation({ isLoaded }) {
             />
           </li>
           <li className="dropdown middle">
-            <button className="dropdown-toggle">
-              {currentBoard ? currentBoard.name : 'My Boards'}
-              <span className="arrow-down">▼</span>
-            </button>
-            <ul className="dropdown-menu">
-              {userBoards.length > 0 ? (
-                userBoards.map((board) => (
-                  <li key={board.id}>
-                    <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
-                  </li>
-                ))
-              ) : (
-                <li>No boards available</li>
-              )}
-            </ul>
+            <div className="dropdown-wrapper">
+              <button className="dropdown-toggle">
+                {currentBoard ? currentBoard.name : 'My Boards'}
+                <span className="arrow-down">▼</span>
+              </button>
+                <ul className="dropdown-menu">
+                  {userBoards.length > 0 ? (
+                    userBoards.map((board) => (
+                      <li key={board.id}>
+                        <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
+                      </li>
+                    ))
+                  ) : (
+                    <li>No boards available</li>
+                  )}
+                </ul>
+              </div>
           </li>
         </>
       )}

@@ -80,7 +80,7 @@ button {
 
 .cardButton:hover {
     background-color: #98bc5a;
-    transition: background-color 0.3s;
+    
 }
 
 .taskButton {

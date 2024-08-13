@@ -194,7 +194,7 @@ h3 {
 
 .comment-actions .delete-button {
     background-color: red !important;
-    color: white !important;
+    color: rgb(213, 208, 208) !important;
     border: none !important;
     border-radius: 4px !important;
     padding: 6px 12px !important;
@@ -207,6 +207,7 @@ h3 {
 
 
 .comments-list {
+    border-radius: 6px;
     list-style: none;
     padding: 0;
     width: 100%;
@@ -219,16 +220,16 @@ h3 {
     background-color: #44444f;
     padding: 10px;
     border-radius: 5px;
-    width: 100%;
-    margin-bottom: 10px;
+    width: 95%;
+    margin: 10px;
     display: flex;
     flex-direction: column;
 }
   
 .comment-content {
     display: flex;
-    flex-direction: column;
-    margin-bottom: 10px;
+    flex-direction: row;
+    margin-bottom: 8px;
 }
   
 .comment-actions {
@@ -260,6 +261,7 @@ h3 {
   
 .username {
     font-weight: bold;
+    color: rgb(10, 9, 9);
 }
   
 .content {

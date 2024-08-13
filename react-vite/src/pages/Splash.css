@@ -1,66 +1,210 @@
 /* src/pages/Splash.css */
 .splash-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    padding: 20px;
-    position: relative;
-    height: 110%;
-  }
-  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 20px;
+  position: relative;
+  height: 110%;
+}
+
+.gradient-background {
+  background: rgb(48, 49, 54);
+  background: linear-gradient(173deg, rgba(48, 49, 54, 1) 64%, rgba(127, 127, 138, 1) 100%, rgba(77, 73, 142, 1) 100%);
+  width: 100%;
+  height: 120%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+@media (max-width: 1024px) {
   .gradient-background {
-    background: rgb(48,49,54);
-    background: linear-gradient(173deg, rgba(48,49,54,1) 64%, rgba(127,127,138,1) 100%, rgba(77,73,142,1) 100%);
-    width: 100%;
-    height: 120%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
+    height: 150%;
   }
-   
-  @media (max-width: 1024px) {
-    .gradient-background {
-      height: 150%;
-    }
-  }
+}
 
+.welcome-container {
+  text-align: center;
+  margin: 5px;
+  margin-top: 60px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
   .welcome-container {
-    text-align: center;
-    margin: 5px;
-    margin-top: 60px;
-    margin-bottom: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    margin-top: 140px;
   }
-  
-  @media (min-width: 1024px) {
-    .welcome-container {
-      margin-top: 140px;
-    }
-  }
+}
 
-  @media (min-width: 1450px) {
-    .welcome-title {
-      width: 60%;
-    }
+@media (min-width: 1450px) {
+  .welcome-title {
+    width: 60%;
   }
+}
 
-  .welcome-container h1 {
-    margin: 5px;
-    color: silver;
-  }
+.welcome-container h1 {
+  margin: 5px;
+  color: silver;
+}
 
-  .green {
-    color: #bdd42a;
+.green {
+  color: #bdd42a;
+}
+
+h3 {
+  color: silver;
+  margin-top: 20px;
+}
+
+.content-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
+  max-width: 1000px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.left-content,
+.right-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-content {
+  padding: 20px;
+}
+
+.right-content {
+  padding: 20px;
+}
+
+.left-content h3,
+.right-content h3 {
+  margin-bottom: 10px;
+}
+
+.image-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.welcome-image {
+  max-width: 80%;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(70, 69, 69, 0.2);
+}
+
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 40px;
+}
+
+.signup-container h3 {
+  margin: 0;
+}
+
+.signup-container button {
+  padding: 10px 20px;
+  background-color: rgb(200, 250, 100);
+  color: rgb(57, 57, 57);
+  font-weight: 600;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-bottom: 60px;
+}
+
+.signup-container button:hover {
+  background-color: rgb(170, 208, 95);
+}
+
+.boards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.board-link {
+  text-decoration: none;
+}
+
+.board-link:hover {
+  text-decoration: none;
+}
+
+.board-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 190px;
+  height: 200px;
+  padding: 10px;
+  background-color: #cfd0d4;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+  -webkit-font-smoothing: antialiased;
+  /* Smooth font rendering for WebKit browsers */
+  -moz-osx-font-smoothing: grayscale;
+  /* Smooth font rendering for Firefox on macOS */
+  text-rendering: optimizeLegibility;
+  /* Optimize text rendering for better legibility */
+}
+
+.board-card:hover {
+  transform: scale(1.05);
+}
+
+.board-name {
+  font-size: 26px;
+  font-weight: bold;
+  color: black;
+  margin-bottom: 10px;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+.board-description {
+  font-size: 18px;
+  color: #43424a;
+  text-align: center;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+  .content-container {
+    grid-template-columns: 1fr;
+    gap: 10px;
   }
 
   h3 {
     color: silver;
     margin-top: 20px;
   }
+
   .content-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -69,36 +213,41 @@
     width: 100%;
     margin: 0 auto;
   }
-  
-  .left-content, .right-content {
+
+  .left-content,
+  .right-content {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
+
   .left-content {
     padding: 20px;
   }
-   .right-content {
-      padding: 20px;
-    }
-  .left-content h3, .right-content h3 {
+
+  .right-content {
+    padding: 20px;
+  }
+
+  .left-content h3,
+  .right-content h3 {
     margin-bottom: 10px;
   }
-  
+
   .image-wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
   }
-  
+
   .welcome-image {
     max-width: 80%;
     height: auto;
     border-radius: 15px;
     box-shadow: 0 4px 8px rgba(70, 69, 69, 0.2);
   }
-  
+
   .signup-container {
     display: flex;
     flex-direction: column;
@@ -107,11 +256,11 @@
     gap: 10px;
     margin-top: 40px;
   }
-  
+
   .signup-container h3 {
     margin: 0;
   }
-  
+
   .signup-container button {
     padding: 10px 20px;
     /* background-color: #bdd42a; */
@@ -123,26 +272,26 @@
     cursor: pointer;
     transition: background-color 0.3s;
   }
-  
+
   .signup-container button:hover {
     background-color: #69bfd6;
   }
-  
+
   .boards-container {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
   }
-  
+
   .board-link {
     text-decoration: none;
   }
-  
+
   .board-link:hover {
     text-decoration: none;
   }
-  
+
   .board-card {
     display: flex;
     flex-direction: column;
@@ -155,15 +304,18 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
-    -webkit-font-smoothing: antialiased; /* Smooth font rendering for WebKit browsers */
-    -moz-osx-font-smoothing: grayscale; /* Smooth font rendering for Firefox on macOS */
-    text-rendering: optimizeLegibility; /* Optimize text rendering for better legibility */
+    -webkit-font-smoothing: antialiased;
+    /* Smooth font rendering for WebKit browsers */
+    -moz-osx-font-smoothing: grayscale;
+    /* Smooth font rendering for Firefox on macOS */
+    text-rendering: optimizeLegibility;
+    /* Optimize text rendering for better legibility */
   }
-  
+
   .board-card:hover {
     transform: scale(1.05);
   }
-  
+
   .board-name {
     font-size: 26px;
     font-weight: bold;
@@ -174,7 +326,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
+
   .board-description {
     font-size: 18px;
     color: #43424a;
@@ -183,7 +335,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  
+
   /* Responsive adjustments */
   @media (max-width: 900px) {
     .content-container {
@@ -192,26 +344,26 @@
     }
 
     .signup-container {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-        margin-top: 10px;
-        width: 80%;
-      }
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 10px;
+      width: 80%;
+    }
 
-    .left-content, .right-content {
+    .left-content,
+    .right-content {
       align-items: center;
     }
-  
+
     .welcome-image {
       max-width: 45%;
     }
 
     .welcome-title {
-        width: 80%;
-        font-size: 1.2rem;
-      }
+      width: 80%;
+      font-size: 1.2rem;
+    }
   }
-  

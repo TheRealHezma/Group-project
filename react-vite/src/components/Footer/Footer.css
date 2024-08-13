@@ -1,0 +1,37 @@
+/* src/components/Footer/Footer.css */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 10px 10;
+    width: screen;
+    /* width: 1555px; */
+    /* position: fixed; */
+    /* display: flex;
+    flex-direction: column;
+    bottom: 0; */
+    /* align-self: center;
+    left: 0;
+    right: 0; */
+
+}
+
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    height: 1000px;
+    width: screen
+        /* elements overflowing */
+}
+
+/* Full viewport height */
+
+
+
+.content-wrap {
+    padding-bottom: 60px;
+    flex: 1;
+}
+
+/* Takes up remaining space */

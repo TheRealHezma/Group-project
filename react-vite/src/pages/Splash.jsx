@@ -5,6 +5,7 @@ import { getAllBoards } from '../redux/board';
 import { useModal } from '../context/Modal';
 import SignupFormModal from '../components/SignupFormModal';
 import './Splash.css';
+import '../components/Footer/Footer.css'
 
 const Splash = () => {
   const dispatch = useDispatch();

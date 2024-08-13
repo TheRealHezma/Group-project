@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useModal } from "../../context/Modal";
 import {
     getCard,
     createCardTask,
@@ -29,6 +30,7 @@ const CardDetailsModal = ({ id }) => {
   const [editCommentData, setEditCommentData] = useState({});
   const [editMode, setEditMode] = useState({});
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     dispatch(getCard(id));
@@ -125,8 +127,15 @@ const CardDetailsModal = ({ id }) => {
     setEditMode((prev) => ({ ...prev, [commentId]: true }));
   };
 
+  const handleBackgroundClick = (e) => {
+    if (e.target.className === styles.modal) {
+      closeModal();
+    }
+  };
+
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} onClick={handleBackgroundClick}>
+      <div className={styles.modalContent}>
       <h2 className={styles.cardTitle}>{thisCard.title}</h2>
       <p className={styles.cardDescription}>{thisCard.description}</p>
       <div className={styles.cardContent}>
@@ -261,6 +270,7 @@ const CardDetailsModal = ({ id }) => {
                   </ul>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

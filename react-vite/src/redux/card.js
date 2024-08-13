@@ -228,7 +228,7 @@ const cardsReducer = (state = initialState, action) => {
       const allCardTasks = {};
       if (action.cardTasks.CardTasks === undefined) {
         return { ...state, allCardTasks: {} };
-      };
+      }
       action.cardTasks.CardTasks.forEach((cardTask) => {
         allCardTasks[cardTask.id] = cardTask;
       });

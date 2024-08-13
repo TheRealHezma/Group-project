@@ -144,13 +144,7 @@ const CardsTest = () => {
     }));
   };
 
-  const handleEditButtonClick = (commentId) => {
-    setEditMode((prev) => ({ ...prev, [commentId]: true }));
-  };
 
-  const handleCardClick = (cardId) => {
-    dispatch(getCard(cardId))
-  }
 
   return (
     <div className="splash-container">

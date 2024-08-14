@@ -5,6 +5,8 @@
 const GET = 'boards/LOAD';
 const GET_BY_ID = 'board/LOADONE';
 const CREATE = 'boards/CREATE'; // Corrected the typo
+const EDIT = 'boards/EDIT';
+const DELETE = 'boards/DELETE';
 
 //*ACTIONS
 
@@ -28,6 +30,22 @@ const getBoardById = (board) => {
 const createBoard = (board) => {
   return {
     type: CREATE,
+    board,
+  };
+};
+
+//Edit a board by board id
+const editBoard = (board) => {
+  return {
+    type: EDIT,
+    board,
+  };
+};
+
+//Delete a board by board id
+const deleteBoard = (board) => {
+  return {
+    type: DELETE,
     board,
   };
 };
@@ -59,6 +77,31 @@ export const createBoardThunk = (boardData) => async (dispatch) => {
   return newBoard;
 };
 
+// edit board thunk
+export const editBoardThunk = (boardId, boardData) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(boardData),
+  });
+  const updatedBoard = await response.json();
+  dispatch(editBoard(updatedBoard));
+  return updatedBoard;
+};
+
+// delete board thunk
+export const deleteBoardThunk = (boardId) => async (dispatch) => {
+  const response = await fetch(`/api/boards/${boardId}`, {
+    method: 'DELETE',
+  });
+  const deletedBoard = await response.json();
+  dispatch(deleteBoard(deletedBoard));
+  return deletedBoard;
+};
+
+
 //*INITIAL STATE + REDUCER
 const initialState = { allBoards: {}, currentBoard: {} };
 
@@ -81,6 +124,20 @@ const boardsReducer = (state = initialState, action) => {
       return {
         ...state,
         allBoards: { ...state.allBoards, [action.board.id]: action.board },
+      };
+    }
+    case EDIT: {
+      return {
+        ...state,
+        allBoards: { ...state.allBoards, [action.board.id]: action.board },
+      };
+    }
+    case DELETE: {
+      const newState = { ...state.allBoards };
+      delete newState[action.board.id];
+      return {
+        ...state,
+        allBoards: { ...newState },
       };
     }
     default:

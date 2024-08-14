@@ -1,0 +1,44 @@
+/* src/components/Footer/Footer.css */
+.footer {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 20px;
+    margin-bottom: -14px;
+    width: screen;
+    /* width: 1555px; */
+    /* position: fixed; */
+    /* display: flex;
+    flex-direction: column;
+    bottom: 0; */
+    /* align-self: center;
+    left: 0;
+    right: 0; */
+
+}
+
+@media (max-width: 850px) {
+    .footer {
+        margin-bottom: 0px;
+    }
+}
+
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    height: 1000px;
+    width: screen
+        /* elements overflowing */
+}
+
+/* Full viewport height */
+
+
+
+.content-wrap {
+    padding-bottom: 60px;
+    flex: 1;
+}
+
+/* Takes up remaining space */

@@ -1,9 +1,11 @@
+// src/App.jsx
 import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ModalProvider, Modal } from './context/Modal';
 import { thunkAuthenticate } from './redux/session';
 import Navigation from './components/Navigation/Navigation';
+import Footer from './components/Footer/Footer';
 import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
@@ -20,13 +22,16 @@ const Layout = () => {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="page-container">
       <ModalProvider>
         <Navigation isLoaded={isLoaded} />
-        {isLoaded && <Outlet />}
+        <div className="content-wrap">
+          {isLoaded && <Outlet />}
+        </div>
+        <Footer />
         <Modal />
       </ModalProvider>
-    </>
+    </div>
   );
 };
 
@@ -58,7 +63,7 @@ const router = createBrowserRouter([
                 element: <CardsTest />,
               },
               {
-                path: ':id', // Added
+                path: ':id',
                 element: <CardDetails />,
               },
             ],

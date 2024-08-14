@@ -99,6 +99,7 @@ const listsReducer = (state = initialState, action) => {
       } else {
         return {
           ...state,
+          allLists: {},
         };
       }
     }

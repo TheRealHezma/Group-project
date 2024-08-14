@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
+import { useModal } from "../../context/Modal";
 import {
     getCard,
     createCardTask,
@@ -29,6 +30,7 @@ const CardDetailsModal = ({ id }) => {
   const [editCommentData, setEditCommentData] = useState({});
   const [editMode, setEditMode] = useState({});
   const dispatch = useDispatch();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     dispatch(getCard(id));
@@ -125,17 +127,24 @@ const CardDetailsModal = ({ id }) => {
     setEditMode((prev) => ({ ...prev, [commentId]: true }));
   };
 
+  const handleBackgroundClick = (e) => {
+    if (e.target.className === styles.modal) {
+      closeModal();
+    }
+  };
+
   return (
-    <div className={styles.modal}>
+    <div className={styles.modal} onClick={handleBackgroundClick}>
+      <div className={styles.modalContent}>
       <h2 className={styles.cardTitle}>{thisCard.title}</h2>
       <p className={styles.cardDescription}>{thisCard.description}</p>
       <div className={styles.cardContent}>
         <div className={styles.cardTasks}>
           <h2>Tasks</h2>
-          <button className={styles.cardButton} onClick={toggleAddTask}>
+          <button className={styles.icon} onClick={toggleAddTask}>
       <FaPlus />
       </button><span>Add Task</span>
-      <p>_____________________________</p>
+      <p>______________________</p>
       {isAddingTask && (
         <div>
           <input
@@ -144,7 +153,7 @@ const CardDetailsModal = ({ id }) => {
             value={taskDescription}
             onChange={(e) => setTaskDescription(e.target.value)}
           />
-          <button className={styles.taskButton} onClick={handleCreateCardTask}>
+          <button className={styles.icon} onClick={handleCreateCardTask}>
             Submit Task
           </button>
         </div>
@@ -153,10 +162,10 @@ const CardDetailsModal = ({ id }) => {
             <p>No tasks</p>
           ) : (
             tasks.map((task) => (
-                <div key={task.id} className={styles.taskCard}>
+                <div key={task.id} className={styles.task}>
               <p>{task.description}</p>
               <button
-                className={styles.taskButton}
+                className={styles.icon}
                 onClick={() => toggleEditTask(task)}
               >
                 <FaEdit />
@@ -188,7 +197,7 @@ const CardDetailsModal = ({ id }) => {
                 </div>
               )}
               <button
-                className={styles.taskButton}
+                className={styles.icon}
                 onClick={() => handleDeleteCardTask(task.id)}
               >
                 <FaTrash />
@@ -221,9 +230,10 @@ const CardDetailsModal = ({ id }) => {
                       .map((comment) => (
                         <li key={comment.id} className="comment-item">
                           <div className="comment-content">
-                            <span className="username">{comment.username}: </span>
-                            <span className="content">{comment.content}</span>
+                            <span className="username">{comment.username} wrote:    </span>
+                            <span className="content">{comment.content}      </span>
                             <span className="created-at">
+                            <p>    on:  </p>
                               ({new Date(comment.created_at).toLocaleDateString('en-US', {
                                 weekday: 'short',
                                 month: 'short',
@@ -261,6 +271,7 @@ const CardDetailsModal = ({ id }) => {
                   </ul>
           )}
         </div>
+      </div>
       </div>
     </div>
   );

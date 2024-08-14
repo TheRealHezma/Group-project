@@ -16,7 +16,7 @@ class Board(db.Model):
     updated_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc), onupdate=lambda: datetime.now(timezone.utc))
 
     # Relationship with lists
-    lists = db.relationship('List', backref='board', lazy=True)
+    lists = db.relationship('List', backref='board', lazy=True, cascade="all, delete-orphan")
     #users_in_board = db.relationship('UserInBoard', backref='board', lazy=True)
 
     def to_dict(self):

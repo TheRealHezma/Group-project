@@ -3,6 +3,7 @@
 //*VARIABLE TYPES
 const GET = "cards/LOAD";
 const GET_BY_ID = "cards/LOADONE";
+const CREATE_CARD = "cards/CREATE";
 const EDIT_CARD = "cards/EDIT";
 const DELETE_CARD = "cards/DELETE";
 const GET_TASKS = "cardTasks/LOAD";
@@ -35,6 +36,14 @@ const getCardById = (card) => {
     type: GET_BY_ID,
     card,
   };
+};
+
+// create a card
+const createCard = (card) => {
+    return {
+        type: CREATE_CARD,
+        card,
+    };
 };
 
 // edit a card by id
@@ -113,6 +122,22 @@ export const getCard = (cardId) => async (dispatch) => {
   const card = await response.json();
   dispatch(getCardById(card));
 };
+
+export const createNewCard = (listId, cardData) => async (dispatch) => {
+    const response = await fetch(`/api/lists/${listId}/cards`, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cardData),
+    });
+
+    if (response.ok) {
+        const newCard = await response.json();
+        dispatch(createCard(newCard));
+    }
+};
+
 
 export const editCardById = (cardId, cardData) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}`, {

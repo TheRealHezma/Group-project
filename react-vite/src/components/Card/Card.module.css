@@ -112,6 +112,10 @@ button {
   margin: 5px 0;
 }
 
+.inputField {
+    margin: 20px;
+}
+
 .checkboxContainer {
   margin: 10px 0;
 }

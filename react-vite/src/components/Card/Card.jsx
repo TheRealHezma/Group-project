@@ -12,6 +12,7 @@ const Card = ({
   onAddTask,
   onEditCard,
   onDeleteCard,
+  reloadCards // Add reloadCards as a prop
 }) => {
   const allTasks = useSelector((state) => state.cards.allCardTasks || []);
   const [cardTasks, setCardTasks] = useState([]);
@@ -42,6 +43,7 @@ const Card = ({
     setNewCardTitle('');
     setNewCardDescription('');
     setIsEditingCard(false);
+    reloadCards(); // Call reloadCards to refresh the list
   };
 
   const handleAddTask = () => {
@@ -81,7 +83,7 @@ const Card = ({
           <FaPlus />
         </button>
         {isAddingTask && (
-          <div>
+          <div className={styles.inputField}>
             <input
               type="text"
               placeholder="New Task"
@@ -97,7 +99,7 @@ const Card = ({
           <FaEdit />
         </button>
         {isEditingCard && (
-          <div>
+          <div className={styles.inputField}>
             <input
               type="text"
               placeholder="New Title"

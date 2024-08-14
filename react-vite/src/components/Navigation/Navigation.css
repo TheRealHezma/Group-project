@@ -191,6 +191,11 @@ a {
     color: white;
   }
 
+  .closeButton {
+    background: grey;
+    color: white;
+  }
+
   .red {
     color: red;
   }

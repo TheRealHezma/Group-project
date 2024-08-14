@@ -24,18 +24,25 @@ const BoardDetails = () => {
     setModalContent(<NewListForm boardId={id} />);
   };
 
+  const refreshLists = () => {
+    dispatch(getLists(id)); // Refresh the lists after a list is deleted
+  };
+
   return (
     <div>
       {currentBoard ? (
         <div>
           <h1>{currentBoard.name}</h1>
           <p>{currentBoard.description}</p>
-          {/* !Load currentBoard state on page open */}
           <button onClick={openNewListModal}>Create New List</button>
           <div className={styles.listsContainer}>
             {Object.keys(lists).length > 0 ? (
               Object.values(lists).map((list) => (
-                <List key={list.id} list={list} />
+                <List
+                  key={list.id}
+                  list={list}
+                  onListDeleted={refreshLists} // Pass refreshLists to List component
+                />
               ))
             ) : (
               <p>No lists! Make one today!</p>

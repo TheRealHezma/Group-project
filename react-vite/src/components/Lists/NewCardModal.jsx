@@ -1,28 +1,30 @@
 import { useState } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
-import { editBoardThunk } from '../../redux/board';
+import { useDispatch } from 'react-redux';
+import { createNewCard } from '../../redux/card';
 import { useModal } from '../../context/Modal';
 
-function NewBoardModal() {
+function NewCardModal({ listId, onCardCreated }) {
   const dispatch = useDispatch();
-  const [boardName, setBoardName] = useState('');
+  const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false); // Added loading state
-  const currentBoard = useSelector((state) => state.boards.currentBoard.Board);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const { closeModal } = useModal();
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitting(true); // Set loading state to true
+    setIsSubmitting(true);
 
-    const boardData = {
-      name: boardName,
+    const cardData = {
+      title,
       description,
     };
-    dispatch(editBoardThunk(currentBoard.id, boardData))
-      .then(() => closeModal())
+
+    dispatch(createNewCard(listId, cardData))
+      .then(() => {
+        onCardCreated();
+        closeModal();
+      })
       .catch(async (res) => {
         const data = await res.json();
         if (data?.errors) {
@@ -40,18 +42,18 @@ function NewBoardModal() {
   return (
     <div className="modal" onClick={handleBackgroundClick}>
       <div className="modal-content">
-        <h1>Edit Board</h1>
+        <h1>New Card</h1>
         <form onSubmit={handleSubmit}>
           <label>
-            Board Name
+            Title
             <input
               type="text"
-              value={boardName}
-              onChange={(e) => setBoardName(e.target.value)}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
               required
             />
           </label>
-          {errors.name && <p>{errors.name}</p>}
+          {errors.title && <p>{errors.title}</p>}
           <label>
             Description
             <textarea
@@ -62,7 +64,7 @@ function NewBoardModal() {
           </label>
           {errors.description && <p>{errors.description}</p>}
           <button type="submit" disabled={isSubmitting}>
-            {isSubmitting ? 'Updating...' : 'Update'}
+            {isSubmitting ? 'Creating...' : 'Create'}
           </button>
         </form>
       </div>
@@ -70,4 +72,4 @@ function NewBoardModal() {
   );
 }
 
-export default NewBoardModal;
+export default NewCardModal;

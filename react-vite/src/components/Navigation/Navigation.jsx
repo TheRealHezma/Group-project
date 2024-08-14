@@ -2,8 +2,7 @@ import { NavLink, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useEffect, useState } from 'react';
-import { deleteBoardThunk } from '../../redux/board';
-import { useModal } from '../../context/Modal';
+import { deleteBoardThunk, getAllBoards } from '../../redux/board';
 import NewBoardModal from '../NewBoardModal/NewBoardModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import EditBoardModal from './EditBoardModal';
@@ -15,10 +14,18 @@ function Navigation({ isLoaded }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState('');
-  const [userBoards, setUserBoards] = useState([]);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
   const { id } = useParams();
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
+  const [currentBoardName, setCurrentBoardName] = useState('My Boards');
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllBoards(user.id));
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -36,17 +43,33 @@ function Navigation({ isLoaded }) {
   }, []);
 
   useEffect(() => {
-    setUserBoards(Object.values(boards));
-  }, [boards]);
+    const userBoards = Object.values(boards);
+    const currentBoard = userBoards.find((board) => board.id === Number(id));
+    if (currentBoard) {
+      setCurrentBoardName(currentBoard.name);
+    } else {
+      setCurrentBoardName('My Boards');
+    }
+  }, [boards, id]);
 
-  const handleDeleteBoard = (boardId) => {
-    dispatch(deleteBoardThunk(boardId)).then(() => {
-        navigate('/');                       // redirect to home page
-    });
-
+  const handleDeleteBoard = () => {
+    setShowConfirmDelete(true);
+    setErrorMessage('');
   };
 
-  const currentBoard = userBoards.find((board) => board.id === Number(id));
+  const confirmDelete = async () => {
+    try {
+      await dispatch(deleteBoardThunk(id));
+      navigate('/'); // redirect to home page
+      setShowConfirmDelete(false);
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmDelete(false);
+  };
 
   return (
     <ul className="navigation">
@@ -60,14 +83,14 @@ function Navigation({ isLoaded }) {
           {location.pathname === `/boards/${id}` ? (
             <>
               <li>
-                <OpenModalButton 
-                buttonText={'Edit Board'}
-                modalComponent={<EditBoardModal boardId={id} />}
-                className="edit-board-button"
+                <OpenModalButton
+                  buttonText={'Edit Board'}
+                  modalComponent={<EditBoardModal boardId={id} />}
+                  className="edit-board-button"
                 />
               </li>
               <li>
-                <button onClick={() => handleDeleteBoard(id)} className='delete-board-button'>Delete Board</button>
+                <button onClick={handleDeleteBoard} className='delete-board-button'>Delete Board</button>
               </li>
             </>
           ) : (
@@ -82,12 +105,12 @@ function Navigation({ isLoaded }) {
           <li className="dropdown middle">
             <div className="dropdown-wrapper">
               <button className="dropdown-toggle">
-                {currentBoard ? currentBoard.name : 'My Boards'}
+                {currentBoardName}
                 <span className="arrow-down">▼</span>
               </button>
               <ul className="dropdown-menu">
-                {userBoards.length > 0 ? (
-                  userBoards.map((board) => (
+                {Object.values(boards).length > 0 ? (
+                  Object.values(boards).map((board) => (
                     <li key={board.id}>
                       <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
                     </li>
@@ -104,6 +127,26 @@ function Navigation({ isLoaded }) {
       <li>
         <ProfileButton />
       </li>
+
+      {showConfirmDelete && (
+        <div className="confirmModal">
+          <div className="confirmModalContent">
+            {errorMessage ? (
+              <>
+                <p>{errorMessage}</p>
+                <button onClick={cancelDelete} className="closeButton">Close</button>
+              </>
+            ) : (
+              <>
+                <p>Are you sure you want to delete this board?</p>
+                <p className="red">Doing so will delete any lists, cards, tasks and messages on the board.</p>
+                <button onClick={confirmDelete} className="confirmButton">Delete</button>
+                <button onClick={cancelDelete} className="cancelButton">Cancel</button>
+              </>
+            )}
+          </div>
+        </div>
+      )}
     </ul>
   );
 }

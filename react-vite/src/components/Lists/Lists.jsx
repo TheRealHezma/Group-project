@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteListById, editListById } from '../../redux/list';
-import { FaTrash, FaEdit } from 'react-icons/fa';
+import { FaPlus, FaTrash, FaEdit } from 'react-icons/fa';
 import Card from '../Card/Card';
 import {
   getCardsByList,
@@ -13,8 +13,10 @@ import {
 } from '../../redux/card';
 import { useEffect, useState } from 'react';
 import styles from './Lists.module.css';
+import NewCardModal from './NewCardModal';
+import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
-const List = ({ list }) => {
+const List = ({ list, onListDeleted }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
   const cards = useSelector(
     (state) => state.cards.cardsByListId[list.id]?.Cards || []
@@ -22,8 +24,12 @@ const List = ({ list }) => {
 
   const dispatch = useDispatch();
 
-  useEffect(() => {
+  const reloadCards = () => {
     dispatch(getCardsByList(list.id));
+  };
+
+  useEffect(() => {
+    reloadCards();
   }, [dispatch, list.id]);
 
   const handleDelete = () => {
@@ -33,6 +39,9 @@ const List = ({ list }) => {
   const confirmDelete = () => {
     dispatch(deleteListById(list.id));
     setShowConfirmDelete(false);
+    if (onListDeleted) {
+      onListDeleted(); // Call the callback to refresh the lists
+    }
   };
 
   const cancelDelete = () => {
@@ -57,6 +66,7 @@ const List = ({ list }) => {
         description: newCardDescription,
       })
     );
+    reloadCards();
   };
 
   const handleLoadCardTasks = (cardId) => {
@@ -100,6 +110,7 @@ const List = ({ list }) => {
               onLoadCardTasks={handleLoadCardTasks}
               onEditTask={handleEditTask}
               onDeleteTask={handleDeleteTask}
+              reloadCards={reloadCards} // Pass reloadCards to Card component
             />
           ))}
         </div>
@@ -112,12 +123,21 @@ const List = ({ list }) => {
             <button onClick={handleDelete} className={styles.delete}><FaTrash /></button>
             <span className={styles.text}>Delete List</span>
           </div>
+          <div className={styles.actionItem}>
+            <OpenModalButton
+              buttonText={<FaPlus />}
+              modalComponent={<NewCardModal listId={list.id} onCardCreated={reloadCards} />}
+              className={styles.add}
+            />
+            <span className={styles.text}>Add Card</span>
+          </div>
         </div>
       </div>
       {showConfirmDelete && (
         <div className={styles.confirmModal}>
           <div className={styles.confirmModalContent}>
             <p>Are you sure you want to delete this list?</p>
+            <p className={styles.red}>Doing so will delete any cards, tasks and messages on the list.</p>
             <button onClick={confirmDelete} className={styles.confirmButton}>Delete</button>
             <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
           </div>

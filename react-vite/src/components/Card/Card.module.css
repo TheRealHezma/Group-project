@@ -112,6 +112,51 @@ button {
   margin: 5px 0;
 }
 
+.inputField {
+    margin: 20px;
+}
+
 .checkboxContainer {
   margin: 10px 0;
 }
+
+.confirmModal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .confirmModalContent {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+  }
+  
+  .confirmButton, .cancelButton {
+    margin: 10px;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .confirmButton {
+    background: red;
+    color: white;
+  }
+  
+  .cancelButton {
+    background: grey;
+    color: white;
+  }
+
+  .red {
+    color: red;
+  }

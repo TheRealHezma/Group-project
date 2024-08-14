@@ -30,6 +30,7 @@ a {
   height: 50px;
   width: auto;
   border-radius: 6px;
+  margin-left: -15px;
 }
 
 .logo:hover {

@@ -35,6 +35,7 @@
 .modal-content form {
   display: flex;
   flex-direction: column;
+  /* align-items: center; */
 }
 
 .modal-content label {
@@ -63,6 +64,9 @@
   transition: background-color 0.3s ease;
   width: 100%;
   margin-top: 10px;
+  /* added */
+  align-self: center;
+
 }
 
 .modal-button:hover {

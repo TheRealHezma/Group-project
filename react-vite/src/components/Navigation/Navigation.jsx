@@ -14,7 +14,6 @@ function Navigation({ isLoaded }) {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { openModal } = useModal();
   const [greeting, setGreeting] = useState('');
   const [userBoards, setUserBoards] = useState([]);
   const { id } = useParams();

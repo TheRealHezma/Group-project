@@ -14,7 +14,8 @@ function Navigation({ isLoaded }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState('');
-  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // State for confirmation popup
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(''); // State for error message
   const { id } = useParams();
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
@@ -53,13 +54,17 @@ function Navigation({ isLoaded }) {
 
   const handleDeleteBoard = () => {
     setShowConfirmDelete(true);
+    setErrorMessage('');
   };
 
-  const confirmDelete = () => {
-    dispatch(deleteBoardThunk(id)).then(() => {
+  const confirmDelete = async () => {
+    try {
+      await dispatch(deleteBoardThunk(id));
       navigate('/'); // redirect to home page
       setShowConfirmDelete(false);
-    });
+    } catch (error) {
+      setErrorMessage(error.message);
+    }
   };
 
   const cancelDelete = () => {
@@ -126,10 +131,19 @@ function Navigation({ isLoaded }) {
       {showConfirmDelete && (
         <div className="confirmModal">
           <div className="confirmModalContent">
-            <p>Are you sure you want to delete this board?</p>
-            <p className="red">Doing so will delete any lists, cards, tasks and messages on the board.</p>
-            <button onClick={confirmDelete} className="confirmButton">Delete</button>
-            <button onClick={cancelDelete} className="cancelButton">Cancel</button>
+            {errorMessage ? (
+              <>
+                <p>{errorMessage}</p>
+                <button onClick={cancelDelete} className="closeButton">Close</button>
+              </>
+            ) : (
+              <>
+                <p>Are you sure you want to delete this board?</p>
+                <p className="red">Doing so will delete any lists, cards, tasks and messages on the board.</p>
+                <button onClick={confirmDelete} className="confirmButton">Delete</button>
+                <button onClick={cancelDelete} className="cancelButton">Cancel</button>
+              </>
+            )}
           </div>
         </div>
       )}

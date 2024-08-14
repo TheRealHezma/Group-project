@@ -96,9 +96,19 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
   const response = await fetch(`/api/boards/${boardId}`, {
     method: 'DELETE',
   });
-  const deletedBoard = await response.json();
-  dispatch(deleteBoard(deletedBoard));
-  return deletedBoard;
+
+  if (response.ok) {
+    const deletedBoard = await response.json();
+    dispatch(deleteBoard(deletedBoard));
+    return deletedBoard;
+  } else {
+    const errorData = await response.json();
+    if (response.status === 403) {
+      throw new Error(errorData.message || 'You are not authorized to delete this board.');
+    } else {
+      throw new Error(errorData.message || 'An error occurred. Please try again.');
+    }
+  }
 };
 
 

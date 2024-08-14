@@ -3,7 +3,8 @@
     background-color: #333;
     color: #fff;
     text-align: center;
-    padding: 10px 10;
+    padding: 20px 20px;
+    margin-bottom: -14px;
     width: screen;
     /* width: 1555px; */
     /* position: fixed; */
@@ -14,6 +15,12 @@
     left: 0;
     right: 0; */
 
+}
+
+@media (max-width: 850px) {
+    .footer {
+        margin-bottom: 0px;
+    }
 }
 
 

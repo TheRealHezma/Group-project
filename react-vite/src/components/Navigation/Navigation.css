@@ -54,7 +54,6 @@ a {
   /* background-color: rgb(170, 208, 95); */
   background-color: #69bfd6;
 }
-
 .dropdown {
   position: relative;
 }
@@ -119,8 +118,36 @@ a {
 }
 
 .create-board-button:hover {
-  background-color: rgb(170, 208, 95);
-  ;
   /* background-color: rgb(170, 208, 95); */
   background-color: #69bfd6;
+}
+
+.edit-board-button {
+    background-color: #61dafb;
+    color: rgb(21, 21, 21);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.delete-board-button {
+    background-color: #61dafb;
+    color: rgb(21, 21, 21);
+    border: none;
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+.edit-board-button:hover {
+    background-color: #69bfd6;
+}
+
+.delete-board-button {
+    background-color: #69bfd6;
 }

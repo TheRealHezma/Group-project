@@ -19,6 +19,8 @@ import './CardDetails.css';
 import Card from '../components/Card/Card';
 import OpenModalButton from '../components/Card/cardDescriptionModal';
 import CardDetails from './CardDetails';
+
+
 const CardsTest = () => {
   const dispatch = useDispatch();
   const cards = useSelector((state) => state.cards.allCards);
@@ -71,13 +73,7 @@ const CardsTest = () => {
   const handleLoadCardTasks = (cardId) => {
     dispatch(getAllCardTasks(cardId));
   };
-//############################################################
-  const handleLoadComments = (cardId) => {
-    dispatch(getAllComments(cardId));
-    setCommentsLoaded((prev) => ({ ...prev, [cardId]: true }));
-    setCommentsOpen((prev) => ({ ...prev, [cardId]: true }));
-  };
-//###########################################################################
+
   const handleCreateComment = (e, cardId) => {
     e.preventDefault();
     if (!newComment.trim()) {

@@ -17,11 +17,9 @@ const BoardDetails = () => {
 
   useEffect(() => {
     dispatch(getBoard(id));
-  }, [dispatch, id]);
-
-  useEffect(() => {
     dispatch(getLists(id));
   }, [dispatch, id]);
+
 
   const openNewListModal = () => {
     setModalContent(<NewListForm boardId={id} />)

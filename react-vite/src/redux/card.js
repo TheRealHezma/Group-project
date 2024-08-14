@@ -1,15 +1,16 @@
 //ERIC HAS AN IMPROVED THUNK FOR GET ALL CARDS FOR LIST BY LIST ID THAT CAN BE ADDED -IT'S ON MY FORK RIGHT NOW
 
 //*VARIABLE TYPES
-const GET = 'cards/LOAD';
-const GET_BY_ID = 'cards/LOADONE';
-const EDIT_CARD = 'cards/EDIT';
-const DELETE_CARD = 'cards/DELETE';
-const GET_TASKS = 'cardTasks/LOAD';
-const CREATE_TASK = 'cardTasks/CREATE';
-const GET_TASK_BY_ID = 'cardTasks/LOADONE';
-const EDIT_TASK = 'cardTasks/EDIT';
-const DELETE_TASK = 'cardTasks/DELETE';
+const GET = "cards/LOAD";
+const GET_BY_ID = "cards/LOADONE";
+const EDIT_CARD = "cards/EDIT";
+const DELETE_CARD = "cards/DELETE";
+const GET_TASKS = "cardTasks/LOAD";
+const CREATE_TASK = "cardTasks/CREATE";
+const GET_TASK_BY_ID = "cardTasks/LOADONE";
+const EDIT_TASK = "cardTasks/EDIT";
+const DELETE_TASK = "cardTasks/DELETE";
+const GET_CARDS_BY_LIST = "cards/LOAD_BY_LIST";
 
 //*ACTIONS
 
@@ -21,7 +22,14 @@ const getCards = (cards) => {
   };
 };
 
-// get a card by card id
+// get all cards for a specific list id
+const getCardsByListAction = (listId, cards) => ({
+  type: GET_CARDS_BY_LIST,
+  listId,
+  cards,
+});
+
+// get a card by card_id
 const getCardById = (card) => {
   return {
     type: GET_BY_ID,
@@ -38,10 +46,11 @@ const editCard = (cardId) => {
 };
 
 // delete a card by id
-const deleteCard = (cardId) => {
+const deleteCard = (cardId, listId) => {
   return {
     type: DELETE_CARD,
     cardId,
+    listId,
   };
 };
 
@@ -93,6 +102,12 @@ export const getAllCards = (listId) => async (dispatch) => {
   dispatch(getCards(allListCards));
 };
 
+export const getCardsByList = (listId) => async (dispatch) => {
+  const response = await fetch(`/api/lists/${listId}/cards`);
+  const cards = await response.json();
+  dispatch(getCardsByListAction(listId, cards));
+};
+
 export const getCard = (cardId) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}/`);
   const card = await response.json();
@@ -101,9 +116,9 @@ export const getCard = (cardId) => async (dispatch) => {
 
 export const editCardById = (cardId, cardData) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(cardData),
   });
@@ -114,13 +129,13 @@ export const editCardById = (cardId, cardData) => async (dispatch) => {
   }
 };
 
-export const deleteCardById = (cardId) => async (dispatch) => {
+export const deleteCardById = (cardId, listId) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 
   if (response.ok) {
-    dispatch(deleteCard(cardId));
+    dispatch(deleteCard(cardId, listId));
   }
 };
 
@@ -132,9 +147,9 @@ export const getAllCardTasks = (cardId) => async (dispatch) => {
 
 export const createCardTask = (cardId, taskData) => async (dispatch) => {
   const response = await fetch(`/api/cards/${cardId}/cardtasks`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(taskData),
   });
@@ -153,9 +168,9 @@ export const getCardTask = (cardTaskId) => async (dispatch) => {
 
 export const editCardTaskById = (taskId, taskData) => async (dispatch) => {
   const response = await fetch(`/api/cardtasks/${taskId}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(taskData),
   });
@@ -168,7 +183,7 @@ export const editCardTaskById = (taskId, taskData) => async (dispatch) => {
 
 export const deleteCardTaskById = (taskId) => async (dispatch) => {
   const response = await fetch(`/api/cardtasks/${taskId}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 
   if (response.ok) {
@@ -182,6 +197,7 @@ const initialState = {
   currentCard: {},
   allCardTasks: {},
   currentCardTask: {},
+  cardsByListId: {},
 };
 
 const cardsReducer = (state = initialState, action) => {
@@ -196,32 +212,60 @@ const cardsReducer = (state = initialState, action) => {
         allCards: { ...allCards },
       };
     }
+    case GET_CARDS_BY_LIST: {
+      const { listId, cards } = action;
+      return {
+        ...state,
+        cardsByListId: {
+          ...state.cardsByListId,
+          [listId]: cards,
+        },
+      };
+    }
     case GET_BY_ID: {
       const currentCard = action.card;
       return { ...state, currentCard: currentCard };
     }
     case EDIT_CARD: {
-      const updatedCard = action.cardId;
+      const updatedCard = action.card;
+      const listId = updatedCard.list_id;
+      const cardToBeUpdated = state.cardsByListId[listId].Cards;
       return {
         ...state,
         allCards: {
           ...state.allCards,
           [updatedCard.id]: updatedCard,
         },
-        currentCard:
-          updatedCard.id === state.currentCard.id
-            ? updatedCard
-            : state.currentCard,
+        cardsByListId: {
+          ...state.cardsByListId,
+          [listId]: {
+            ...state.cardsByListId[listId],
+            Cards: cardToBeUpdated.map((card) =>
+              card.id === updatedCard.id ? updatedCard : card
+            ),
+          },
+        },
       };
     }
     case DELETE_CARD: {
       const newCards = { ...state.allCards };
+      const listId = action.listId;
+      const cardsNotToBeDeleted = state.cardsByListId[
+        action.listId
+      ].Cards.filter((card) => card.id != action.cardId);
       delete newCards[action.cardId];
       return {
         ...state,
         allCards: newCards,
         currentCard:
           state.currentCard.id === action.cardId ? {} : state.currentCard,
+        cardsByListId: {
+          ...state.cardsByListId,
+          [listId]: {
+            ...state.cardsByListId[listId],
+            Cards: cardsNotToBeDeleted,
+          },
+        },
       };
     }
     case GET_TASKS: {

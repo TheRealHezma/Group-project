@@ -118,6 +118,7 @@ const List = ({ list }) => {
         <div className={styles.confirmModal}>
           <div className={styles.confirmModalContent}>
             <p>Are you sure you want to delete this list?</p>
+            <p className={styles.red}>Doing so will delete any cards, tasks and messages on the list.</p>
             <button onClick={confirmDelete} className={styles.confirmButton}>Delete</button>
             <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
           </div>

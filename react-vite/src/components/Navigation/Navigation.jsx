@@ -16,6 +16,7 @@ function Navigation({ isLoaded }) {
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState('');
   const [userBoards, setUserBoards] = useState([]);
+  const [showConfirmDelete, setShowConfirmDelete] = useState(false); // State for confirmation popup
   const { id } = useParams();
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
@@ -39,11 +40,19 @@ function Navigation({ isLoaded }) {
     setUserBoards(Object.values(boards));
   }, [boards]);
 
-  const handleDeleteBoard = (boardId) => {
-    dispatch(deleteBoardThunk(boardId)).then(() => {
-        navigate('/');                       // redirect to home page
-    });
+  const handleDeleteBoard = () => {
+    setShowConfirmDelete(true);
+  };
 
+  const confirmDelete = () => {
+    dispatch(deleteBoardThunk(id)).then(() => {
+      navigate('/'); // redirect to home page
+      setShowConfirmDelete(false);
+    });
+  };
+
+  const cancelDelete = () => {
+    setShowConfirmDelete(false);
   };
 
   const currentBoard = userBoards.find((board) => board.id === Number(id));
@@ -60,14 +69,14 @@ function Navigation({ isLoaded }) {
           {location.pathname === `/boards/${id}` ? (
             <>
               <li>
-                <OpenModalButton 
-                buttonText={'Edit Board'}
-                modalComponent={<EditBoardModal boardId={id} />}
-                className="edit-board-button"
+                <OpenModalButton
+                  buttonText={'Edit Board'}
+                  modalComponent={<EditBoardModal boardId={id} />}
+                  className="edit-board-button"
                 />
               </li>
               <li>
-                <button onClick={() => handleDeleteBoard(id)} className='delete-board-button'>Delete Board</button>
+                <button onClick={handleDeleteBoard} className='delete-board-button'>Delete Board</button>
               </li>
             </>
           ) : (
@@ -104,6 +113,17 @@ function Navigation({ isLoaded }) {
       <li>
         <ProfileButton />
       </li>
+
+      {showConfirmDelete && (
+        <div className="confirmModal">
+          <div className="confirmModalContent">
+            <p>Are you sure you want to delete this board?</p>
+            <p className="red">Doing so will delete any lists, cards, tasks and messages on the board.</p>
+            <button onClick={confirmDelete} className="confirmButton">Delete</button>
+            <button onClick={cancelDelete} className="cancelButton">Cancel</button>
+          </div>
+        </div>
+      )}
     </ul>
   );
 }

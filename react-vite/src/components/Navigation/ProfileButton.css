@@ -5,7 +5,6 @@
 
 .profile-button {
     color: rgb(21, 21, 21);
-    /* background: rgb(200, 250, 100); */
     background-color: #61dafb;
     border: none;
     padding: 8px 16px;
@@ -14,26 +13,24 @@
     cursor: pointer;
     display: flex;
     align-items: center;
+    justify-content: center;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .profile-button:hover {
-    /* background-color: rgb(170, 208, 95); */
     background-color: #69bfd6;
 }
- 
+
 .profile-dropdown {
     display: none;
     position: absolute;
     top: 100%;
     right: 0;
-    /* background-color: rgb(200, 250, 100); */
     background-color: #61dafb;
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 120px;
-    /* Reduced the width */
     z-index: 1;
 }
 
@@ -43,15 +40,16 @@
 
 .profile-dropdown li {
     padding: 8px 12px;
-    /* Adjusted padding */
     color: #333;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    /* list-style: none; */
+    list-style: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-dropdown li:hover {
-    /* background: rgb(200, 250, 100); */
     background-color: #69bfd6;
 }
 
@@ -59,6 +57,10 @@
     font-size: 14px;
     color: #333;
     cursor: default;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .profile-info:hover {
@@ -68,7 +70,6 @@
 .profile-dropdown button,
 .profile-logout button {
     width: 100%;
-    /* background-color: rgb(200, 250, 100); */
     background-color: #61dafb;
     color: rgb(21, 21, 21);
     border: none;
@@ -76,10 +77,14 @@
     border-radius: 4px;
     cursor: pointer;
     font-size: 14px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
 }
 
 .profile-dropdown button:hover,
 .profile-logout button:hover {
-    /* background-color: rgb(170, 208, 95); */
     background-color: #69bfd6;
 }

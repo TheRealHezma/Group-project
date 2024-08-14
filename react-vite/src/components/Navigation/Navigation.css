@@ -192,8 +192,8 @@ a {
   }
 
   .closeButton {
-    background: grey;
-    color: white;
+    background: #61dafb;
+    color: rgb(18, 18, 18);
   }
 
   .red {

@@ -1,12 +1,22 @@
-import { useDispatch, useSelector } from "react-redux";
-import { deleteListById, editListById } from "../../redux/list";
-import Card from "../Card/Card";
-import { getCardsByList, deleteCardById, editCardById, createCardTask, getAllCardTasks, deleteCardTaskById, editCardTaskById } from "../../redux/card";
-import { useEffect } from "react";
-import "./Lists.css";
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteListById, editListById } from '../../redux/list';
+import Card from '../Card/Card';
+import {
+  getCardsByList,
+  deleteCardById,
+  editCardById,
+  createCardTask,
+  getAllCardTasks,
+  deleteCardTaskById,
+  editCardTaskById,
+} from '../../redux/card';
+import { useEffect } from 'react';
+import './Lists.css';
 
 const List = ({ list }) => {
-  const cards = useSelector((state) => state.cards.cardsByListId[list.id]?.Cards || []);
+  const cards = useSelector(
+    (state) => state.cards.cardsByListId[list.id]?.Cards || []
+  );
 
   const dispatch = useDispatch();
 
@@ -19,7 +29,7 @@ const List = ({ list }) => {
   };
 
   const handleEdit = () => {
-    const newName = prompt("Enter new list name:", list.name); //I NEED TO CHANGE THIS STOP FORGETTING
+    const newName = prompt('Enter new list name:', list.name); //I NEED TO CHANGE THIS STOP FORGETTING
     if (newName) {
       dispatch(editListById(list.id, { name: newName }));
     }

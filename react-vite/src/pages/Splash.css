@@ -11,8 +11,13 @@
 
 .gradient-background {
   background: rgb(48, 49, 54);
-  background: linear-gradient(173deg, rgba(48, 49, 54, 1) 64%, rgba(127, 127, 138, 1) 100%, rgba(77, 73, 142, 1) 100%);
-  width: 1479px;
+  background: linear-gradient(
+    173deg,
+    rgba(48, 49, 54, 1) 64%,
+    rgba(127, 127, 138, 1) 100%,
+    rgba(77, 73, 142, 1) 100%
+  );
+  width: 100%;
   /* width WAS set to 100%, changed to test screen size */
   height: 120%;
   position: absolute;

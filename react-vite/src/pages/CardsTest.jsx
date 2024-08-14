@@ -133,14 +133,6 @@ const CardsTest = () => {
       });
   };
 
-  const toggleCommentsSection = (cardId) => {
-    setCommentsOpen((prev) => ({
-      ...prev,
-      [cardId]: !prev[cardId],
-    }));
-  };
-
-
 
   return (
     <div className="splash-container">

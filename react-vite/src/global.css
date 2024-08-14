@@ -2,10 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
 body {
-  margin: 0;
+  margin: 6px;
   font-family: 'Poppins', sans-serif;
   background-color: #282c34;
   color: white;
+}
+
+input {
+  border-radius: 4px;
 }
 
 h1, h2, h3, h4, h5, h6 {

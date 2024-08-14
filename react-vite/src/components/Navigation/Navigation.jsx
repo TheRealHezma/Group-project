@@ -1,12 +1,20 @@
-import { NavLink, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { NavLink, useParams, useLocation } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import './Navigation.css';
 import { useEffect, useState } from 'react';
+import { deleteBoardThunk } from '../../redux/board';
+import { useModal } from '../../context/Modal';
 import NewBoardModal from '../NewBoardModal/NewBoardModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
+import EditBoardModal from './EditBoardModal';
+import { useNavigate } from 'react-router-dom';
+import './Navigation.css';
 
 function Navigation({ isLoaded }) {
+  const location = useLocation();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { openModal } = useModal();
   const [greeting, setGreeting] = useState('');
   const [userBoards, setUserBoards] = useState([]);
   const { id } = useParams();
@@ -32,6 +40,12 @@ function Navigation({ isLoaded }) {
     setUserBoards(Object.values(boards));
   }, [boards]);
 
+  const handleDeleteBoard = (boardId) => {
+    dispatch(deleteBoardThunk(boardId)).then(() => {
+        navigate('/');                       // redirect to home page
+    });
+
+  };
 
   const currentBoard = userBoards.find((board) => board.id === Number(id));
 
@@ -44,31 +58,46 @@ function Navigation({ isLoaded }) {
       </li>
       {isLoaded && user && (
         <>
-          <li>
-            <OpenModalButton
-              buttonText={'Create Board'}
-              modalComponent={<NewBoardModal />}
-              className="create-board-button"
-            />
-          </li>
+          {location.pathname === `/boards/${id}` ? (
+            <>
+              <li>
+                <OpenModalButton 
+                buttonText={'Edit Board'}
+                modalComponent={<EditBoardModal boardId={id} />}
+                className="edit-board-button"
+                />
+              </li>
+              <li>
+                <button onClick={() => handleDeleteBoard(id)} className='delete-board-button'>Delete Board</button>
+              </li>
+            </>
+          ) : (
+            <li>
+              <OpenModalButton
+                buttonText={'Create Board'}
+                modalComponent={<NewBoardModal />}
+                className="create-board-button"
+              />
+            </li>
+          )}
           <li className="dropdown middle">
             <div className="dropdown-wrapper">
               <button className="dropdown-toggle">
                 {currentBoard ? currentBoard.name : 'My Boards'}
                 <span className="arrow-down">▼</span>
               </button>
-                <ul className="dropdown-menu">
-                  {userBoards.length > 0 ? (
-                    userBoards.map((board) => (
-                      <li key={board.id}>
-                        <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
-                      </li>
-                    ))
-                  ) : (
-                    <li>No boards available</li>
-                  )}
-                </ul>
-              </div>
+              <ul className="dropdown-menu">
+                {userBoards.length > 0 ? (
+                  userBoards.map((board) => (
+                    <li key={board.id}>
+                      <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
+                    </li>
+                  ))
+                ) : (
+                  <li>No boards available</li>
+                )}
+              </ul>
+            </div>
           </li>
         </>
       )}

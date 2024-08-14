@@ -1,25 +1,24 @@
 /* src/pages/Splash.css */
 .splash-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  padding: 20px;
-  position: relative;
-  height: 110%;
-}
-
-.gradient-background {
-  background: rgb(48, 49, 54);
-  background: linear-gradient(173deg, rgba(48, 49, 54, 1) 64%, rgba(127, 127, 138, 1) 100%, rgba(77, 73, 142, 1) 100%);
-  width: 1479px;
-  /* width WAS set to 100%, changed to test screen size */
-  height: 120%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: -1;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 20px;
+    position: relative;
+    height: 110%;
+  }
+  
+  /* .gradient-background {
+    background: rgb(48,49,54);
+    background: linear-gradient(173deg, rgba(48,49,54,1) 64%, rgba(127,127,138,1) 100%, rgba(77,73,142,1) 100%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  } */
 
 @media (max-width: 1024px) {
   .gradient-background {
@@ -121,7 +120,8 @@ h3 {
 
 .signup-container button {
   padding: 10px 20px;
-  background-color: rgb(200, 250, 100);
+  /* background-color: #bdd42a; */
+  background-color: #61dafb;
   color: rgb(57, 57, 57);
   font-weight: 600;
   border: none;
@@ -132,7 +132,8 @@ h3 {
 }
 
 .signup-container button:hover {
-  background-color: rgb(170, 208, 95);
+  /* background-color: rgb(170, 208, 95); */
+  background-color: #69bfd6;
 }
 
 .boards-container {

@@ -2,8 +2,7 @@ import { NavLink, useParams, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import { useEffect, useState } from 'react';
-import { deleteBoardThunk } from '../../redux/board';
-import { useModal } from '../../context/Modal';
+import { deleteBoardThunk, getAllBoards } from '../../redux/board';
 import NewBoardModal from '../NewBoardModal/NewBoardModal';
 import OpenModalButton from '../OpenModalButton/OpenModalButton';
 import EditBoardModal from './EditBoardModal';
@@ -15,11 +14,17 @@ function Navigation({ isLoaded }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [greeting, setGreeting] = useState('');
-  const [userBoards, setUserBoards] = useState([]);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false); // State for confirmation popup
   const { id } = useParams();
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
+  const [currentBoardName, setCurrentBoardName] = useState('My Boards');
+
+  useEffect(() => {
+    if (user) {
+      dispatch(getAllBoards(user.id));
+    }
+  }, [dispatch, user]);
 
   useEffect(() => {
     const currentHour = new Date().getHours();
@@ -37,8 +42,14 @@ function Navigation({ isLoaded }) {
   }, []);
 
   useEffect(() => {
-    setUserBoards(Object.values(boards));
-  }, [boards]);
+    const userBoards = Object.values(boards);
+    const currentBoard = userBoards.find((board) => board.id === Number(id));
+    if (currentBoard) {
+      setCurrentBoardName(currentBoard.name);
+    } else {
+      setCurrentBoardName('My Boards');
+    }
+  }, [boards, id]);
 
   const handleDeleteBoard = () => {
     setShowConfirmDelete(true);
@@ -54,8 +65,6 @@ function Navigation({ isLoaded }) {
   const cancelDelete = () => {
     setShowConfirmDelete(false);
   };
-
-  const currentBoard = userBoards.find((board) => board.id === Number(id));
 
   return (
     <ul className="navigation">
@@ -91,12 +100,12 @@ function Navigation({ isLoaded }) {
           <li className="dropdown middle">
             <div className="dropdown-wrapper">
               <button className="dropdown-toggle">
-                {currentBoard ? currentBoard.name : 'My Boards'}
+                {currentBoardName}
                 <span className="arrow-down">▼</span>
               </button>
               <ul className="dropdown-menu">
-                {userBoards.length > 0 ? (
-                  userBoards.map((board) => (
+                {Object.values(boards).length > 0 ? (
+                  Object.values(boards).map((board) => (
                     <li key={board.id}>
                       <NavLink to={`/boards/${board.id}`}>{board.name}</NavLink>
                     </li>

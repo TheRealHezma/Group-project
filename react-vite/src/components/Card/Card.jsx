@@ -43,7 +43,7 @@ const Card = ({
     setNewCardTitle('');
     setNewCardDescription('');
     setIsEditingCard(false);
-    reloadCards(); // Call reloadCards to refresh the list
+    reloadCards();
   };
 
   const handleAddTask = () => {

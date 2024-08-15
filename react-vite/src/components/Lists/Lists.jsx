@@ -110,7 +110,7 @@ const List = ({ list, onListDeleted }) => {
               onLoadCardTasks={handleLoadCardTasks}
               onEditTask={handleEditTask}
               onDeleteTask={handleDeleteTask}
-              reloadCards={reloadCards} // Pass reloadCards to Card component
+              reloadCards={reloadCards}
             />
           ))}
         </div>

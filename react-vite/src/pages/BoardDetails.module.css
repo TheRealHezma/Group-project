@@ -18,5 +18,13 @@
 
   .listsContainer {
     display: flex;
+    flex-direction: row;
     margin-bottom: 140px;
+  }
+
+  @media screen and (max-width: 780px) {
+    .listsContainer {
+      flex-direction: column;
+    }
+    
   }

@@ -27,7 +27,7 @@
 .page-container {
     display: flex;
     flex-direction: column;
-    height: 1000px;
+    height: screen;
     width: screen
         /* elements overflowing */
 }

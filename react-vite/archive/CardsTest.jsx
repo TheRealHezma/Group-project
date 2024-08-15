@@ -8,16 +8,16 @@ import {
   getAllCardTasks,
   editCardTaskById,
   deleteCardTaskById,
-} from '../redux/card';
+} from '../src/redux/card';
 import {
   getAllComments,
   createNewComment,
   updateComment,
   removeComment,
-} from '../redux/comment';
+} from '../src/redux/comment';
 import './CardDetails.css';
-import Card from '../components/Card/Card';
-import OpenModalButton from '../components/Card/cardDescriptionModal';
+import Card from '../src/components/Card/Card';
+import OpenModalButton from '../src/components/Card/cardDescriptionModal';
 import CardDetails from './CardDetails';
 
 

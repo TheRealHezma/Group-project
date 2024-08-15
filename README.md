@@ -1,3 +1,7 @@
+
+![TaskWaveLogo4](https://github.com/user-attachments/assets/aae98d60-c539-45cb-beb8-9eb5ba024624)
+
+
 # Task Wave Kanban-Style Organization Tool
 
 This is the starter for the Flask React project.

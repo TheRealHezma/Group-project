@@ -29,7 +29,7 @@ const BoardDetails = () => {
   };
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       {currentBoard ? (
         <div>
           <h1>{currentBoard.name}</h1>

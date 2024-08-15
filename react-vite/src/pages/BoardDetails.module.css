@@ -1,3 +1,7 @@
+.wrapper {
+    margin: 60px;
+}
+
 .listCard {
     border: 1px solid #ccc;
     padding: 10px;
@@ -18,5 +22,13 @@
 
   .listsContainer {
     display: flex;
+    flex-direction: row;
     margin-bottom: 140px;
+  }
+
+  @media screen and (max-width: 780px) {
+    .listsContainer {
+      flex-direction: column;
+    }
+    
   }

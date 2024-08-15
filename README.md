@@ -1,8 +1,8 @@
-# Flask React Project
+# Task Wave Kanban-Style Organization Tool
 
 This is the starter for the Flask React project.
 
-## Getting started
+## If You Want to Run The App in Your Own Environment Start Here ---->
 
 1. Clone this repository (only this branch).
 

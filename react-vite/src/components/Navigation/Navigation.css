@@ -37,6 +37,30 @@ a {
   transform: scale(1.05);
 }
 
+@media (max-width: 1000px) {
+  .logo {
+    margin-left: -14;
+    height: 35px;
+    padding: 0;
+  }
+  .dropdown {
+    display: none;
+  }
+  .create-board-button {
+    font-size: 10px;
+    height: 40px;
+    margin-left: -10;
+  }
+  .edit-board-button {
+    font-size: 10px;
+    height: 44px;
+  }
+  .delete-board-button {
+      font-size: 10px;
+      height: 44px;
+    }
+}
+
 .new_Board,
 /* .create-board-button, */
 .dropdown-toggle {
@@ -149,7 +173,7 @@ a {
     background-color: #69bfd6;
 }
 
-.delete-board-button {
+.delete-board-button:hover {
     background-color: #69bfd6;
 }
 

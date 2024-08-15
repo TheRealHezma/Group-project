@@ -257,6 +257,7 @@ const CardDetailsModal = ({ id }) => {
                                     placeholder="Edit comment"
                                   />
                                   <button onClick={() => handleEditComment(comment.id, thisCard.id)}>Save</button>
+                                  <button onClick={() => setEditMode((prev) => ({ ...prev, [comment.id]: false }))}>Cancel</button>
                                 </>
                               ) : (
                                 <>

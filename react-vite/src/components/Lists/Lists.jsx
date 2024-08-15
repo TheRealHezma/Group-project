@@ -18,6 +18,9 @@ import OpenModalButton from '../OpenModalButton/OpenModalButton';
 
 const List = ({ list, onListDeleted }) => {
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [showEditConfirm, setShowEditConfirm] = useState(false);
+  const [newListName, setNewListName] = useState(list.name);
+
   const cards = useSelector(
     (state) => state.cards.cardsByListId[list.id]?.Cards || []
   );
@@ -49,10 +52,7 @@ const List = ({ list, onListDeleted }) => {
   };
 
   const handleEdit = () => {
-    const newName = prompt('Enter new list name:', list.name);
-    if (newName) {
-      dispatch(editListById(list.id, { name: newName }));
-    }
+    setShowEditConfirm(true);
   };
 
   const handleDeleteCard = (cardId) => {
@@ -140,6 +140,40 @@ const List = ({ list, onListDeleted }) => {
             <p className={styles.red}>Doing so will delete any cards, tasks and messages on the list.</p>
             <button onClick={confirmDelete} className={styles.confirmButton}>Delete</button>
             <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
+          </div>
+        </div>
+      )}
+      {showEditConfirm && (
+        <div className={styles.confirmModal}>
+          <div className={styles.confirmModalContent}>
+          <form onSubmit={(e) => e.preventDefault()}>
+              <label htmlFor="editListName">Enter new list name:</label>
+              <input
+                id="editListName"
+                type="text"
+                value={newListName}
+                onChange={(e) => setNewListName(e.target.value)}
+              />
+              <div className={styles.buttons}>
+                <button
+                  onClick={() => {
+                    if (newListName.trim()) {
+                      dispatch(editListById(list.id, { name: newListName.trim() }));
+                      setShowEditConfirm(false);
+                    }
+                  }}
+                  className={styles.confirmButton}
+                >
+                  Confirm
+                </button>
+                <button
+                  onClick={() => setShowEditConfirm(false)}
+                  className={styles.cancelButton}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
           </div>
         </div>
       )}

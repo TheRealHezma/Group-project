@@ -123,7 +123,7 @@ function Navigation({ isLoaded }) {
           </li>
         </>
       )}
-      <li>{greeting}</li>
+      <li className='greeting'>{greeting}</li>
       <li>
         <ProfileButton />
       </li>

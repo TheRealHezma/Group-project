@@ -1,183 +1,111 @@
 /* src/Navigation.css */
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #20232a;
-  padding: 10px 20px;
-  width: screen;
-  /* width: 1555px; */
-}
-
-li {
-  margin: 0 15px;
-  color: rgb(201, 201, 197)
-}
-
-a {
-  color: rgb(255, 255, 255);
-  text-decoration: none;
-  font-weight: 500;
-  padding: 8px 16px;
-  border-radius: 4px;
-  transition: background-color 0.3s ease;
-}
-
-.logo {
-  height: 50px;
-  width: auto;
-  border-radius: 6px;
-  margin-left: -15px;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-@media (max-width: 1000px) {
+ul.navigation {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #20232a;
+    padding: 10px 20px;
+    width: 100%;
+  }
+  
+  li {
+    margin: 0 10px;
+    color: rgb(201, 201, 197);
+  }
+  
+  a {
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+  }
+  
   .logo {
-    margin-left: -14;
-    height: 35px;
+    height: 50px;
+    border-radius: 6px;
+    margin-left: -48px;
+  }
+  
+  .logo:hover {
+    transform: scale(1.05);
+  }
+  
+  .dropdown-wrapper {
+    display: inline-block;
+    white-space: nowrap;
+    width: 120px;
+  }
+  
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #61dafb;
+    border: 1px solid #ddd;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    list-style: none;
+    margin: 0;
     padding: 0;
   }
-  .dropdown {
-    display: none;
+  
+  .dropdown:hover .dropdown-menu {
+    display: block;
+    background-color: #69bfd6;
   }
-  .create-board-button {
-    font-size: 10px;
-    height: 40px;
-    margin-left: -10;
+  
+  .dropdown-menu li {
+    margin: 0;
   }
-  .edit-board-button {
-    font-size: 10px;
-    height: 44px;
+  
+  .dropdown-menu a {
+    display: block;
+    color: black;
+    text-decoration: none;
+    padding: 8px 16px;
+    border-bottom: 1px solid #ddd;
   }
-  .delete-board-button {
-      font-size: 10px;
-      height: 44px;
-    }
-}
-
-.new_Board,
-/* .create-board-button, */
-.dropdown-toggle {
-  color: rgb(21, 21, 21);
-  /* background: rgb(200, 250, 100); */
-  background-color: #61dafb;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.new_Board:hover,
-/* .create-board-button, */
-.dropdown-toggle:hover {
-  /* background-color: rgb(170, 208, 95); */
-  background-color: #69bfd6;
-}
-.dropdown {
-  position: relative;
-}
-
-.dropdown-menu {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  /* background-color: rgb(200, 250, 100); */
-  background-color: #61dafb;
-  border: 1px solid #ddd;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.dropdown:hover .dropdown-menu {
-  display: block;
-  /* background-color: rgb(170, 208, 95); */
-  background-color: #69bfd6;
-}
-
-.dropdown-menu li {
-  margin: 0;
-}
-
-.dropdown-menu a {
-  display: block;
-  color: black;
-  text-decoration: none;
-  padding: 8px 16px;
-  border-bottom: 1px solid #ddd;
-}
-
-.dropdown-menu a:hover {
-  background-color: #f0f0f0;
-}
-
-.dropdown-menu li:last-child a {
-  border-bottom: none;
-}
-
-.dropdown-wrapper {
-  display: inline-block;
-  width: 200px;
-  white-space: nowrap;
-}
-
-.create-board-button {
-  /* background-color: rgb(200, 250, 100); */
-  background-color: #61dafb;
-  color: rgb(21, 21, 21);
-  border: none;
-  padding: 8px 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.create-board-button:hover {
-  /* background-color: rgb(170, 208, 95); */
-  background-color: #69bfd6;
-}
-
-.edit-board-button {
+  
+  .dropdown-menu a:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .dropdown-menu li:last-child a {
+    border-bottom: none;
+  }
+  
+  .create-board-button,
+  .edit-board-button,
+  .delete-board-button,
+  .dropdown-toggle {
     background-color: #61dafb;
     color: rgb(21, 21, 21);
     border: none;
-    padding: 8px 16px;
+    padding: 8px 10px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 12px;
     transition: background-color 0.3s ease;
-}
-
-.delete-board-button {
-    background-color: #61dafb;
-    color: rgb(21, 21, 21);
-    border: none;
-    padding: 8px 16px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease;
-}
-
-.edit-board-button:hover {
+  }
+  
+  .create-board-button:hover,
+  .edit-board-button:hover,
+  .delete-board-button:hover,
+  .dropdown-toggle:hover {
     background-color: #69bfd6;
-}
-
-.delete-board-button:hover {
-    background-color: #69bfd6;
-}
-
-.confirmModal {
+  }
+  
+  .confirmModal {
     position: fixed;
     top: 0;
     left: 0;
@@ -197,7 +125,8 @@ a {
     text-align: center;
   }
   
-  .confirmButton, .cancelButton {
+  .confirmButton,
+  .cancelButton {
     margin: 10px;
     padding: 10px 20px;
     border: none;
@@ -214,12 +143,61 @@ a {
     background: grey;
     color: white;
   }
-
+  
   .closeButton {
     background: #61dafb;
     color: rgb(18, 18, 18);
   }
-
+  
   .red {
     color: red;
   }
+  
+  .profile-button {
+    margin-right: 20px;
+  }
+  
+  @media (max-width: 1030px) {
+    /* ul.navigation {
+      flex-direction: column;
+      align-items: flex-start;
+    } */
+  
+    .logo-container {
+      margin-bottom: 2px;
+    }
+  
+    .dropdown,
+    .greeting {
+      display: none;
+    }
+    
+    .logo {
+        height: 30px;
+        margin-left: 1px;
+    }
+    .create-board-button,
+    .edit-board-button,
+    .delete-board-button {
+      font-size: 10px;
+      padding: 6px 10px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    ul.navigation {
+      align-items: center;
+    }
+  
+    .logo {
+      height: 30px;
+    }
+  
+    .create-board-button,
+    .edit-board-button,
+    .delete-board-button {
+      font-size: 10px;
+      padding: 4px 8px;
+    }
+  }
+  

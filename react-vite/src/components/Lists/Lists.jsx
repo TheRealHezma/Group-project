@@ -127,7 +127,7 @@ const List = ({ list, onListDeleted }) => {
             <OpenModalButton
               buttonText={<FaPlus />}
               modalComponent={<NewCardModal listId={list.id} onCardCreated={reloadCards} />}
-              className={styles.add}
+              className={styles.addCard}
             />
             <span className={styles.text}>Add Card</span>
           </div>

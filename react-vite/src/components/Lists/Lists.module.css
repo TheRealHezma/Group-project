@@ -73,6 +73,13 @@ button + button {
     font-size: 14px;
 }
 
+.addCard {
+    background-color: #a3e929;
+    color: black;
+    opacity: .8;
+    font-size: 14px;
+}
+
 .text {
     font-size: 14px;
     color: black;

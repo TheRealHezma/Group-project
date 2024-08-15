@@ -42,3 +42,35 @@
 }
 
 /* Takes up remaining space */
+
+
+/* src/components/Footer/Footer.css */
+/* .footer {
+    background-color: #20232a;
+    color: #fff;
+    text-align: center;
+    padding: 20px 20px;
+    margin-bottom: screen;
+    width: screen;
+}
+
+@media (max-width: 850px) {
+    .footer {
+        margin-bottom: 0px;
+    }
+}
+
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    height: screen;
+    width: screen;
+}
+
+
+.content-wrap {
+    padding-bottom: 60px;
+    flex: 1;
+}
+ */

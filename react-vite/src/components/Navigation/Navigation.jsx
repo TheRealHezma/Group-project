@@ -20,6 +20,7 @@ function Navigation({ isLoaded }) {
   const user = useSelector((state) => state.session.user);
   const boards = useSelector((state) => state.boards.allBoards);
   const [currentBoardName, setCurrentBoardName] = useState('My Boards');
+  const [isBoardOwner, setIsBoardOwner] = useState(false);
 
   useEffect(() => {
     if (user) {
@@ -45,12 +46,15 @@ function Navigation({ isLoaded }) {
   useEffect(() => {
     const userBoards = Object.values(boards);
     const currentBoard = userBoards.find((board) => board.id === Number(id));
+
     if (currentBoard) {
       setCurrentBoardName(currentBoard.name);
+      setIsBoardOwner(currentBoard.owner_id === user.id); // Check if the current user is the board owner
     } else {
       setCurrentBoardName('My Boards');
+      setIsBoardOwner(false);
     }
-  }, [boards, id]);
+  }, [boards, id, user]);
 
   const handleDeleteBoard = () => {
     setShowConfirmDelete(true);
@@ -82,16 +86,20 @@ function Navigation({ isLoaded }) {
         <>
           {location.pathname === `/boards/${id}` ? (
             <>
-              <li>
-                <OpenModalButton
-                  buttonText={'Edit Board'}
-                  modalComponent={<EditBoardModal boardId={id} />}
-                  className="edit-board-button"
-                />
-              </li>
-              <li>
-                <button onClick={handleDeleteBoard} className='delete-board-button'>Delete Board</button>
-              </li>
+              {isBoardOwner && ( // Only show edit and delete options if the user is the board owner
+                <>
+                  <li>
+                    <OpenModalButton
+                      buttonText={'Edit Board'}
+                      modalComponent={<EditBoardModal boardId={id} />}
+                      className="edit-board-button"
+                    />
+                  </li>
+                  <li>
+                    <button onClick={handleDeleteBoard} className='delete-board-button'>Delete Board</button>
+                  </li>
+                </>
+              )}
             </>
           ) : (
             <li>

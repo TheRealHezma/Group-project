@@ -1,17 +1,19 @@
 import { useState } from 'react';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { editBoardThunk } from '../../redux/board';
 import { useModal } from '../../context/Modal';
 
-function NewBoardModal() {
+function NewBoardModal({ currentBoardName }) {
   const dispatch = useDispatch();
-  const [boardName, setBoardName] = useState('');
-  const [description, setDescription] = useState('');
+  const currentBoard = useSelector((state) => state.boards.currentBoard.Board);
+  const [boardName, setBoardName] = useState(currentBoardName);
+  const [description, setDescription] = useState(
+    currentBoard.description || ''
+  );
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false); // Added loading state
-  const currentBoard = useSelector((state) => state.boards.currentBoard.Board);
-  const { closeModal } = useModal();
 
+  const { closeModal } = useModal();
 
   const handleSubmit = async (e) => {
     e.preventDefault();

@@ -63,7 +63,6 @@
 
 .cardComments {
     width: 60%;
-    height: 50vh;
     background-color: slategray;
     color: rgb(246, 242, 225);
     border: solid rgb(92, 90, 90) 1px;
@@ -97,6 +96,8 @@
     flex-direction: column;
     align-items: center;
     max-height: 40vh;
+    overflow-y: auto; /* Enables vertical scrolling */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 /* Style the scrollbar */
@@ -175,4 +176,3 @@
     white-space: normal; 
     font-size: 20px;
 }
-

@@ -91,6 +91,7 @@ const Card = ({
               placeholder="New Task"
               value={taskDescription}
               onChange={(e) => setTaskDescription(e.target.value)}
+              required
             />
             <button className={styles.taskButton} onClick={handleAddTask}>
               Submit Task

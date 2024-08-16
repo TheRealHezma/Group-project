@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { getCard, createCardTask, getAllCardTasks, editCardTaskById, deleteCardTaskById } from '../../redux/card';
@@ -12,6 +12,9 @@ const CardDetailsModal = ({ id }) => {
     const comments = useSelector((state) => Object.values(state.comments.allCommentsByCard[thisCard.id] || {}));
     const tasks = useSelector((state) => Object.values(state.cards.allCardTasks).filter(task => task.card_id === id));
     
+
+    const [isEditingTask, setIsEditingTask] = useState(false);
+    const [isAddingTask, setIsAddingTask] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [editCommentData, setEditCommentData] = useState({});
     const [editMode, setEditMode] = useState({});
@@ -39,9 +42,16 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const toggleEditTask = (task) => {
-        setEditingTaskId(task.id);
-        setEditTaskDescription(task.description);
-        setEditTaskCompleted(task.completed);
+
+        if (editingTaskId === task.id) {
+            setIsEditingTask(false);
+            setEditingTaskId(null);
+        } else {
+            setIsEditingTask(true);
+            setEditingTaskId(task.id);
+            setEditTaskDescription(task.description);
+            setEditTaskCompleted(task.completed);
+        }
     };
 
     const handleEditTask = (taskId) => {
@@ -90,7 +100,11 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const handleEditButtonClick = (commentId) => {
-        setEditMode((prev) => ({ ...prev, [commentId]: true }));
+
+        setEditMode((prev) => ({
+            ...prev,
+            [commentId]: !prev[commentId]
+        }));
     };
 
     const handleBackgroundClick = (e) => {
@@ -122,7 +136,8 @@ const CardDetailsModal = ({ id }) => {
                         ) : (
                             tasks.map((task) => (
                                 <div key={task.id} className={styles.taskItem}>
-                                    <p className={styles.taskDescription}>{task.description}</p>
+                                    <p className={styles.taskDescription} title={task.description} >{task.description}</p>
+
                                     <div className={styles.taskIcons}>
                                         <FaEdit className={styles.icon} onClick={() => toggleEditTask(task)} />
                                         <FaTrash className={styles.icon} onClick={() => handleDeleteCardTask(task.id)} />
@@ -133,8 +148,11 @@ const CardDetailsModal = ({ id }) => {
                                                 type="text"
                                                 value={editTaskDescription}
                                                 onChange={(e) => setEditTaskDescription(e.target.value)}
+
+                                                className={styles.taskInput}
                                             />
-                                            <button onClick={() => handleEditTask(task.id)}>Save</button>
+                                            <button onClick={() => handleEditTask(task.id)} className={styles.button} >Save</button>
+
                                         </div>
                                     )}
                                 </div>
@@ -161,7 +179,9 @@ const CardDetailsModal = ({ id }) => {
                                     .map((comment) => (
                                         <li key={comment.id} className={styles.commentItem}>
                                             <span className={styles.commentText}>
-                                                {{comment.username}} wrote: {comment.content} - {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })}
+
+                                                On: {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })} - {comment.username} wrote: {comment.content} - 
+
                                             </span>
                                             <div className={styles.commentIcons}>
                                                 <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment.id)} />

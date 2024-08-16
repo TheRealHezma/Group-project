@@ -16,7 +16,7 @@
     width: 50vw;
     height: 65vh;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -44,19 +44,28 @@
 .cardTasks {
     width: 36%;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border: solid rgb(92, 90, 90) 1px;
     border-radius: 8px;
     padding: 10px;
     margin-right: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-break: break-all;
 }
+
+.clipped {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    cursor: pointer;
+  }
 
 .cardComments {
     width: 60%;
     height: 50vh;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border: solid rgb(92, 90, 90) 1px;
     border-radius: 8px;
     padding: 10px;
@@ -74,7 +83,7 @@
     width: 80%;
     padding: 5px;
     margin-right: 5px;
-    background-color: whitesmoke;
+    background-color: rgb(246, 242, 225);
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -82,12 +91,12 @@
 .comments {
     list-style: none;
     padding: 0;
+    margin: 8px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     max-height: 40vh;
-    overflow-y: auto;
 }
 
 /* Style the scrollbar */
@@ -104,16 +113,32 @@
     background-color: #555;
 }
 
-.icon {
-    font-size: 12px;
+
+.icon{
+    font-size: 14px;
     cursor: pointer;
     transition: color 0.3s;
     color: #61dafb;
     margin-left: 10px;
+    margin-right: 9px;
 }
 
-.icon:hover {
+.icon:hover{
     color: #69bfd6;
+}
+
+.button{
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: rgb(29, 28, 28);
+    background-color: #61dafb;
+    margin-left: 10px;
+    margin-right: 9px;
+}
+
+.button:hover{
+    background-color: #69bfd6;
 }
 
 .taskItem, .commentItem {
@@ -128,7 +153,26 @@
     flex-grow: 1;
 }
 
+.taskDescription {
+    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; 
+    cursor: pointer;
+    max-width: 100%;
+    cursor: pointer;
+}
+
 .taskIcons, .commentIcons {
     display: flex;
     align-items: center;
 }
+
+.commentText {
+    word-wrap: break-word; /* This is an alias for overflow-wrap */
+    overflow-wrap: break-word; /* Ensures long words break to fit the container */
+    word-break: break-all; /* Ensures long words break to fit the container */
+    white-space: normal; 
+    font-size: 20px;
+}
+

@@ -143,10 +143,10 @@ def get_comments_by_card_id(id):
     #    print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
     #    return jsonify({"message": "Forbidden"}), 403
 
-    user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
-    if not user_in_board:
-       print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
-       return jsonify({"message": "Forbidden"}), 403
+    # user_in_board = UserInBoard.query.filter_by(board_id=id, user_id=current_user.id).first()
+    # if not user_in_board:
+    #    print(f"User {current_user.id} is not a member of board {id}")  # Log the user and board id
+    #    return jsonify({"message": "Forbidden"}), 403
 
     comments = Comment.query.filter_by(card_id=id).all()
     if not comments:

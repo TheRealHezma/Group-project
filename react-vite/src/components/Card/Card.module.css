@@ -23,6 +23,13 @@ button {
   transition: background-color 0.3s;
 }
 
+.clipped {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
 .cardContainer {
     display: flex;
     align-items: center;
@@ -37,6 +44,7 @@ button {
     align-items: flex-start;
     font-size: .7rem;
     margin-right: 130px;
+    max-width: 160px;
   }
   
   OpenModalButton {

@@ -12,7 +12,7 @@ const Card = ({
   onAddTask,
   onEditCard,
   onDeleteCard,
-  reloadCards // Add reloadCards as a prop
+  reloadCards, // Add reloadCards as a prop
 }) => {
   const allTasks = useSelector((state) => state.cards.allCardTasks || []);
   const [cardTasks, setCardTasks] = useState([]);
@@ -36,6 +36,8 @@ const Card = ({
 
   const toggleEditCard = () => {
     setIsEditingCard(!isEditingCard);
+    setNewCardDescription(description);
+    setNewCardTitle(title);
   };
 
   const handleEditCard = () => {
@@ -69,8 +71,8 @@ const Card = ({
     <div className={styles.card}>
       <div className={styles.cardContainer}>
         <div className={styles.textContainer}>
-          <h2>{title}</h2>
-          <p>{description}</p>
+          <h2 className={styles.clipped} >{title}</h2>
+          <p className={styles.clipped} >{description}</p>
         </div>
         <OpenModalButton
           modalComponent={<CardDetailsModal id={id} />}
@@ -131,9 +133,15 @@ const Card = ({
         <div className={styles.confirmModal}>
           <div className={styles.confirmModalContent}>
             <p>Are you sure you want to delete this card?</p>
-            <p className={styles.red}>Doing so will delete any tasks and messages on the card.</p>
-            <button onClick={confirmDelete} className={styles.confirmButton}>Delete</button>
-            <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
+            <p className={styles.red}>
+              Doing so will delete any tasks and messages on the card.
+            </p>
+            <button onClick={confirmDelete} className={styles.confirmButton}>
+              Delete
+            </button>
+            <button onClick={cancelDelete} className={styles.cancelButton}>
+              Cancel
+            </button>
           </div>
         </div>
       )}

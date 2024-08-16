@@ -69,8 +69,8 @@ const Card = ({
     <div className={styles.card}>
       <div className={styles.cardContainer}>
         <div className={styles.textContainer}>
-          <h2>{title}</h2>
-          <p>{description}</p>
+          <h2 className={styles.clipped} >{title}</h2>
+          <p className={styles.clipped} >{description}</p>
         </div>
         <OpenModalButton
           modalComponent={<CardDetailsModal id={id} />}

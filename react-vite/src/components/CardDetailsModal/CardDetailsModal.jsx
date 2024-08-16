@@ -161,7 +161,7 @@ const CardDetailsModal = ({ id }) => {
                                     .map((comment) => (
                                         <li key={comment.id} className={styles.commentItem}>
                                             <span className={styles.commentText}>
-                                                {{comment.username}} wrote: {comment.content} - {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })}
+                                               {comment.username}  wrote: {comment.content} - {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })}
                                             </span>
                                             <div className={styles.commentIcons}>
                                                 <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment.id)} />

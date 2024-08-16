@@ -9,8 +9,6 @@ import Footer from './components/Footer/Footer';
 import './global.css';
 import Splash from './pages/Splash';
 import BoardDetails from './pages/BoardDetails';
-import CardsTest from './pages/CardsTest';
-import CardDetails from './pages/CardDetails';
 
 const Layout = () => {
   const dispatch = useDispatch();
@@ -51,19 +49,6 @@ const router = createBrowserRouter([
               {
                 path: ':id',
                 element: <BoardDetails />,
-              },
-            ],
-          },
-          {
-            path: 'cards',
-            children: [
-              {
-                index: true,
-                element: <CardsTest />,
-              },
-              {
-                path: ':id',
-                element: <CardDetails />,
               },
             ],
           },

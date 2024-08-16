@@ -16,7 +16,7 @@
     width: 50vw;
     height: 65vh;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border-radius: 12px;
     padding: 20px;
     display: flex;
@@ -44,7 +44,7 @@
 .cardTasks {
     width: 36%;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border: solid rgb(92, 90, 90) 1px;
     border-radius: 8px;
     padding: 10px;
@@ -54,9 +54,8 @@
 
 .cardComments {
     width: 60%;
-    height: 50vh;
     background-color: slategray;
-    color: whitesmoke;
+    color: rgb(246, 242, 225);
     border: solid rgb(92, 90, 90) 1px;
     border-radius: 8px;
     padding: 10px;
@@ -74,7 +73,7 @@
     width: 80%;
     padding: 5px;
     margin-right: 5px;
-    background-color: whitesmoke;
+    background-color: rgb(246, 242, 225);
     border: 1px solid #ccc;
     border-radius: 4px;
 }
@@ -82,12 +81,13 @@
 .comments {
     list-style: none;
     padding: 0;
+    margin: 8px;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     max-height: 40vh;
-    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 /* Style the scrollbar */
@@ -105,11 +105,12 @@
 }
 
 .icon {
-    font-size: 12px;
+    font-size: 14px;
     cursor: pointer;
     transition: color 0.3s;
     color: #61dafb;
     margin-left: 10px;
+    margin-right: 9px;
 }
 
 .icon:hover {
@@ -131,4 +132,9 @@
 .taskIcons, .commentIcons {
     display: flex;
     align-items: center;
+}
+
+.commentText {
+    word-wrap: break-word;
+    font-size: 20px;
 }

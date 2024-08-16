@@ -41,9 +41,15 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const toggleEditTask = (task) => {
-        setEditingTaskId(task.id);
-        setEditTaskDescription(task.description);
-        setEditTaskCompleted(task.completed);
+        if (editingTaskId === task.id) {
+            setIsEditingTask(false);
+            setEditingTaskId(null);
+        } else {
+            setIsEditingTask(true);
+            setEditingTaskId(task.id);
+            setEditTaskDescription(task.description);
+            setEditTaskCompleted(task.completed);
+        }
     };
 
     const handleEditTask = (taskId) => {
@@ -92,7 +98,10 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const handleEditButtonClick = (commentId) => {
-        setEditMode((prev) => ({ ...prev, [commentId]: true }));
+        setEditMode((prev) => ({
+            ...prev,
+            [commentId]: !prev[commentId]
+        }));
     };
 
     const handleBackgroundClick = (e) => {

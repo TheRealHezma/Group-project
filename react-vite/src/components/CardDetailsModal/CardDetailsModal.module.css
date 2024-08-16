@@ -50,6 +50,7 @@
     padding: 10px;
     margin-right: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    word-break: break-all;
 }
 
 .clipped {
@@ -152,11 +153,11 @@
 }
 
 .taskDescription {
+    word-break: break-all;
     word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal; 
     cursor: pointer;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
     max-width: 100%;
     cursor: pointer;
 }
@@ -167,6 +168,9 @@
 }
 
 .commentText {
-    word-wrap: break-word;
+    word-wrap: break-word; /* This is an alias for overflow-wrap */
+    overflow-wrap: break-word; /* Ensures long words break to fit the container */
+    word-break: break-all; /* Ensures long words break to fit the container */
+    white-space: normal; 
     font-size: 20px;
 }

@@ -91,12 +91,22 @@ function Navigation({ isLoaded }) {
                   <li>
                     <OpenModalButton
                       buttonText={'Edit Board'}
-                      modalComponent={<EditBoardModal boardId={id} />}
+                      modalComponent={
+                        <EditBoardModal
+                          boardId={id}
+                          currentBoardName={currentBoardName}
+                        />
+                      }
                       className="edit-board-button"
                     />
                   </li>
                   <li>
-                    <button onClick={handleDeleteBoard} className='delete-board-button'>Delete Board</button>
+                    <button
+                      onClick={handleDeleteBoard}
+                      className="delete-board-button"
+                    >
+                      Delete Board
+                    </button>
                   </li>
                 </>
               )}
@@ -131,7 +141,7 @@ function Navigation({ isLoaded }) {
           </li>
         </>
       )}
-      <li className='greeting'>{greeting}</li>
+      <li className="greeting">{greeting}</li>
       <li>
         <ProfileButton />
       </li>
@@ -142,14 +152,23 @@ function Navigation({ isLoaded }) {
             {errorMessage ? (
               <>
                 <p>{errorMessage}</p>
-                <button onClick={cancelDelete} className="closeButton">Close</button>
+                <button onClick={cancelDelete} className="closeButton">
+                  Close
+                </button>
               </>
             ) : (
               <>
                 <p>Are you sure you want to delete this board?</p>
-                <p className="red">Doing so will delete any lists, cards, tasks and messages on the board.</p>
-                <button onClick={confirmDelete} className="confirmButton">Delete</button>
-                <button onClick={cancelDelete} className="cancelButton">Cancel</button>
+                <p className="red">
+                  Doing so will delete any lists, cards, tasks and messages on
+                  the board.
+                </p>
+                <button onClick={confirmDelete} className="confirmButton">
+                  Delete
+                </button>
+                <button onClick={cancelDelete} className="cancelButton">
+                  Cancel
+                </button>
               </>
             )}
           </div>

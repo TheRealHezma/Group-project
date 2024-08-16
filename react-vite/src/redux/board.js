@@ -1,6 +1,5 @@
 //TODO: UPDATE A BOARD AND DELETE A BOARD ###########################################################
 
-
 //*VARIABLE TYPES
 const GET = 'boards/LOAD';
 const GET_BY_ID = 'board/LOADONE';
@@ -106,11 +105,12 @@ export const deleteBoardThunk = (boardId) => async (dispatch) => {
     if (response.status === 403) {
       throw new Error('You are not authorized to delete this board.');
     } else {
-      throw new Error(errorData.message || 'An error occurred. Please try again.');
+      throw new Error(
+        errorData.message || 'An error occurred. Please try again.'
+      );
     }
   }
 };
-
 
 //*INITIAL STATE + REDUCER
 const initialState = { allBoards: {}, currentBoard: {} };
@@ -139,7 +139,11 @@ const boardsReducer = (state = initialState, action) => {
     case EDIT: {
       return {
         ...state,
-        allBoards: { ...state.allBoards, [action.board.id]: action.board },
+        allBoards: {
+          ...state.allBoards,
+          [action.board.Board.id]: action.board.Board,
+        },
+        currentBoard: action.board,
       };
     }
     case DELETE: {

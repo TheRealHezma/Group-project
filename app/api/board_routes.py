@@ -94,7 +94,7 @@ def edit_board(id):
 
     db.session.commit()
 
-    return jsonify(board.to_dict()), 200
+    return jsonify({"Board": board.to_dict()}), 200
 # Will allow owner only to delete board
 @board_routes.route('/<int:id>', methods=['DELETE'])
 @login_required

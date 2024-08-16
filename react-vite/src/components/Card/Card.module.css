@@ -28,6 +28,7 @@ button {
   text-overflow: ellipsis;
   white-space: nowrap;
   max-width: 100%;
+  cursor: pointer;
 }
 
 .cardContainer {

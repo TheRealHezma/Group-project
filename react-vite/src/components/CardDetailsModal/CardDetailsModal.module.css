@@ -52,6 +52,14 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.clipped {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    cursor: pointer;
+  }
+
 .cardComments {
     width: 60%;
     background-color: slategray;
@@ -104,7 +112,7 @@
     background-color: #555;
 }
 
-.icon {
+.icon{
     font-size: 14px;
     cursor: pointer;
     transition: color 0.3s;
@@ -113,8 +121,22 @@
     margin-right: 9px;
 }
 
-.icon:hover {
+.icon:hover{
     color: #69bfd6;
+}
+
+.button{
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s;
+    color: rgb(29, 28, 28);
+    background-color: #61dafb;
+    margin-left: 10px;
+    margin-right: 9px;
+}
+
+.button:hover{
+    background-color: #69bfd6;
 }
 
 .taskItem, .commentItem {
@@ -127,6 +149,16 @@
 
 .taskDescription, .commentText {
     flex-grow: 1;
+}
+
+.taskDescription {
+    word-wrap: break-word;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    cursor: pointer;
 }
 
 .taskIcons, .commentIcons {

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { getCard, createCardTask, getAllCardTasks, editCardTaskById, deleteCardTaskById } from '../../redux/card';
@@ -11,9 +11,16 @@ const CardDetailsModal = ({ id }) => {
     const thisCard = useSelector((state) => state.cards.currentCard);
     const comments = useSelector((state) => Object.values(state.comments.allCommentsByCard[thisCard.id] || {}));
     const tasks = useSelector((state) => Object.values(state.cards.allCardTasks).filter(task => task.card_id === id));
+    
+    const [isEditingTask, setIsEditingTask] = useState(false);
+    const [isAddingTask, setIsAddingTask] = useState(false);
     const [newComment, setNewComment] = useState('');
     const [editCommentData, setEditCommentData] = useState({});
     const [editMode, setEditMode] = useState({});
+    const [editTaskDescription, setEditTaskDescription] = useState('');
+    const [editTaskCompleted, setEditTaskCompleted] = useState(false);
+    const [editingTaskId, setEditingTaskId] = useState(null);
+    const [taskDescription, setTaskDescription] = useState('');
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
@@ -23,36 +30,29 @@ const CardDetailsModal = ({ id }) => {
         dispatch(getAllComments(id));
     }, [id, dispatch]);
 
-    const [isEditingTask, setIsEditingTask] = useState(false);
-    const [editTaskDescription, setEditTaskDescription] = useState('');
-    const [editTaskCompleted, setEditTaskCompleted] = useState(false);
-    const [editingTaskId, setEditingTaskId] = useState(null);
-    const [isAddingTask, setIsAddingTask] = useState(false);
-    const [taskDescription, setTaskDescription] = useState('');
-
-    const toggleAddTask = () => {
-        setIsAddingTask(!isAddingTask);
+    const handleCreateCardTask = (e) => {
+        e.preventDefault();
+        if (!taskDescription.trim()) return;
+        const taskData = { description: taskDescription, completed: false };
+        dispatch(createCardTask(thisCard.id, taskData)).then(() => {
+            setTaskDescription('');
+            dispatch(getAllCardTasks(id));
+        });
     };
 
     const toggleEditTask = (task) => {
-        setIsEditingTask(!isEditingTask);
         setEditingTaskId(task.id);
         setEditTaskDescription(task.description);
         setEditTaskCompleted(task.completed);
     };
 
-    const handleCreateCardTask = () => {
-        const taskData = { description: taskDescription, completed: false };
-        dispatch(createCardTask(thisCard.id, taskData));
-        setTaskDescription('');
-        setIsAddingTask(false);
-    };
-
     const handleEditTask = (taskId) => {
         const updatedTaskData = { description: editTaskDescription, completed: editTaskCompleted };
-        dispatch(editCardTaskById(taskId, updatedTaskData));
-        setEditTaskDescription('');
-        setIsEditingTask(false);
+        dispatch(editCardTaskById(taskId, updatedTaskData)).then(() => {
+            setEditTaskDescription('');
+            setEditingTaskId(null);
+            dispatch(getAllCardTasks(id));
+        });
     };
 
     const handleDeleteCardTask = (taskId) => {
@@ -64,7 +64,7 @@ const CardDetailsModal = ({ id }) => {
     const handleCreateComment = (e, cardId) => {
         e.preventDefault();
         if (!newComment.trim()) return;
-        const cardIdInt = parseInt(cardId, 10);
+        const cardIdInt = parseInt(cardId);
         if (!isNaN(cardIdInt)) {
             const payload = { user_id: currentUser.id, content: newComment, card_id: cardIdInt };
             dispatch(createNewComment(cardIdInt, payload)).then(() => {
@@ -124,7 +124,7 @@ const CardDetailsModal = ({ id }) => {
                         ) : (
                             tasks.map((task) => (
                                 <div key={task.id} className={styles.taskItem}>
-                                    <p className={styles.taskDescription}>{task.description}</p>
+                                    <p className={styles.taskDescription} title={task.description} >{task.description}</p>
                                     <div className={styles.taskIcons}>
                                         <FaEdit className={styles.icon} onClick={() => toggleEditTask(task)} />
                                         <FaTrash className={styles.icon} onClick={() => handleDeleteCardTask(task.id)} />
@@ -135,8 +135,9 @@ const CardDetailsModal = ({ id }) => {
                                                 type="text"
                                                 value={editTaskDescription}
                                                 onChange={(e) => setEditTaskDescription(e.target.value)}
+                                                className={styles.taskInput}
                                             />
-                                            <button onClick={() => handleEditTask(task.id)}>Save</button>
+                                            <button onClick={() => handleEditTask(task.id)} className={styles.button} >Save</button>
                                         </div>
                                     )}
                                 </div>

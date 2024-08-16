@@ -62,6 +62,10 @@
     align-items: center;
   }
 
+  .comment-content {
+    overflow: hidden;
+  }
+
   .cardTitle {
     text-align: center;
     margin-bottom: 10px;
@@ -99,6 +103,7 @@
     padding: 10px;
     margin-left: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
   }
 
   .cardTasks h2, .cardComments h2 {
@@ -106,6 +111,14 @@
     margin-bottom: 20px;
   }
   
+  .clipped {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%;
+    cursor: pointer;
+  }
+
   .task {
     display: flex;
     /* justify-content: space-between; */

@@ -21,11 +21,9 @@ const CardDetailsModal = ({ id }) => {
   const currentUser = useSelector((state) => state.session.user);
   const thisCard = useSelector((state) => state.cards.currentCard);
   const comments = useSelector((state) => Object.values(state.comments.allCommentsByCard[thisCard.id] || {}));
-  // MAY NEED TO IMPLEMENT MEMOIZATION FOR TASKS ######################################################
   const tasks = useSelector((state) => 
     Object.values(state.cards.allCardTasks).filter(task => task.card_id === id)
   );
-  // ADDITIONAL STATE NEEDED FOR COMMENTS ############################################################
   const [newComment, setNewComment] = useState('');
   const [editCommentData, setEditCommentData] = useState({});
   const [editMode, setEditMode] = useState({});
@@ -37,16 +35,13 @@ const CardDetailsModal = ({ id }) => {
     dispatch(getAllCardTasks(id));
     dispatch(getAllComments(id));
   }, [id, dispatch]);
-  // ADDITIONAL STATE NEEDED FOR TASKS ################################################################
+
   const [isEditingTask, setIsEditingTask] = useState(false);
   const [editTaskDescription, setEditTaskDescription] = useState('');
   const [editTaskCompleted, setEditTaskCompleted] = useState(false);
   const [editingTaskId, setEditingTaskId] = useState(null);
-//   //*State for adding a new task to a card
   const [isAddingTask, setIsAddingTask] = useState(false);
   const [taskDescription, setTaskDescription] = useState('');
-
-  // HANDLER FUNCTIONS FOR TASKS  #####################################################################
 
   const toggleAddTask = () => {
     setIsAddingTask(!isAddingTask);
@@ -58,7 +53,6 @@ const CardDetailsModal = ({ id }) => {
     setEditTaskDescription(task.description);
     setEditTaskCompleted(task.completed);
   };
-
 
   const handleCreateCardTask = () => {
     const taskData = {
@@ -84,7 +78,6 @@ const CardDetailsModal = ({ id }) => {
     dispatch(deleteCardTaskById(taskId));
   };
 
-  // HANDLER FUNCTIONS FOR COMMENTS #
   const handleCreateComment = (e, cardId) => {
     e.preventDefault();
     if (!newComment.trim()) {
@@ -99,7 +92,6 @@ const CardDetailsModal = ({ id }) => {
       };
       dispatch(createNewComment(cardIdInt, payload))
         .then(() => {
-          // Update local state after successfully creating a new comment
           setNewComment('');
           dispatch(getAllComments(cardIdInt));
         })
@@ -111,7 +103,6 @@ const CardDetailsModal = ({ id }) => {
     if (updatedContent) {
       dispatch(updateComment(commentId, { content: updatedContent }))
         .then(() => {
-          // Update local state after successfully updating a comment
           setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
           setEditMode((prev) => ({ ...prev, [commentId]: false }));
           dispatch(getAllComments(cardIdInt));
@@ -162,8 +153,8 @@ const CardDetailsModal = ({ id }) => {
             <p>No tasks</p>
           ) : (
             tasks.map((task) => (
-                <div key={task.id} className={styles.task}>
-              <p>{task.description}</p>
+                <div key={task.id} className={styles.task} >
+              <p className={styles.clipped} title={task.description}>{task.description}</p>
               <button
                 className={styles.icon}
                 onClick={() => toggleEditTask(task)}

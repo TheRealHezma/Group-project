@@ -73,6 +73,17 @@ button + button {
     font-size: 14px;
 }
 
+.addCard {
+    background-color: #a3e929;
+    color: black;
+    opacity: .8;
+    font-size: 14px;
+}
+
+.newCard input{
+    margin: 4px;
+}
+
 .text {
     font-size: 14px;
     color: black;
@@ -97,24 +108,29 @@ button + button {
     margin: auto;
     padding: 20px;
     border: 1px solid #888;
-    width: 80%;
+    width: 100%;
     max-width: 400px;
     border-radius: 10px;
     /* Rounded corners */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
   }
+  .confirmModalContent p {
+    margin: 4px;
+    margin-bottom: 6px;
+  }
    
   .confirmButton {
     margin-right: 10px;
     padding: 8px 16px;
-    background-color: red;
+    margin-right: 60px;
+    background-color: #61dafb;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
   }
-  
+   
   .cancelButton {
     padding: 8px 16px;
     background-color: gray;
@@ -123,7 +139,16 @@ button + button {
     border-radius: 4px;
     cursor: pointer;
   }
-
+  .deleteButton {
+    padding: 8px 16px;
+    margin-right: 60px;
+    background-color: red;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
   .red {
     color: red;
   }
@@ -131,4 +156,5 @@ button + button {
   input {
     padding: 8px;
     margin: 8px;
+    width: 80%;
   }

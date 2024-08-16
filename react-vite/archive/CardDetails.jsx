@@ -2,8 +2,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCard, editCardById, deleteCardById } from '../redux/card';
-import { getComment, getAllComments, createNewComment, updateComment, removeComment } from '../redux/comment';
+import { getCard, editCardById, deleteCardById } from '../src/redux/card';
+import { getComment, getAllComments, createNewComment, updateComment, removeComment } from '../src/redux/comment';
 
 const CardDetails = () => {
   const { id } = useParams(); //id of card

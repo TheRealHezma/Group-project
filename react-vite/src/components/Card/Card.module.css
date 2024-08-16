@@ -134,7 +134,8 @@ button {
   }
   
   .confirmModalContent {
-    background: white;
+    background: rgb(15, 15, 15);
+    color:white;
     padding: 20px;
     border-radius: 5px;
     text-align: center;

@@ -126,8 +126,12 @@ const List = ({ list, onListDeleted }) => {
           <div className={styles.actionItem}>
             <OpenModalButton
               buttonText={<FaPlus />}
-              modalComponent={<NewCardModal listId={list.id} onCardCreated={reloadCards} />}
-              className={styles.add}
+              modalComponent={<NewCardModal 
+              listId={list.id} 
+              onCardCreated={reloadCards} 
+              className={styles.newCard}
+              />}
+              className={styles.addCard}
             />
             <span className={styles.text}>Add Card</span>
           </div>
@@ -138,7 +142,7 @@ const List = ({ list, onListDeleted }) => {
           <div className={styles.confirmModalContent}>
             <p>Are you sure you want to delete this list?</p>
             <p className={styles.red}>Doing so will delete any cards, tasks and messages on the list.</p>
-            <button onClick={confirmDelete} className={styles.confirmButton}>Delete</button>
+            <button onClick={confirmDelete} className={styles.deleteButton}>Delete</button>
             <button onClick={cancelDelete} className={styles.cancelButton}>Cancel</button>
           </div>
         </div>

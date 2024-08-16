@@ -12,6 +12,7 @@ const CardDetailsModal = ({ id }) => {
     const comments = useSelector((state) => Object.values(state.comments.allCommentsByCard[thisCard.id] || {}));
     const tasks = useSelector((state) => Object.values(state.cards.allCardTasks).filter(task => task.card_id === id));
     
+
     const [isEditingTask, setIsEditingTask] = useState(false);
     const [isAddingTask, setIsAddingTask] = useState(false);
     const [newComment, setNewComment] = useState('');
@@ -41,6 +42,7 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const toggleEditTask = (task) => {
+
         if (editingTaskId === task.id) {
             setIsEditingTask(false);
             setEditingTaskId(null);
@@ -98,6 +100,7 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const handleEditButtonClick = (commentId) => {
+
         setEditMode((prev) => ({
             ...prev,
             [commentId]: !prev[commentId]
@@ -134,6 +137,7 @@ const CardDetailsModal = ({ id }) => {
                             tasks.map((task) => (
                                 <div key={task.id} className={styles.taskItem}>
                                     <p className={styles.taskDescription} title={task.description} >{task.description}</p>
+
                                     <div className={styles.taskIcons}>
                                         <FaEdit className={styles.icon} onClick={() => toggleEditTask(task)} />
                                         <FaTrash className={styles.icon} onClick={() => handleDeleteCardTask(task.id)} />
@@ -144,9 +148,11 @@ const CardDetailsModal = ({ id }) => {
                                                 type="text"
                                                 value={editTaskDescription}
                                                 onChange={(e) => setEditTaskDescription(e.target.value)}
+
                                                 className={styles.taskInput}
                                             />
                                             <button onClick={() => handleEditTask(task.id)} className={styles.button} >Save</button>
+
                                         </div>
                                     )}
                                 </div>
@@ -173,7 +179,9 @@ const CardDetailsModal = ({ id }) => {
                                     .map((comment) => (
                                         <li key={comment.id} className={styles.commentItem}>
                                             <span className={styles.commentText}>
+
                                                 On: {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })} - {comment.username} wrote: {comment.content} - 
+
                                             </span>
                                             <div className={styles.commentIcons}>
                                                 <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment.id)} />

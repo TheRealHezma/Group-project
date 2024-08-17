@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createBoardThunk } from '../../redux/board';
 import { useModal } from '../../context/Modal';
-// import "./NewBoardModal.css";
+
 
 function NewBoardModal() {
   const dispatch = useDispatch();

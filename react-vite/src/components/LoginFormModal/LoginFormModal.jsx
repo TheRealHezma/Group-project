@@ -2,7 +2,7 @@ import { useState } from "react";
 import { thunkLogin } from "../../redux/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
-import "./LoginForm.css";
+import styles from "./LoginForm.module.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -54,8 +54,8 @@ function LoginFormModal() {
   };
 
   return (
-    <div className="modal" onClick={handleBackgroundClick}>
-      <div className="modal-content">
+    <div className={styles.modal} onClick={handleBackgroundClick}>
+      <div className={styles.modalContent}>
         <h1>Log In</h1>
         <form onSubmit={handleSubmit}>
           <label>
@@ -78,8 +78,8 @@ function LoginFormModal() {
             />
           </label>
           {errors.password && <p>{errors.password}</p>}
-          <button type="submit" className="modal-button">Log In</button>
-          <button onClick={handleDemoLogin} className="modal-button">Demo User</button>
+          <button type="submit" className={styles.login}>Log In</button>
+          <button onClick={handleDemoLogin} className={styles.demo}>Demo User</button>
         </form>
       </div>
     </div>

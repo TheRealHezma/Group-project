@@ -55,6 +55,10 @@
     word-break: break-all;
 }
 
+.completed {
+    text-decoration: line-through;
+}
+
 .clipped {
     overflow: hidden;
     text-overflow: ellipsis;

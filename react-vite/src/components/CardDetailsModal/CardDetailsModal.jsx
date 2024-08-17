@@ -142,7 +142,6 @@ const CardDetailsModal = ({ id }) => {
                                 <div key={task.id} className={styles.taskItem}>
                                 <label class="checkboxLabel">
                                     <input type="checkbox" />
-                                    <span>Task description</span>
                                 </label>
                                     <p className={`${styles.taskDescription} ${task.completed ? styles.completed : ''}`} title={task.description}>
                                         {task.description}

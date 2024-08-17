@@ -27,10 +27,12 @@
 .cardTitle {
     text-align: center;
     margin-bottom: 10px;
+    word-break: break-all;
 }
 
 .cardDescription {
     margin-bottom: 10px;
+    word-break: break-all;
 }
 
 .cardContent {

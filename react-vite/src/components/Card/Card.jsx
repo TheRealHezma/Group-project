@@ -22,6 +22,7 @@ const Card = ({
   const [newCardDescription, setNewCardDescription] = useState('');
   const [isEditingCard, setIsEditingCard] = useState(false);
   const [showConfirmDelete, setShowConfirmDelete] = useState(false);
+  const [taskError, setTaskError] = useState('');
 
   useEffect(() => {
     const filteredTasks = Object.values(allTasks).filter(
@@ -32,6 +33,7 @@ const Card = ({
 
   const toggleAddTask = () => {
     setIsAddingTask(!isAddingTask);
+    setTaskError('');
   };
 
   const toggleEditCard = () => {
@@ -49,9 +51,13 @@ const Card = ({
   };
 
   const handleAddTask = () => {
-    onAddTask(id, taskDescription);
-    setTaskDescription('');
-    setIsAddingTask(false);
+    if (!taskDescription.trim()) {
+      setTaskError('Please include characters in submission.');
+    } else {
+      onAddTask(id, taskDescription);
+      setTaskDescription('');
+      setIsAddingTask(false);
+    }
   };
 
   const handleDelete = () => {
@@ -71,8 +77,10 @@ const Card = ({
     <div className={styles.card}>
       <div className={styles.cardContainer}>
         <div className={styles.textContainer}>
-          <h2 className={styles.clipped} title={title} >{title}</h2>
-          <p className={styles.clipped} >{description}</p>
+          <h2 className={styles.clipped} title={title}>
+            {title}
+          </h2>
+          <p className={styles.clipped}>{description}</p>
         </div>
         <OpenModalButton
           modalComponent={<CardDetailsModal id={id} />}
@@ -93,6 +101,8 @@ const Card = ({
               onChange={(e) => setTaskDescription(e.target.value)}
               required
             />
+
+            {taskError !== '' && <p>{taskError}</p>}
             <button className={styles.taskButton} onClick={handleAddTask}>
               Submit Task
             </button>

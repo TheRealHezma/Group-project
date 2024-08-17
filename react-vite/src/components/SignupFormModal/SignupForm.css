@@ -26,6 +26,7 @@
   }
   
   .modal-content h1 {
+    text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
   }
@@ -41,7 +42,7 @@
   }
   
   .modal-content input {
-    width: 100%;
+    width: 95%;
     padding: 10px;
     margin-bottom: 20px;
     border: none;
@@ -50,6 +51,8 @@
   }
   
   .modal-content button {
+    width: 95%;
+    margin-left: 9px;
     background-color: #61dafb;
     color: #20232a;
     padding: 10px;

@@ -30,7 +30,7 @@
     border: 1px solid #ddd;
     border-radius: 4px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    min-width: 120px;
+    min-width: 130px;
     z-index: 1;
 }
 
@@ -49,10 +49,6 @@
     justify-content: center;
 }
 
-.profile-dropdown li:hover {
-    background-color: #69bfd6;
-}
-
 .profile-info {
     font-size: 14px;
     color: #333;
@@ -64,15 +60,16 @@
 }
 
 .profile-info:hover {
-    background-color: #ffffff;
+    background-color: #69bfd6;
 }
 
 .profile-dropdown button,
 .profile-logout button {
+    outline: none; /* Remove default outline */
+    border: none; /* Ensure no border is visible */
     width: 100%;
     background-color: #61dafb;
     color: rgb(21, 21, 21);
-    border: none;
     padding: 8px 0;
     border-radius: 4px;
     cursor: pointer;
@@ -82,9 +79,15 @@
     align-items: center;
     justify-content: center;
     white-space: nowrap;
+    transition: background-color 0.3s ease;
 }
 
 .profile-dropdown button:hover,
 .profile-logout button:hover {
-    background-color: #69bfd6;
+    background-color: #69bfd6; /* Consistent hover color */
+}
+
+.profile-dropdown button:focus,
+.profile-logout button:focus {
+    outline: none; /* Ensure no outline on focus */
 }

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { createListThunk } from "../../redux/list";
 import { useModal } from '../../context/Modal';
+import '../SignupFormModal/SignupForm.css';
 
 const NewListForm = ({ boardId }) => {
     const dispatch = useDispatch();
@@ -21,7 +22,8 @@ const NewListForm = ({ boardId }) => {
       };
 
       return (
-        <form onSubmit={handleSubmit}>
+        <div className="modal">
+        <form onSubmit={handleSubmit} className="modal-content">
           <label>
             List Name:
             <input
@@ -34,6 +36,7 @@ const NewListForm = ({ boardId }) => {
           <button type="submit">Create List</button>
           <button type="button" onClick={closeModal}>Cancel</button>
         </form>
+        </div>
       );
     };
 

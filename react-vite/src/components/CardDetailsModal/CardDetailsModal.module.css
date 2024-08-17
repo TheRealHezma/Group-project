@@ -7,7 +7,7 @@
     left: 0;
     top: 0;
     width: 100%;
-    height: auto;
+    height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.4);
 }
@@ -61,7 +61,7 @@
     white-space: nowrap;
     max-width: 100%;
     cursor: pointer;
-  }
+}
 
 .cardComments {
     width: 60%;
@@ -116,7 +116,6 @@
     background-color: #555;
 }
 
-
 .icon{
     font-size: 14px;
     cursor: pointer;
@@ -163,7 +162,6 @@
     white-space: normal; 
     cursor: pointer;
     max-width: 100%;
-    cursor: pointer;
 }
 
 .taskIcons, .commentIcons {
@@ -177,4 +175,19 @@
     word-break: break-all; /* Ensures long words break to fit the container */
     white-space: normal; 
     font-size: 20px;
+}
+
+/* Checkbox styles */
+.checkboxLabel {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+}
+
+.checkboxLabel input[type="checkbox"] {
+    margin: 0 5px 0 0;
+}
+
+.checkboxLabel span {
+    margin-left: 5px;
 }

@@ -1,3 +1,4 @@
+import React from "react";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
@@ -109,6 +110,13 @@ const CardDetailsModal = ({ id }) => {
         }
     };
 
+    const handleCheckboxChange = (task) => {
+        const updatedTaskData = { ...task, completed: !task.completed };
+        dispatch(editCardTaskById(task.id, updatedTaskData)).then(() => {
+            dispatch(getAllCardTasks(id));
+        });
+    };
+
     return (
         <div className={styles.modal} onClick={handleBackgroundClick}>
             <div className={styles.modalContent}>
@@ -132,8 +140,13 @@ const CardDetailsModal = ({ id }) => {
                         ) : (
                             tasks.map((task) => (
                                 <div key={task.id} className={styles.taskItem}>
-                                    <p className={styles.taskDescription} title={task.description} >{task.description}</p>
-
+                                <label class="checkboxLabel">
+                                    <input type="checkbox" />
+                                    <span>Task description</span>
+                                </label>
+                                    <p className={`${styles.taskDescription} ${task.completed ? styles.completed : ''}`} title={task.description}>
+                                        {task.description}
+                                    </p>
                                     <div className={styles.taskIcons}>
                                         <FaEdit className={styles.icon} onClick={() => toggleEditTask(task)} />
                                         <FaTrash className={styles.icon} onClick={() => handleDeleteCardTask(task.id)} />
@@ -144,11 +157,9 @@ const CardDetailsModal = ({ id }) => {
                                                 type="text"
                                                 value={editTaskDescription}
                                                 onChange={(e) => setEditTaskDescription(e.target.value)}
-
                                                 className={styles.taskInput}
                                             />
-                                            <button onClick={() => handleEditTask(task.id)} className={styles.button} >Save</button>
-
+                                            <button onClick={() => handleEditTask(task.id)} className={styles.button}>Save</button>
                                         </div>
                                     )}
                                 </div>
@@ -175,9 +186,7 @@ const CardDetailsModal = ({ id }) => {
                                     .map((comment) => (
                                         <li key={comment.id} className={styles.commentItem}>
                                             <span className={styles.commentText}>
-
-                                                On: {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })} - {comment.username} wrote: {comment.content} - 
-
+                                                On: {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })} - {comment.username} wrote: {comment.content} -
                                             </span>
                                             <div className={styles.commentIcons}>
                                                 <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment)} />
@@ -185,15 +194,13 @@ const CardDetailsModal = ({ id }) => {
                                             </div>
                                             {editingCommentId === comment.id && (
                                                 <div>
-                                                <input
-                                                    type="text"
-                                                    value={editCommentContent}
-                                                    required
-                                                    onChange={(e) =>
-                                                        setEditCommentContent(e.target.value)
-                                                    }
-                                                />
-                                                <button onClick={() => handleEditComment(comment.id)} className={styles.button} >Save</button>
+                                                    <input
+                                                        type="text"
+                                                        value={editCommentContent}
+                                                        required
+                                                        onChange={(e) => setEditCommentContent(e.target.value)}
+                                                    />
+                                                    <button onClick={() => handleEditComment(comment.id)} className={styles.button}>Save</button>
                                                 </div>
                                             )}
                                         </li>

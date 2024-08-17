@@ -12,11 +12,9 @@ const CardDetailsModal = ({ id }) => {
     const comments = useSelector((state) => Object.values(state.comments.allCommentsByCard[thisCard.id] || {}));
     const tasks = useSelector((state) => Object.values(state.cards.allCardTasks).filter(task => task.card_id === id));
     
-    const [isEditingTask, setIsEditingTask] = useState(false);
-    const [isAddingTask, setIsAddingTask] = useState(false);
+    const [editingCommentId, setEditingCommentId] = useState(null);
+    const [editCommentContent, setEditCommentContent] = useState('');
     const [newComment, setNewComment] = useState('');
-    const [editCommentData, setEditCommentData] = useState({});
-    const [editMode, setEditMode] = useState({});
     const [editTaskDescription, setEditTaskDescription] = useState('');
     const [editTaskCompleted, setEditTaskCompleted] = useState(false);
     const [editingTaskId, setEditingTaskId] = useState(null);
@@ -41,6 +39,12 @@ const CardDetailsModal = ({ id }) => {
     };
 
     const toggleEditTask = (task) => {
+        if (editingTaskId === task.id) {
+            setEditingTaskId(null);
+            setEditTaskDescription('');
+            setEditTaskCompleted(false);
+            return;
+        }
         setEditingTaskId(task.id);
         setEditTaskDescription(task.description);
         setEditTaskCompleted(task.completed);
@@ -74,15 +78,13 @@ const CardDetailsModal = ({ id }) => {
         }
     };
 
-    const handleEditComment = (commentId, cardIdInt) => {
-        const updatedContent = editCommentData[commentId];
-        if (updatedContent) {
-            dispatch(updateComment(commentId, { content: updatedContent })).then(() => {
-                setEditCommentData((prev) => ({ ...prev, [commentId]: '' }));
-                setEditMode((prev) => ({ ...prev, [commentId]: false }));
-                dispatch(getAllComments(cardIdInt));
-            });
-        }
+    const handleEditComment = (commentId) => {
+        const updatedCommentData = { content: editCommentContent};
+        dispatch(updateComment(commentId, updatedCommentData)).then(() => {
+            setEditCommentContent('');
+            setEditingCommentId(null);
+            dispatch(getAllComments(thisCard.id));
+        });
     };
 
     const handleDeleteComment = (commentId) => {
@@ -91,8 +93,14 @@ const CardDetailsModal = ({ id }) => {
         });
     };
 
-    const handleEditButtonClick = (commentId) => {
-        setEditMode((prev) => ({ ...prev, [commentId]: true }));
+    const handleEditButtonClick = (comment) => {
+        if (editingCommentId === comment.id) {
+            setEditingCommentId(null);
+            setEditCommentContent('');
+            return;
+        }
+        setEditingCommentId(comment.id);
+        setEditCommentContent(comment.content);
     };
 
     const handleBackgroundClick = (e) => {
@@ -167,17 +175,21 @@ const CardDetailsModal = ({ id }) => {
                                                 On: {new Date(comment.created_at).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: '2-digit' })} - {comment.username} wrote: {comment.content} - 
                                             </span>
                                             <div className={styles.commentIcons}>
-                                                <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment.id)} />
+                                                <FaEdit className={styles.icon} onClick={() => handleEditButtonClick(comment)} />
                                                 <FaTrash className={styles.icon} onClick={() => handleDeleteComment(comment.id)} />
                                             </div>
-                                            {editMode[comment.id] && (
+                                            {editingCommentId === comment.id && (
+                                                <div>
                                                 <input
                                                     type="text"
-                                                    value={editCommentData[comment.id] || comment.content}
+                                                    value={editCommentContent}
+                                                    required
                                                     onChange={(e) =>
-                                                        setEditCommentData((prev) => ({ ...prev, [comment.id]: e.target.value }))
+                                                        setEditCommentContent(e.target.value)
                                                     }
                                                 />
+                                                <button onClick={() => handleEditComment(comment.id)} className={styles.button} >Save</button>
+                                                </div>
                                             )}
                                         </li>
                                     ))
